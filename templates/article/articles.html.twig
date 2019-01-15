@@ -2,4 +2,16 @@
 
 {% block title %}Artykuły{% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Title: {{ article.title }}</h1>
+                <h2>Posted: {{ article.publishedAt|ago }}</h2>
+                <h2>Heart count: {{ article.heartCount }}</h2>
+                <div>{{ article.content}}</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -2,6 +2,8 @@
 
     namespace App\Controller;
 
+    use App\Entity\Article;
+    use App\Repository\ArticleRepository;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Routing\Annotation\Route;
 
@@ -9,10 +11,16 @@
     {
         /**
          * @Route("/", name="app_homepage")
+         * @param ArticleRepository $repository
+         * @return \Symfony\Component\HttpFoundation\Response
          */
-        public function homepage()
+        public function homepage(ArticleRepository $repository)
         {
-            return $this->render('article/index.html.twig');
+            $articles = $repository->findAllPublishedOrderedByNewest();
+
+            return $this->render('article/index.html.twig', [
+                'articles' => $articles,
+            ]);
         }
 
         /**
@@ -25,10 +33,14 @@
 
         /**
          * @Route("/articles/{slug}", name="app_articles")
+         * @param Article $article
+         * @return \Symfony\Component\HttpFoundation\Response
          */
-        public function articles()
+        public function articles(Article $article)
         {
-            return $this->render('article/articles.html.twig');
+            return $this->render('article/articles.html.twig',[
+                'article' => $article,
+            ]);
         }
 
         /**
