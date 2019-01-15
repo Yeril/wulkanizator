@@ -1,0 +1,17 @@
+.col {
+    width: 33%;
+
+/*    align-content: center;*/
+
+}
+
+.img_offerts {
+    width: 97%;
+    height: auto;
+    align-content: center;
+
+}
+
+.offerts {
+    width: 99%;
+}

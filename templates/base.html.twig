@@ -1,12 +1,94 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+              integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+              crossorigin="anonymous">
+    {% endblock %}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset("img/icons/wheel.ico") }}"/>
+</head>
+<body>
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5">
+        <a class="navbar-brand d-none d-sm-inline d-lg-none m-1 pr-5 font-weight-bold"
+           href="{{ path("app_homepage") }}">Wulkanizator</a>
+        <a class="navbar-brand d-inline d-sm-none m-1 pr-5 font-weight-bold" href="{{ path("app_homepage") }}"><i
+                    class="fas fa-car"></i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <a class="navbar-brand m-1 pr-5 font-weight-bold d-none d-lg-inline"
+               href="{{ path("app_homepage") }}">Wulkanizator</a>
+            <ul class="navbar-nav text-center h5">
+                <li class="nav-item{% if app.request.get('_route') == 'app_homepage' %} active{% endif %}">
+                    <a class="nav-link " href="{{ path("app_homepage") }}"><i class="fas fa-car"></i>
+                        Strona główna</a>
+                </li>
+                {#<li class="nav-item{% if app.request.get('_route') == 'app_articles' %} active{% endif %}">#}
+                    {#<a class="nav-link" href="{{ path("app_articles") }}"><i class="fas fa-newspaper"></i>#}
+                        {#Artykuły</a>#}
+                {#</li>#}
+                <li class="nav-item{% if app.request.get('_route') == 'app_about' %} active{% endif %}">
+                    <a class="nav-link" href="{{ path("app_about") }}"><i class="fas fa-chalkboard-teacher"></i>
+                       Informacje</a>
+                </li>
+                <li class="nav-item{% if app.request.get('_route') == 'app_contact' %} active{% endif %}">
+                    <a class="nav-link" href="{{ path("app_contact") }}"><i class="fas fa-phone-square"></i>
+                        Kontakt</a>
+                </li>
+            </ul>
+            {% if is_granted('ROLE_USER') %}
+                <div class="form-inline justify-content-center ml-lg-5 mt-3 mt-md-auto">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path("app_admin") }}"
+                           class="nav-link btn btn-sm btn-outline-warning m-1 font-weight-bold"><i
+                                    class="fas fa-tools"></i>
+                            Panel Administratora</a>
+                    {% endif %}
+                    <a href="{{ path("app_account") }}"
+                       class="nav-link btn btn-sm btn-outline-warning m-1 font-weight-bold"><i class="fas fa-user"></i>
+                        Konto</a>
+                    <a href="{{ path("app_logout") }}"
+                       class="nav-link btn btn-sm btn-outline-warning m-1 font-weight-bold"><i
+                                class="fas fa-sign-out-alt"></i>
+                        Wyloguj się</a>
+                </div>
+            {% else %}
+                <div class="form-inline justify-content-center ml-lg-5 mt-3 mt-md-auto">
+                    <a href="{{ path("app_login") }}"
+                       class="nav-link btn btn-sm btn-outline-warning m-1 font-weight-bold"><i
+                                class="fas fa-sign-in-alt"></i>
+                        Logowanie</a>
+                    <a href="{{ path("app_register") }}"
+                       class="nav-link btn btn-sm btn-outline-warning m-1 font-weight-bold"><i
+                                class="fas fa-user-plus"></i>
+                        Rejestracja</a>
+                </div>
+            {% endif %}
+        </div>
+    </nav>
+{% endblock %}
+{% block body %}{% endblock %}
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+{% endblock %}
+</body>
 </html>

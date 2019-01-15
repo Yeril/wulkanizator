@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("css/homepage.css") }}">
+{% endblock %}
+
+{% block body %}
+    <section class="section section-top section-full">
+        <div class="bg-cover" id="bg-img"></div>
+        <div class="bg-overlay"></div>
+        <div class="container">
+            <div class="row justify-content-center align-items-center p-5">
+                <div class="col-md-8 col-lg-7">
+                    <h1 class="shadowed text-white text-center mb-4 text">
+                        Wheels for your car
+                    </h1>
+                    <p class="shadowed lead text-white text-center mb-4">
+                        Our company has a wide range of rims, tires and wheels. In our offer you will also find
+                        consumables and accessories for your wheels. In addition, we offer you a tire service with
+                        attractive prices.
+                    </p>
+                    <p class="text-center mb-0">
+                        <a href="{{ path("app_homepage") }}" class="btn btn-lg btn-warning">
+                            Sprawdź nowe artykuły
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section p-5">
+        <div class="container text-md-left">
+            <div class="row align-items-center">
+                <div class="col-md-6 col-lg-5 offset-lg-1">
+                    <img src="{{ asset("img/cars.jpg") }}" alt="cars.jpg" class="img-fluid">
+                </div>
+                <div class="col-md-6 col-lg-4 offset-lg-1">
+                    <h2 class="shadowed-white"> All cars </h2>
+                    <p class="text-muted">In our offer you will find tires and rims for every car, for every budget. We
+                        approach each client and his needs individually.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section p-5">
+        <div class="container text-md-right">
+            <div class="row align-items-center">
+                <div class="col-md-6 col-lg-5 offset-lg-1 order-md-2">
+                    <img src="{{ asset("img/desk.jpg") }}" alt="desk.jpg" class="img-fluid">
+                </div>
+                <div class="col-md-6 col-lg-4 offset-lg-1 order-md-1">
+                    <h2 class="shadowed-white"> Best workers </h2>
+                    <p class="text-muted text">Only experienced and qualified employees work in our workshop. All this
+                        to provide services at the highest level for the satisfaction of our customers.</p>
+                    <a href="{{ path("app_register") }}" class="btn btn-dark">Sign up now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h5>Admin</h5>
+                    <ul class="list-unstyled">
+                        <li><a class="text-muted nav-link" href="{{ path("app_admin") }}">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <h5>My Account</h5>
+                    <ul class="list-unstyled">
+                        {#<li><a class="text-muted nav-link" href="{{path("app_account")}}">My Account</a></li>#}
+                    </ul>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <p class="text-muted text"><a class="text-muted nav-link" href="{{ path("app_contact") }}">&copy;2018 Kontakt</a></p>
+            </div>
+        </div>
+    </footer>
+{% endblock %}

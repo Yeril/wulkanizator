@@ -1,0 +1,42 @@
+.main {
+    width: auto;
+    margin: 0 auto;
+    padding: 50px 0;
+    align-content: center;
+}
+
+.form-control {
+    border-color: #d7d7d7;
+    box-shadow: none;
+}
+
+
+.contact-form {
+    width: 90%;
+    margin: 0 auto;
+    /*    padding: 40px 0;*/
+    align-content: center;
+}
+
+
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.hint-text {
+    font-size: 15px;
+    text-align: center;
+    padding-bottom: 25px;
+    opacity: 0.8;
+}
+
+#map {
+    height: 400px;
+    /* The height is 400 pixels */
+    width: 100%;
+}
