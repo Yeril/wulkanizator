@@ -8,6 +8,7 @@
     use Symfony\Component\Form\Extension\Core\Type\PasswordType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Validator\Constraints\IsFalse;
     use Symfony\Component\Validator\Constraints\IsTrue;
     use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\NotBlank;
@@ -24,25 +25,25 @@
                     'mapped' => false,
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Please enter a password',
+                            'message' => 'Proszę wprowadź hasło!',
                         ]),
                         new Length([
                             'min' => 6,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
+                            'minMessage' => 'Hasło powinno mieć co najmniej {{ limit }} znaków!',
                             // max length allowed by Symfony for security reasons
                             'max' => 4096,
                         ]),
                     ],
 
                 ])
-            ->add('termsAccepted', CheckboxType::class, array(
-                'mapped' => false,
-                'constraints' => new IsTrue([
-                    'message' => 'Musisz zaakceptować warunki korzystania!'
-                ]),
-                'label' => 'Akceptuję regulamin'
-            ))
-            ;
+                ->add('agreeTerms', CheckboxType::class, [
+                    'mapped' => false,
+                    'constraints' => [
+                        new IsTrue([
+                            'message' => 'Zaakceptuj regulamin!'
+                        ])
+                    ]
+                ]);
         }
 
         public function configureOptions(OptionsResolver $resolver)

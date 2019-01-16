@@ -49,12 +49,14 @@
             if (($this->isGranted("ROLE_USER"))) {
                 return $this->redirectToRoute("app_homepage");
             }
+            /** @var User $user */
             $user = new User();
 
             $form = $this->createForm(RegistrationFormType::class, $user);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+
                 // encode the plain password
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
@@ -62,7 +64,8 @@
                         $form->get('password')->getData()
                     )
                 );
-
+                if( true === $form->get('agreeTerms')->getData())
+                    $user->agreeToTerms();
                 $user->setRoles(['ROLE_USER']);
 
                 $entityManager = $this->getDoctrine()->getManager();

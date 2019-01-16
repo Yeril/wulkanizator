@@ -3,10 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="Ten email jest zajęty!"
+ * )
  */
 class User implements UserInterface
 {
@@ -19,6 +25,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="Wprowadź swój adres email")
+     * @Assert\Email(message="Adres mail jest niepoprawny")
      */
     private $email;
 
@@ -34,7 +42,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstName;
 
@@ -42,6 +50,11 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lastName;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $agreedTermsAt;
 
     public function getId(): ?int
     {
@@ -141,6 +154,28 @@ class User implements UserInterface
     public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getAgreedTermsAt(): ?\DateTimeInterface
+    {
+        return $this->agreedTermsAt;
+    }
+
+    public function agreeToTerms(): self
+    {
+        try {
+            $this->agreedTermsAt = new \DateTime();
+        } catch (\Exception $e) {
+        }
+
+        return $this;
+    }
+
+    public function setAgreedTermsAt(\DateTimeInterface $agreedTermsAt):self
+    {
+        $this->agreedTermsAt = $agreedTermsAt;
 
         return $this;
     }
