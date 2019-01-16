@@ -14,7 +14,12 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset("img/icons/wheel.ico") }}"/>
 </head>
 <body>
-
+{% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+    <div class="alert alert-warning" style="margin-bottom: 0;">
+        You are currently switched to this user!
+        <a href="{{ path('app_homepage', {'_switch_user':'_exit'}) }}">Exit impersonation</a>
+    </div>
+{% endif %}
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5">
         <a class="navbar-brand d-none d-sm-inline d-lg-none m-1 pr-5 font-weight-bold"

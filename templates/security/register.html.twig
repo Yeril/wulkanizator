@@ -1,5 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Rejestracja{% endblock %}
+{% block title %}Zarejestruj się!{% endblock %}
 
-{% block body %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("css/homepage.css") }}">
+    <link rel="stylesheet" href="{{ asset("css/singinup.css") }}">
+{% endblock %}
+
+{% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    <div class='form-signin'>
+        {{ form_start(registrationForm, {label_attr: {class: 'form-signin'}}) }}
+        <h1 class="h3 mb-3 font-weight-normal">Zarejestruj się</h1>
+        {{ form_row(registrationForm.email, {
+            attr: { placeholder: 'Email' },
+            label_attr: { class: 'sr-only' }
+        }) }}
+        {{ form_row(registrationForm.password, {
+            attr: { placeholder: 'Password' },
+            label_attr: { class: 'sr-only' }
+        }) }}
+        {#{{ form_label(registrationForm.termsAccepted, 'Akceptuje regulamin') }}#}
+        {{ form_row(registrationForm.termsAccepted) }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj</button>
+
+        {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}
+
