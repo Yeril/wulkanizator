@@ -3,9 +3,12 @@
     namespace App\DataFixtures;
 
     use App\Entity\Article;
+    use App\Entity\Tag;
+    use Doctrine\Common\DataFixtures\DependentFixtureInterface;
     use Doctrine\Common\Persistence\ObjectManager;
 
-    class ArticleFixtures extends BaseFixture
+
+    class ArticleFixtures extends BaseFixture implements DependentFixtureInterface
     {
         private static $articleTitles = [
             'Tytuł 1',
@@ -13,16 +16,10 @@
             'Tytuł 3',
         ];
 
-        private static $articleAuthors = [
-            'Dawid Jasztal',
-            'Moja mama',
-            'Bubniaczek',
-            'Rafał Gałek'
-        ];
-
         public function loadData(ObjectManager $manager)
         {
-            $this->createMany(Article::class, 10, function(Article $article, $count) {
+            $this->createMany(10, 'main_articles', function($count) use ($manager) {
+                $article = new Article();
                 $article->setTitle($this->faker->randomElement(self::$articleTitles))
                     ->setContent(<<<EOF
 Spicy **jalapeno bacon** ipsum dolor amet veniam shank in dolore. Ham hock nisi landjaeger cow,
@@ -49,11 +46,25 @@ EOF
                     $article->setPublishedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
                 }
 
-                $article->setAuthor($this->faker->randomElement(self::$articleAuthors))
-                    ->setHeartCount($this->faker->numberBetween(5, 100))
+                $article = $article->setAuthor($this->getRandomReference('main_users'));
+                $article->setHeartCount($this->faker->numberBetween(5, 100))
                 ;
+
+                $tags = $this->getRandomReferences('main_tags', $this->faker->numberBetween(0,5));
+                foreach ($tags as $tag){
+                    $article->addTag($tag);
+                }
+
+                return $article;
             });
 
             $manager->flush();
+        }
+        public function getDependencies()
+        {
+            return [
+                UserFixtures::class,
+                TagFixtures::class,
+            ];
         }
     }
