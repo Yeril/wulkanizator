@@ -12,6 +12,8 @@
               crossorigin="anonymous">
     {% endblock %}
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset("img/icons/wheel.ico") }}"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
 </head>
 <body>
 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
@@ -37,7 +39,7 @@
             <ul class="navbar-nav text-center h5">
                 <li class="nav-item{% if app.request.get('_route') == 'app_homepage' %} active{% endif %}">
                     <a class="nav-link " href="{{ path("app_homepage") }}"><i class="fas fa-car"></i>
-                        Strona główna</a>
+                        Artykuły</a>
                 </li>
                 {#<li class="nav-item{% if app.request.get('_route') == 'app_articles' %} active{% endif %}">#}
                     {#<a class="nav-link" href="{{ path("app_articles") }}"><i class="fas fa-newspaper"></i>#}

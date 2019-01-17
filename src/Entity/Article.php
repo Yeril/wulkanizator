@@ -50,12 +50,14 @@
         private $heartCount = 0;
 
         /**
-         * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article")
+         * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", fetch="EXTRA_LAZY")
+         * @ORM\OrderBy({"createdAt" = "DESC"})
          */
         private $comments;
 
         /**
          * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
+         * @ORM\JoinColumn(nullable=false)
          */
         private $author;
 

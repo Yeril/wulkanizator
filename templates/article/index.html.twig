@@ -9,23 +9,42 @@
 
 
 {% block body %}
-    {% for article in articles %}
-        <div class="article-container my-1">
-            <a href="{{ path('app_articles', {slug: article.slug}) }}">
-                <div class="article-title d-inline-block pl-3 align-middle">
-                    <span>{{ article.title }}</span>
-                    <small>({{ article.nonDeletedComments|length }} comments)</small>
-                    <br>
-                    {% for tag in article.tags %}
-                        <small>
-                            <span class="badge badge-light">{{ tag.name }}</span>
-                        </small>
-                    {% endfor %}
-                    <br>
-                    <span class="align-left article-details"><img class="article-author-img rounded-circle" src="{{ asset('img/avatars/avatar01.png') }}" alt="avatar"> {{ article.author }} </span>
-                    <span class="pl-5 article-details float-right"> {{ article.publishedAt ? article.publishedAt|ago }}</span>
-                </div>
-            </a>
+    <div class="container">
+        <h1 id="main-header" class="text-center shadowed-white">Ostatnie artykuły</h1>
+        <div class="row">
+            <div class="col-8">
+                {% for article in articles %}
+                    <div class="article-container my-1 p-1">
+                        <a href="{{ path('app_articles', {slug: article.slug}) }}">
+                            <div class="article-title d-inline-block pl-3 align-middle">
+                                <span>{{ article.title }}</span>
+                                <small class="ml-5"><i class="fas fa-heart"
+                                                       style="color: red;"></i> {{ article.heartCount }}
+                                </small>
+
+                                {% if article.tags|length %}
+                                    <br>
+                                    {% for tag in article.tags %}
+                                        <small>
+                                            <span class="badge badge-warning">{{ tag.name }}</span>
+                                        </small>
+                                    {% endfor %}
+                                    <br>
+                                {% endif %}
+                                <div>{{ article.content|truncate(40) }}</div>
+                                <span class="align-left article-details"><img class="article-author-img rounded-circle"
+                                                                              src="{{ asset(article.author.photo.path) }}"
+                                                                              alt="avatar"> {{ article.author }} </span>
+                                <span class="pl-5 article-details float-right"> {{ article.publishedAt ? article.publishedAt|ago }}</span>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+                {{ knp_pagination_render(articles) }}
+            </div>
+            <div class="col-4">
+                <h2 class="text-center">Ciekawoski</h2>
+            </div>
         </div>
-    {% endfor %}
+    </div>
 {% endblock %}

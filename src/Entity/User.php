@@ -68,6 +68,11 @@
          */
         private $articles;
 
+        /**
+         * @ORM\ManyToOne(targetEntity="App\Entity\UserPhoto", inversedBy="user")
+         */
+        private $photo;
+
         public function __construct()
         {
             $this->comments = new ArrayCollection();
@@ -263,5 +268,17 @@
         public function __toString()
         {
             return $this->getFirstName();
+        }
+
+        public function getPhoto(): ?UserPhoto
+        {
+            return $this->photo;
+        }
+
+        public function setPhoto(?UserPhoto $photo): self
+        {
+            $this->photo = $photo;
+
+            return $this;
         }
     }

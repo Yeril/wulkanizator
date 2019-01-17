@@ -11,6 +11,13 @@
                 <h2>Posted: {{ article.publishedAt|ago }}</h2>
                 <h2>Heart count: {{ article.heartCount }}</h2>
                 <div>{{ article.content}}</div>
+
+                <h3>Comments</h3>
+                {% for comment in article.nonDeletedComments %}
+                <div>
+                    {{ comment. }}
+                </div>
+                {% enfor %}
             </div>
         </div>
     </div>

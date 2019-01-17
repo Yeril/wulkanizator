@@ -4,19 +4,36 @@
 
     use App\Entity\Article;
     use App\Repository\ArticleRepository;
+    use Knp\Component\Pager\PaginatorInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
 
     class ArticleController extends AbstractController
     {
         /**
          * @Route("/", name="app_homepage")
-         * @param ArticleRepository $repository
+         * @param ArticleRepository $articleRepository
+         * @param Request $request
+         * @param PaginatorInterface $paginator
          * @return \Symfony\Component\HttpFoundation\Response
          */
-        public function homepage(ArticleRepository $repository)
+        public function homepage(ArticleRepository $articleRepository, Request $request, PaginatorInterface $paginator)
         {
-            $articles = $repository->findAllPublishedOrderedByNewest();
+            $query = $articleRepository->findAllPublishedOrderedByNewest();
+
+
+            $articles = $paginator->paginate(
+                $query, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                5/*limit per page*/
+
+            );
+            $articles->setCustomParameters(array(
+                'size' => 'small',
+                'rounded' => false,
+                'span_class' => 'block-warning'
+            ));
 
             return $this->render('article/index.html.twig', [
                 'articles' => $articles,

@@ -1,3 +1,6 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+}
 .section {
     position: relative;
     display: block;
@@ -19,11 +22,11 @@
 }
 
 .shadowed {
-    text-shadow: 1px 1px 2px #040505, 1px 1px 2px black;
+    text-shadow: 1px 1px 1px #040505, 1px 1px 1px black;
 }
 
 .shadowed-white {
-    text-shadow: 1px 2px 4px #ebebeb, 1px 3px 5px #5a6268;
+    text-shadow: 1px 1px 1px #ebebeb, 1px 1px 1px #5a6268;
 }
 
 .footer {

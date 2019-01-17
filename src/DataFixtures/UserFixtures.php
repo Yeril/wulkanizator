@@ -3,10 +3,11 @@
     namespace App\DataFixtures;
 
     use App\Entity\User;
+    use Doctrine\Common\DataFixtures\DependentFixtureInterface;
     use Doctrine\Common\Persistence\ObjectManager;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-    class UserFixtures extends BaseFixture
+    class UserFixtures extends BaseFixture implements DependentFixtureInterface
     {
         private $passwordEncoder;
 
@@ -28,12 +29,14 @@
 //                $this->setReference($email, $user);
 //            }
 
-            $this->createMany(2, 'main_users', function ($i) use ($manager) {
+            $this->createMany(7, 'main_users', function ($i) use ($manager) {
                 $user = new User();
                 $user->setEmail(sprintf('user%d@user%d.com', $i, $i));
                 $user->setFirstName(sprintf('User%d', $i));
                 $user->agreeToTerms();
                 $user->setRoles(['ROLE_USER']);
+                /** @noinspection PhpParamsInspection */
+                $user->setPhoto($this->getRandomReference('main_photos'));
                 $user->setPassword($this->passwordEncoder->encodePassword(
                     $user,
                     sprintf('user%d', $i)
@@ -66,4 +69,10 @@
 //                ['admin@admin.com', 'admin', 'Administrator', ['ROLE_ADMIN']],
 //            ];
 //        }
+        public function getDependencies()
+        {
+            return [
+                PhotoFixture::class,
+            ];
+        }
     }
