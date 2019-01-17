@@ -8,13 +8,10 @@
     <link rel="stylesheet" href="{{ asset("css/singinup.css") }}">
 {% endblock %}
 
-{% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
-
 {% block body %}
     <div class='form-signin'>
 
         {{ form_start(registrationForm, {label_attr: {class: 'form-signin'}}) }}
-        <h1 class="h3 mb-3 font-weight-normal">Zarejestruj się</h1>
         {{ form_errors(registrationForm.email) }}
         {{ form_row(registrationForm.email, {
             attr: { placeholder: 'Email' },

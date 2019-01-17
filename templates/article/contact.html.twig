@@ -2,4 +2,41 @@
 
 {% block title %}Kontakt{% endblock %}
 
-{% block body %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("css/homepage.css") }}">
+{% endblock %}
+
+{% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {% if areNotMessages == false %}
+            <div class="alert alert-danger">
+                <h3>Masz zalegające wiadomości w <a href="{{ path('app_show_emails_contact') }}"
+                                                    class="link">skrzynce</a>! </h3>
+            </div>
+        {% endif %}
+    {% endif %}
+    {% for message in app.session.flashBag.peek('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container mt-5">
+        <h1 class="display-4 text-center">Skontaktuj się z nami!</h1>
+        <p class="text-center">Jeśli masz jakiś problem, bądź pytanie.</p>
+        {{ form_start(contactForm, {label_attr: {class: 'form-signin'}}) }}
+        {{ form_errors(contactForm.email) }}
+        {{ form_row(contactForm.email, {
+            attr: { placeholder: 'Email' },
+            label_attr: { class: 'sr-only' }
+        }) }}
+        {{ form_errors(contactForm.content) }}
+        {{ form_row(contactForm.content, {
+            attr: { placeholder: 'Treść wiadomości', style: 'height:180px' },
+            label_attr: { class: 'sr-only' }
+        }) }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Prześlij wiadomość</button>
+
+        {{ form_end(contactForm) }}
+    </div>
+{% endblock %}

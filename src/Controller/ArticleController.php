@@ -59,13 +59,4 @@
                 'article' => $article,
             ]);
         }
-
-        /**
-         * @Route("/contact", name="app_contact")
-         */
-        public function contact()
-        {
-            return $this->render('article/contact.html.twig');
-        }
-
     }

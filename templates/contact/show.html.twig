@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wykaz emaili{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("css/homepage.css") }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        {% if mails %}
+            <table class="table table-bordered">
+                <thead class="thead-dark text-center">
+                <tr>
+                    <th>Email</th>
+                    <th>Content</th>
+                    <th>Time</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                {% for message in mails %}
+                    <tr>
+                        <td style="width: 10%">{{ message.email }}</td>
+                        <td style="width: 60%">{{ message.content }}</td>
+                        <td style="width: 10%">{{ message.when }}</td>
+                        <td style="width: 20%">
+                            <button class="btn btn-danger btn-sm">usuń</button>
+                            <button class="btn btn-info btn-sm">odpowiedz</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="display-3 alert-warning text-center">Brak wiadomości!</div>
+        {% endif %}
+    </div>
+{% endblock %}
