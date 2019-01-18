@@ -15,6 +15,7 @@
         /**
          * @Route("/contact", name="app_contact")
          * @param Request $request
+         * @param ReceivedContactRepository $receivedContactRepository
          * @return \Symfony\Component\HttpFoundation\Response
          */
         public function contact(Request $request, ReceivedContactRepository $receivedContactRepository)
@@ -27,7 +28,7 @@
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $message->setEmail(($form->get('email')->getData()));
+                $message->setEmail($form->get('email')->getData());
                 $message->setContent($form->get('content')->getData());
 
                 $entityManager = $this->getDoctrine()->getManager();
@@ -41,7 +42,7 @@
                 return $this->redirectToRoute('app_contact');
             }
 
-            return $this->render('article/contact.html.twig', [
+            return $this->render('contact/contact.html.twig', [
                 'contactForm' => $form->createView(),
                 'areNotMessages' => $areNotMessages
             ]);

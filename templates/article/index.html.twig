@@ -4,7 +4,6 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset("css/homepage.css") }}">
 {% endblock %}
 
 
@@ -43,7 +42,19 @@
                 {{ knp_pagination_render(articles) }}
             </div>
             <div class="col-4">
-                <h2 class="text-center">Ciekawoski</h2>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <a style="color:black;" href="{{ path('app_curiosity_all') }}"><h2 class="text-center">
+                            Ciekawoski</h2></a>
+                {% else %}
+                    <h2 class="text-center">Ciekawoski</h2>
+                {% endif %}
+                {% for cur in curiosities %}
+                    <div class="p-2">
+                        <h3 class="text-right font-weight-bold">{{ cur.title }}</h3>
+                        <p class="text-muted">{{ cur.text }}</p>
+                        <small><a href="{{ cur.link }}">Czytaj dalej...</a></small>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>

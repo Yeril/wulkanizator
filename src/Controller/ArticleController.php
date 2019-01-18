@@ -4,6 +4,7 @@
 
     use App\Entity\Article;
     use App\Repository\ArticleRepository;
+    use App\Repository\CuriosityRepository;
     use Knp\Component\Pager\PaginatorInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
@@ -18,9 +19,10 @@
          * @param PaginatorInterface $paginator
          * @return \Symfony\Component\HttpFoundation\Response
          */
-        public function homepage(ArticleRepository $articleRepository, Request $request, PaginatorInterface $paginator)
+        public function homepage(ArticleRepository $articleRepository, CuriosityRepository $curiosityRepository, Request $request, PaginatorInterface $paginator)
         {
             $query = $articleRepository->findAllPublishedOrderedByNewest();
+            $curiosities = $curiosityRepository->getLimitedOrderedByCreatedAtDESC(3);
 
 
             $articles = $paginator->paginate(
@@ -37,6 +39,7 @@
 
             return $this->render('article/index.html.twig', [
                 'articles' => $articles,
+                'curiosities' => $curiosities,
             ]);
         }
 
