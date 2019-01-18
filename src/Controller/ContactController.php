@@ -49,7 +49,7 @@
         }
 
         /**
-         * @Route("/contact/show", name="app_show_emails_contact")
+         * @Route("/admin/contact", name="app_admin_contact")
          * @param ReceivedContactRepository $receivedContactRepository
          * @IsGranted("ROLE_ADMIN")
          * @return \Symfony\Component\HttpFoundation\Response

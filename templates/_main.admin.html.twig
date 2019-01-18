@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/adminboard.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script>
+        feather.replace()
+    </script>
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-1 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ path('app_homepage') }}">Wulkanizator</a>
+        <a class="btn btn-outline-danger col-sm-3 col-md-2 mr-0"
+           href="{{ path('app_homepage', {'_switch_user':'user0@user0.com'}) }}">Switch to user</a>
+        <a class="btn btn-outline-warning col-sm-3 col-md-2 mr-0" href="{{ path('app_logout') }}">Logout</a>
+
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            {% block navbar_admin %}
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                    <div class="sidebar-sticky">
+                        <ul class="nav flex-column text-light">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{{ path('app_admin') }}">
+                                    <span data-feather="home"></span>
+                                    Główna
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_admin_users') }}">
+                                    <span data-feather="users"></span>
+                                    Użytkownicy
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_admin_articles') }}">
+                                    <span data-feather="file-text"></span>
+                                    Artykuły
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_admin_comments') }}">
+                                    <span data-feather="twitter"></span>
+                                    Komentarze
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_admin_curiosities') }}">
+                                    <span data-feather="trending-up"></span>
+                                    Ciekawostki
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_admin_tags') }}">
+                                    <span data-feather="tag"></span>
+                                    Tagi
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_admin_contact') }}">
+                                    <span data-feather="mail"></span>
+                                    Kontakt
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </nav>
+            {% endblock %}
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">{% block admin_page_title %}{% endblock %}</h1>
+                    {% block admin_page_additional_button %}{% endblock %}
+                </div>
+                {% block admin_page_body %}{% endblock %}
+            </main>
+        </div>
+    </div>
+{% endblock %}

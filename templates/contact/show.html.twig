@@ -1,13 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends '_main.admin.html.twig' %}
 
-{% block title %}Wykaz emaili{% endblock %}
+{% block title %}Admin - Kontakt{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset("css/homepage.css") }}">
-{% endblock %}
+{% block admin_page_title %}Admin - Kontakt{% endblock %}
 
-{% block body %}
+{% block admin_page_body %}
     <div class="container mt-5">
         {% if mails %}
             <table class="table table-bordered">

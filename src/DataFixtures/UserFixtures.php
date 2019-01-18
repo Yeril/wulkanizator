@@ -49,6 +49,8 @@
                 $user->setEmail(sprintf('admin%d@admin%d.com', $i, $i));
                 $user->setFirstName(sprintf('Administrator_no.%d', $i));
                 $user->setRoles(['ROLE_ADMIN']);
+                /** @noinspection PhpParamsInspection */
+                $user->setPhoto($this->getRandomReference('main_photos'));
                 $user->agreeToTerms();
 
                 $user->setPassword($this->passwordEncoder->encodePassword(

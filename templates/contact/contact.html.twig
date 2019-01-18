@@ -10,12 +10,12 @@
     {% if is_granted('ROLE_ADMIN') %}
         {% if areNotMessages == false %}
             <div class="alert alert-danger">
-                <h3>Masz zalegające wiadomości w <a href="{{ path('app_show_emails_contact') }}"
+                <h3>Masz zalegające wiadomości w <a href="{{ path('app_admin_contact') }}"
                                                     class="link">skrzynce</a>! </h3>
             </div>
         {% endif %}
     {% endif %}
-    {% for message in app.session.flashBag.peek('success') %}
+    {% for message in app.session.flashBag.get('success') %}
         <div class="alert alert-success">
             {{ message }}
         </div>

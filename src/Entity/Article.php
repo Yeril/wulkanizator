@@ -39,7 +39,7 @@
          */
         private $content;
 
-               /**
+        /**
          * @ORM\Column(type="datetime", nullable=true)
          */
         private $publishedAt;
@@ -52,6 +52,7 @@
         /**
          * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", fetch="EXTRA_LAZY")
          * @ORM\OrderBy({"createdAt" = "DESC"})
+         *
          */
         private $comments;
 
@@ -230,5 +231,34 @@
             $criteria = CommentRepository::createNonDeletedCriteria();
 
             return $this->comments->matching($criteria);
+        }
+
+        public function getPublishedAtString(): string
+        {
+            if ($this->getPublishedAt())
+                return $this->getPublishedAt()->format("Y-m-d H:i:s");
+            else
+                return "null";
+        }
+
+        public function getCreatedAtString(): string
+        {
+            return $this->getCreatedAt()->format("Y-m-d H:i:s");
+        }
+
+        /**
+         * @return bool
+         */
+        public function isPublished(): bool
+        {
+            if ($this->getPublishedAt())
+                return true;
+            else
+                return false;
+        }
+
+        public function unpublish()
+        {
+            $this->publishedAt = null;
         }
     }

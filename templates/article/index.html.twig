@@ -43,7 +43,7 @@
             </div>
             <div class="col-4">
                 {% if is_granted("ROLE_ADMIN") %}
-                    <a style="color:black;" href="{{ path('app_curiosity_all') }}"><h2 class="text-center">
+                    <a style="color:black;" href="{{ path('app_admin_curiosities') }}"><h2 class="text-center">
                             Ciekawoski</h2></a>
                 {% else %}
                     <h2 class="text-center">Ciekawoski</h2>

@@ -1,13 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends '_main.admin.html.twig' %}
 
-{% block title %}Wykaz emaili{% endblock %}
+{% set title = 'Ciekawostki' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset("css/homepage.css") }}">
-{% endblock %}
+{% block title %}Admin - {{ title }} {% endblock %}
 
-{% block body %}
+{% block admin_page_title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_body %}
     <div class="container mt-5">
         <a class="btn btn-block btn-info mb-1" href="{{ path('app_curiosity_new') }}">Dodaj nową ciekawostkę</a>
         {% if curiosities %}

@@ -32,6 +32,13 @@
                 ;
         }
 
+        public function findAllOrderedByNewest()
+        {
+            return $this->createQueryBuilder('a')
+                ->orderBy('a.publishedAt', 'DESC')
+                ->getQuery()
+                ->getResult();
+        }
         /*
         public function findOneBySomeField($value): ?Article
         {

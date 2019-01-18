@@ -13,7 +13,7 @@
     class CuriosityController extends AbstractController
     {
         /**
-         * @Route("/curiosities", name="app_curiosity_all")
+         * @Route("/admin/curiosities", name="app_admin_curiosities")
          * @param CuriosityRepository $curiosityRepository
          * @return \Symfony\Component\HttpFoundation\Response
          * @IsGranted("ROLE_ADMIN")
