@@ -18,4 +18,4 @@ php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 ```
->Use default `user@user.com:user` or `admin@admin.com:admin`
+>Use default `user0@user0.com:user` or `admin0@admin0.com:admin`
