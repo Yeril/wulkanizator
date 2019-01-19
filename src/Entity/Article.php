@@ -261,4 +261,26 @@
         {
             $this->publishedAt = null;
         }
+
+        public function setTags($tags)
+        {
+            if ($tags) {
+                $this->clearTags();
+                /** @var Tag $tag */
+                foreach ($tags as $tag) {
+                    $this->tags[] = $tag;
+                    $tag->addArticle($this);
+                }
+            }
+        }
+
+        public function clearTags()
+        {
+            /** @var Tag $tag */
+            foreach ($this->tags as $tag) {
+                $tag->removeArticle($this);
+            }
+            unset($this->tags);
+            $this->tags = new ArrayCollection();
+        }
     }

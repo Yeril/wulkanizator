@@ -1,18 +1,47 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block head %}
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ asset("css/homepage.css") }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset("css/homepage.css") }}">
     {% endblock %}
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset("img/icons/wheel.ico") }}"/>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset("img/icons/wheel.ico") }}"/>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    {% block cookies %}
+    <link rel="stylesheet" type="text/css"
+          href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css"/>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+        <script>
+            window.addEventListener("load", function () {
+                window.cookieconsent.initialise({
+                    "palette": {
+                        "popup": {
+                            "background": "#000"
+                        },
+                        "button": {
+                            "background": "#f1d600"
+                        }
+                    },
+                    "position": "top",
+                    "theme": "classic",
+                    "content": {
+                        "message": "Nasza witryna zbiera tylko potrzebne dane, aby lepiej funkcjonować, ciasteczka nie bolą!",
+                        "dismiss": "Akceptuje",
+                        "link": "Link",
+                        "href": "http://localhost"
+                    }
+                })
+            });
+        </script>
+    {% endblock %}
 
+    {% endblock %}
 </head>
 <body>
 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
@@ -42,12 +71,12 @@
                         Artykuły</a>
                 </li>
                 {#<li class="nav-item{% if app.request.get('_route') == 'app_articles' %} active{% endif %}">#}
-                    {#<a class="nav-link" href="{{ path("app_articles") }}"><i class="fas fa-newspaper"></i>#}
-                        {#Artykuły</a>#}
+                {#<a class="nav-link" href="{{ path("app_articles") }}"><i class="fas fa-newspaper"></i>#}
+                {#Artykuły</a>#}
                 {#</li>#}
                 <li class="nav-item{% if app.request.get('_route') == 'app_about' %} active{% endif %}">
                     <a class="nav-link" href="{{ path("app_about") }}"><i class="fas fa-chalkboard-teacher"></i>
-                       Informacje</a>
+                        Informacje</a>
                 </li>
                 <li class="nav-item{% if app.request.get('_route') == 'app_contact' %} active{% endif %}">
                     <a class="nav-link" href="{{ path("app_contact") }}"><i class="fas fa-phone-square"></i>

@@ -15,9 +15,9 @@
                 <h3>Comments</h3>
                 {% for comment in article.nonDeletedComments %}
                 <div>
-                    {{ comment }}
+                    {{ comment.content }}
                 </div>
-                {% enfor %}
+                {% endfor %}
             </div>
         </div>
     </div>

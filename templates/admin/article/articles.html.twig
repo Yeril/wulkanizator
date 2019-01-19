@@ -25,6 +25,7 @@
             <th>Tytuł</th>
             <th>Autor</th>
             <th>Zawartość</th>
+            <th>Tagi</th>
             <th>Like/Comment</th>
             <th>Opublikowano / Stworzono</th>
             <th>Akcje</th>
@@ -33,10 +34,17 @@
         <tbody>
         {% for article in articles %}
             <tr>
-                <td style="width: 3%">{{ article.id }}</td>
+                <td style="width: 3%"><a class="page-link"
+                                         href="{{ path('app_articles', {slug: article.slug }) }}">{{ article.id }}</a>
+                </td>
                 <td style="width: 10%">{{ article.title }}</td>
                 <td style="width: 10%">{{ article.author.email }}</td>
-                <td style="width: 30%"> {{ article.content|truncate(60) }}</td>
+                <td style="width: 20%"> {{ article.content|truncate(60) }}</td>
+                <td style="width: 10%">
+                    {% for articletag in article.tags %}
+                        <a href="{{ path('app_admin_tag_show', { id: articletag.id }) }}">{{ articletag.name }}</a><br>
+                    {% endfor %}
+                </td>
                 <td class="h3" style="width: 10%">
                     <span class="fa-layers fa-fw 2x">
                         <i class="far fa-heart" style="color:red;"></i>

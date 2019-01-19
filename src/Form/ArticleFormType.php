@@ -3,6 +3,7 @@
     namespace App\Form;
 
     use App\Entity\Article;
+    use App\Repository\TagRepository;
     use App\Repository\UserRepository;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -13,10 +14,15 @@
     class ArticleFormType extends AbstractType
     {
         private $userRepository;
+        /**
+         * @var TagRepository
+         */
+        private $tagRepository;
 
-        public function __construct(UserRepository $userRepository)
+        public function __construct(UserRepository $userRepository, TagRepository $tagRepository)
         {
             $this->userRepository = $userRepository;
+            $this->tagRepository = $tagRepository;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -39,7 +45,8 @@
                 ])
                 ->add('publishedAt', null, [
                     'widget' => 'single_text'
-                ]);
+                ])//                todo: article tags
+            ;
 
         }
 

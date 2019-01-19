@@ -10,7 +10,7 @@
 
 
     {% block content_body %}
-        {{ form_start(userForm, {attr:{novalidate:'novalidate'}}) }}
+        {{ form_start(userForm) }}
         {{ form_row(userForm.email, {
             label: 'Email'
         }) }}

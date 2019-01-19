@@ -1,0 +1,16 @@
+{% extends '_main.admin.html.twig' %}
+
+{% set title = 'Użytkownik' %}
+
+{% block title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_title %}Admin - {{ title }} <a href="{{ path('app_admin_users_details', {id: user.id}) }}"><span
+            class="text-warning font-weight-bold">{{ user.email }}</span></a> {% endblock %}
+
+{% block admin_page_body %}
+    <h2>Dane:</h2>
+    <p>ID: {{ user.id }}</p>
+    <p>EMAIL: {{ user.email }}</p>
+    <p>Naziwsko: {{ user.lastName }}</p>
+    <p>Imię: {{ user.firstName }}</p>
+{% endblock %}

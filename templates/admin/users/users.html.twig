@@ -33,11 +33,13 @@
                 <td style="width: 10%">{{ user.firstName }}</td>
                 <td style="width: 10%">{{ user.lastName }}</td>
                 <td class="h3" style="width: 10%">
+                    <a href="{{ path('app_admin_users_comments', {id:user.id}) }}">
                     <span class="fa-layers fa-fw 2x">
                         <i class="far fa-comment"></i>
                         <span class="fa-layers-counter 2x"
                               style="color:white;background-color: black">{{ user.comments|length }}</span>
                     </span>
+                    </a>
                 </td>
                 <td style="width: 10%"><img class="rounded-circle" src="{{ asset(user.photo.path) }}" width="50px"
                                             alt="{{ user.photo.path }}"></td>
@@ -45,9 +47,14 @@
                     <a href="{{ path('app_admin_users_edit', {id: user.id}) }}">
                         <button class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
                     </a>
-                    {% if app.user.id != user.id %}
+                    {% if app.user.id == user.id %}
                         <a>
-                            <button class="btn btn-danger delete-user" data-id="{{ user.id }}"><i
+                            <button id="selfuser" class="btn btn-danger" data-id="{{ user.id }}"><i
+                                        class="fas fa-trash-alt"></i></button>
+                        </a>
+                    {% else %}
+                        <a>
+                            <button class="btn btn-danger" data-id="{{ user.id }}"><i
                                         class="fas fa-trash-alt"></i></button>
                         </a>
                     {% endif %}
@@ -61,6 +68,18 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
+        let buttonselfuser = $('#selfuser');
+        buttonselfuser.click(function () {
+            try {
+                throw "Nie możesz usunąć siebie!";
+            } catch (e) {
+                alert(e);
+                console.log(e);
+            } finally {
+                console.log("finally");
+
+            }
+        });
         const users = document.getElementById('users');
 
         if (users) {
@@ -73,7 +92,7 @@
                         }).catch(function () {
                             alert("you cannot delete yourself");
                         })
-                        // .then(res => window.location.reload());
+                            .then(res => window.location.reload());
                     }
                 }
             });

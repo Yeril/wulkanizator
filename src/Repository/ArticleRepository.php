@@ -22,11 +22,15 @@
 
         /**
          * @return Article[]
+         * @throws \Exception
          */
         public function findAllPublishedOrderedByNewest()
         {
+            $now = new \DateTime();
             return $this->addIsPublishedQueryBuilder()
                 ->orderBy('a.publishedAt', 'DESC')
+                ->andWhere('a.publishedAt<=:param')
+                ->setParameter('param', $now)
                 ->getQuery()
                 ->getResult()
                 ;
