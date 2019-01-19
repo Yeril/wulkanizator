@@ -1,0 +1,12 @@
+{% extends '_main.admin.html.twig' %}
+
+{% set title = 'Tagi - podgląd' %}
+
+{% block title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_body %}
+    {{ dump(tag) }}
+    {#todo: tag page for id #}
+{% endblock %}
