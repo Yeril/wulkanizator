@@ -7,5 +7,9 @@
 {% block admin_page_title %}Admin - {{ title }} {% endblock %}
 
 {% block admin_page_body %}
+    <img src="{{ asset(user.photo.path) }}" alt="{{ user.photo.path }}" style="width: 150px;" class="rounded-circle">
+    <h1 class="display-3 d-inline">Witaj, {{ app.user }}!</h1><br>
+    <small>{{ user.email }}</small><br>
+    <small>{{ user.firstName }} {{ user.lastName }}</small>
 
 {% endblock %}

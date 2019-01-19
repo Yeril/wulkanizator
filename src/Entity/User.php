@@ -29,6 +29,7 @@
          * @ORM\Column(type="string", length=180, unique=true)
          * @Assert\NotBlank(message="Wprowadź swój adres email")
          * @Assert\Email(message="Adres mail jest niepoprawny")
+         * @Assert\NotNull(message="Wprowadź swój adres email")
          */
         private $email;
 
@@ -59,7 +60,7 @@
         private $agreedTermsAt;
 
         /**
-         * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
+         * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", fetch="EXTRA_LAZY")
          */
         private $comments;
 
@@ -69,9 +70,11 @@
         private $articles;
 
         /**
-         * @ORM\ManyToOne(targetEntity="App\Entity\UserPhoto", inversedBy="user")
+         * @ORM\ManyToOne(targetEntity="App\Entity\UserPhoto", inversedBy="user", fetch="EAGER")
          */
         private $photo;
+
+        //todo: if null return default picture
 
         public function __construct()
         {

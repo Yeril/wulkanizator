@@ -57,8 +57,8 @@
         private $comments;
 
         /**
-         * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
-         * @ORM\JoinColumn(nullable=false)
+         * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles", fetch="EAGER")
+         * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
          */
         private $author;
 

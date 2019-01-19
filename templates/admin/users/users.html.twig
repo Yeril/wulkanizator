@@ -1,0 +1,84 @@
+{% extends '_main.admin.html.twig' %}
+
+{% set title = 'Użytkownicy' %}
+
+{% block title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_title %}Admin - {{ title }} {% endblock %}
+
+
+{% block admin_page_body %}
+    {% for message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <table id="users" class="table table-bordered align-content-center text-center">
+        <thead class="thead-dark">
+        <tr class="text-center">
+            <th>ID</th>
+            <th>email</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Liczba komentarzy</th>
+            <th>Avatar</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td style="width: 3%">{{ user.id }}</td>
+                <td style="width: 10%">{{ user.email }}</td>
+                <td style="width: 10%">{{ user.firstName }}</td>
+                <td style="width: 10%">{{ user.lastName }}</td>
+                <td class="h3" style="width: 10%">
+                    <span class="fa-layers fa-fw 2x">
+                        <i class="far fa-comment"></i>
+                        <span class="fa-layers-counter 2x"
+                              style="color:white;background-color: black">{{ user.comments|length }}</span>
+                    </span>
+                </td>
+                <td style="width: 10%"><img class="rounded-circle" src="{{ asset(user.photo.path) }}" width="50px"
+                                            alt="{{ user.photo.path }}"></td>
+                <td class="text-center" style="width: 20%">
+                    <a href="{{ path('app_admin_users_edit', {id: user.id}) }}">
+                        <button class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                    </a>
+                    {#href="{{ path('app_admin_users_delete', {id: user.id}) }}"#}
+                    <a>
+                        <button class="btn btn-danger delete-user" data-id="{{ user.id }}"><i
+                                    class="fas fa-trash-alt"></i></button>
+                    </a>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        const users = document.getElementById('users');
+
+        if (users) {
+            users.addEventListener('click', e => {
+                if (e.target.className === 'btn btn-danger delete-user') {
+                    if (confirm('Jesteś pewny?')) {
+                        const id = e.target.getAttribute('data-id');
+                        alert(id);
+                        fetch(`users/delete/${id}`, {
+                            method: 'DELETE'
+                        })
+                            .then(res => window.location.reload());
+                    }
+                }
+            });
+        }
+    </script>
+    <script src="https://use.fontawesome.com/releases/v5.6.3/js/all.js"
+            integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1"
+            crossorigin="anonymous"></script>
+{% endblock %}

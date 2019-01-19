@@ -5,9 +5,12 @@
 {% block title %}Admin - {{ title }} {% endblock %}
 
 {% block admin_page_title %}Admin - {{ title }}{% endblock %}
+
 {% block admin_page_additional_button %}
-<a href="{{ path('app_admin_article_add') }}">
-        <button class="btn btn-light"><i class="fas fa-plus-circle"></i> Utwórz nowy</button></a>{% endblock %}
+    <a href="{{ path('app_admin_article_add') }}">
+        <button class="btn btn-light"><i class="fas fa-plus-circle"></i> Utwórz nowy</button>
+    </a>
+{% endblock %}
 
 {% block admin_page_body %}
     {% for message in app.session.flashBag.get('success') %}
@@ -46,7 +49,13 @@
                               style="color:white;background-color: black">{{ article.comments|length }}</span>
                     </span>
                 </td>
-                <td style="width: 10%">{{ article.publishedAtString }}<br>{{ article.createdAtString }}</td>
+                <td style="width: 10%">
+                    {% if article.publishedAtString != 'null' %}
+                        {{ article.publishedAtString }}
+                    {% else %}
+                        nieopublikowano
+                    {% endif %}
+                    <br>{{ article.createdAtString }}</td>
                 {#<td>#}
                 {#<span class="fa fa-{{ article.isPublished ? 'check' : 'times' }}"></span>#}
                 {#</td>#}

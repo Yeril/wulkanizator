@@ -1,6 +1,6 @@
 {% extends '_main.admin.html.twig' %}
 
-{% set title = 'Dodaj artykuł' %}
+{% set title = 'Zmień użytkownika' %}
 
 {% block title %}Admin - {{ title }} {% endblock %}
 
@@ -10,30 +10,22 @@
 
 
     {% block content_body %}
-        {{ form_start(articleForm) }}
-        {{ form_row(articleForm.title, {
-            label: 'Tytuł Artykułu',
-            attr: {disabled :'disabled'}
+        {{ form_start(userForm, {attr:{novalidate:'novalidate'}}) }}
+        {{ form_row(userForm.email, {
+            label: 'Email'
+        }) }}
+        {{ form_row(userForm.firstName, {
+            label: 'Imię'
+        }) }}
+        {{ form_row(userForm.lastName, {
+            label: 'Nazwisko'
         }) }}
 
-        {{ form_row(articleForm.content, {
-            label: 'Zawartość',
-            attr: { style: 'height:180px' },
-            attr: {disabled :'disabled'}
-        }) }}
-        {% if articleForm.publishedAt is defined %}
-            {{ form_row(articleForm.publishedAt, {
-                label: 'Data publikacji',
-                attr: {disabled :'disabled'}
-            }) }},
-
-        {% endif %}
-
-        <button type="submit" class="btn btn-danger">Opublikuj</button>
-        <a href="{{ path('app_admin_articles') }}">
+        <button type="submit" class="btn btn-danger">Zmodyfikuj</button>
+        <a href="{{ path('app_admin_users') }}">
             <button type="button" class="btn btn-success">Anuluj</button>
         </a>
-        {{ form_end(articleForm) }}
+        {{ form_end(userForm) }}
     {% endblock %}
 
 {% endblock %}

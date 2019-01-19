@@ -5,10 +5,14 @@
 {% block title %}Admin - {{ title }} {% endblock %}
 
 {% block admin_page_title %}Admin - {{ title }} {% endblock %}
+{% block admin_page_additional_button %}
+    <a href="{{ path('app_curiosity_new') }}">
+        <button class="btn btn-light"><i class="fas fa-plus-circle"></i> Dodaj nową ciekawostkę</button>
+    </a>
+{% endblock %}
 
 {% block admin_page_body %}
     <div class="container mt-5">
-        <a class="btn btn-block btn-info mb-1" href="{{ path('app_curiosity_new') }}">Dodaj nową ciekawostkę</a>
         {% if curiosities %}
             <table class="table table-bordered">
                 <thead class="thead-dark text-center">

@@ -3,8 +3,11 @@
     namespace App\Controller;
 
     use App\Entity\Article;
+    use App\Entity\User;
     use App\Form\ArticleFormType;
+    use App\Form\UserFormType;
     use App\Repository\ArticleRepository;
+    use App\Repository\UserRepository;
     use Doctrine\ORM\EntityManagerInterface;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -22,19 +25,87 @@
         /**
          * @Route("/admin", name="app_admin")
          */
-        public function index()
+        public function index(SecurityController $securityController)
         {
+            /** @var User $user */
+            $user = $securityController->getUser();
             return $this->render('admin/index.html.twig', [
-                'controller_name' => 'AdminController',
+                'user' => $user,
             ]);
         }
 
         /**
          * @Route("/admin/users", name="app_admin_users")
+         * @param UserRepository $userRepository
+         * @return \Symfony\Component\HttpFoundation\Response
          */
-        public function users()
+        public function users(UserRepository $userRepository)
         {
-            return $this->render('admin/users.html.twig', [
+            $users = $userRepository->findAllWithPhotos();
+            return $this->render('admin/users/users.html.twig', [
+                'users' => $users
+            ]);
+        }
+
+        /**
+         * @Route("/admin/users/edit/{id}", name="app_admin_users_edit")
+         * @param UserRepository $userRepository
+         * @param $id
+         * @param EntityManagerInterface $entityManager
+         * @param Request $request
+         * @return \Symfony\Component\HttpFoundation\Response
+         */
+        public function users_edit(UserRepository $userRepository, $id, EntityManagerInterface $entityManager, Request $request)
+        {
+            /** @var User $user */
+            $user = $userRepository->find($id);
+            $form = $this->createForm(UserFormType::class, $user);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Użytkownik zmodyfikowany!');
+
+                return $this->redirectToRoute('app_admin_users');
+            }
+
+            return $this->render('admin/users/users.edit.html.twig', [
+                'userForm' => $form->createView()
+            ]);
+        }
+
+        /**
+         * @Route("/admin/users/delete/{id}", name="app_admin_users_delete")
+         * @param UserRepository $userRepository
+         * @param $id
+         * @param EntityManagerInterface $entityManager
+         * @Method("DELETE")
+         * @return \Symfony\Component\HttpFoundation\RedirectResponse
+         */
+        public function users_delete(UserRepository $userRepository, $id, EntityManagerInterface $entityManager, Request $request)
+        {
+            /** @var User $user */
+            $user = $userRepository->find($id);
+            $entityManager->remove($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Użytkownik usunięty!');
+
+            return $this->redirectToRoute('app_admin_users');
+        }
+
+        /**
+         * @Route("/admin/users/comments/{id}", name="app_admin_users_comments")
+         * @param UserRepository $userRepository
+         * @return \Symfony\Component\HttpFoundation\Response
+         */
+        public function users_comments(UserRepository $userRepository)
+        {
+            //todo: add comments on user_id
+            $users = $userRepository->findAll();
+            return $this->render('admin/users/users.html.twig', [
+                'users' => $users
             ]);
         }
 
@@ -77,7 +148,7 @@
                 return $this->redirectToRoute('app_admin_articles');
             }
 
-            return $this->render('admin/article_new.html.twig', [
+            return $this->render(':admin/article:article_new.html.twig', [
                 'articleForm' => $form->createView()
             ]);
         }
@@ -106,7 +177,7 @@
                 return $this->redirectToRoute('app_admin_articles');
             }
 
-            return $this->render('admin/article_edit.html.twig', [
+            return $this->render('admin/article/article_edit.html.twig', [
                 'articleForm' => $form->createView()
             ]);
         }
@@ -129,10 +200,6 @@
             $this->addFlash('success', 'Artykuł usunięty!');
 
             return $this->redirectToRoute('app_admin_articles');
-//            }
-//            return $this->render("admin/article_delete.html.twig", [
-//                'articleForm' => $form->createView()
-//            ]);
         }
 
         /**

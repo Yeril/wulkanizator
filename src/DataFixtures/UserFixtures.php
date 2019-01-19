@@ -37,6 +37,7 @@
                 $user->setRoles(['ROLE_USER']);
                 /** @noinspection PhpParamsInspection */
                 $user->setPhoto($this->getRandomReference('main_photos'));
+                $user->setLastName($this->faker->lastName());
                 $user->setPassword($this->passwordEncoder->encodePassword(
                     $user,
                     sprintf('user%d', $i)
@@ -51,6 +52,7 @@
                 $user->setRoles(['ROLE_ADMIN']);
                 /** @noinspection PhpParamsInspection */
                 $user->setPhoto($this->getRandomReference('main_photos'));
+                $user->setLastName($this->faker->lastName());
                 $user->agreeToTerms();
 
                 $user->setPassword($this->passwordEncoder->encodePassword(

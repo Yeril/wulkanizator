@@ -31,6 +31,18 @@ class UserRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @return User[]
+     */
+    public function findAllWithPhotos()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.email', 'ASC')
+            ->leftJoin('u.photo', 'p')
+            ->getQuery()
+            ->execute();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
