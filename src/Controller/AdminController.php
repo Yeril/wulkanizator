@@ -13,6 +13,7 @@
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
     use Symfony\Component\Routing\Annotation\Route;
 
     /**
@@ -80,13 +81,25 @@
          * @param UserRepository $userRepository
          * @param $id
          * @param EntityManagerInterface $entityManager
-         * @Method("DELETE")
+         * @param Request $request
+         * @param ArticleRepository $articleRepository
          * @return \Symfony\Component\HttpFoundation\RedirectResponse
+         * @Method("DELETE")
          */
-        public function users_delete(UserRepository $userRepository, $id, EntityManagerInterface $entityManager, Request $request)
+        public function users_delete(UserRepository $userRepository, $id, EntityManagerInterface $entityManager, Request $request, ArticleRepository $articleRepository, SecurityController $securityController)
         {
+
             /** @var User $user */
             $user = $userRepository->find($id);
+            if ($user === $securityController->getUser()) {
+                throw new AccessDeniedHttpException("You cannot delete yourself!");
+            }
+            /** @var Article[] $userArticles */
+            $userArticles = $articleRepository->findAllofUser($user);
+            foreach ($userArticles as $article) {
+                $article->setAuthor($securityController->getUser());
+                $entityManager->persist($article);
+            }
             $entityManager->remove($user);
             $entityManager->flush();
 

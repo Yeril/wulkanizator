@@ -45,12 +45,12 @@
                     <a href="{{ path('app_admin_users_edit', {id: user.id}) }}">
                         <button class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
                     </a>
-                    {#href="{{ path('app_admin_users_delete', {id: user.id}) }}"#}
-                    <a>
-                        <button class="btn btn-danger delete-user" data-id="{{ user.id }}"><i
-                                    class="fas fa-trash-alt"></i></button>
-                    </a>
-
+                    {% if app.user.id != user.id %}
+                        <a>
+                            <button class="btn btn-danger delete-user" data-id="{{ user.id }}"><i
+                                        class="fas fa-trash-alt"></i></button>
+                        </a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
@@ -68,11 +68,12 @@
                 if (e.target.className === 'btn btn-danger delete-user') {
                     if (confirm('Jesteś pewny?')) {
                         const id = e.target.getAttribute('data-id');
-                        alert(id);
                         fetch(`users/delete/${id}`, {
                             method: 'DELETE'
+                        }).catch(function () {
+                            alert("you cannot delete yourself");
                         })
-                            .then(res => window.location.reload());
+                        // .then(res => window.location.reload());
                     }
                 }
             });

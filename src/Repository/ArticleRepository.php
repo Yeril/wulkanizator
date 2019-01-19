@@ -39,6 +39,16 @@
                 ->getQuery()
                 ->getResult();
         }
+
+        public function findAllofUser($user)
+        {
+            return $this->createQueryBuilder('a')
+                ->orderBy('a.publishedAt', 'DESC')
+                ->andWhere('a.author=:user')
+                ->setParameter('user', $user)
+                ->getQuery()
+                ->getResult();
+        }
         /*
         public function findOneBySomeField($value): ?Article
         {
