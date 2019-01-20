@@ -6,14 +6,17 @@
     use App\Entity\Comment;
     use App\Entity\Tag;
     use App\Entity\User;
+    use App\Entity\UserPhoto;
     use App\Form\ArticleFormType;
     use App\Form\TagFormType;
     use App\Form\UserFormType;
     use App\Repository\ArticleRepository;
     use App\Repository\CommentRepository;
     use App\Repository\TagRepository;
+    use App\Repository\UserPhotoRepository;
     use App\Repository\UserRepository;
     use Doctrine\ORM\EntityManagerInterface;
+    use Knp\Component\Pager\PaginatorInterface;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -135,14 +138,84 @@
          * @param UserRepository $userRepository
          * @return \Symfony\Component\HttpFoundation\Response
          */
-        public function users_details(UserRepository $userRepository, $id)
+        public function users_details(UserRepository $userRepository, $id, PaginatorInterface $paginator, Request $request)
         {
             /** @var User $user */
             $user = $userRepository->find($id);
 
+            $articles = $paginator->paginate(
+                $user->getArticles(), /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                5/*limit per page*/
+
+            );
+
+            $articles->setCustomParameters(array(
+                'size' => 'small',
+                'rounded' => false,
+                'span_class' => 'block-warning'
+            ));
+
+            $comments = $paginator->paginate(
+                $user->getComments(), /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                5/*limit per page*/
+
+            );
+
+            $comments->setCustomParameters(array(
+                'size' => 'small',
+                'rounded' => false,
+                'span_class' => 'block-warning'
+            ));
+
             return $this->render('admin/users/user.details.html.twig', [
-                'user' => $user
+                'user' => $user,
+                'articles' => $articles,
+                'comments' => $comments
             ]);
+        }
+
+        /**
+         * @Route("/admin/users/avatar/{id}", name="app_admin_users_avatar")
+         * @param UserRepository $userRepository
+         * @param $id
+         * @param UserPhotoRepository $userPhotoRepository
+         * @return \Symfony\Component\HttpFoundation\Response
+         */
+        public function users_avatar(UserRepository $userRepository, $id, UserPhotoRepository $userPhotoRepository)
+        {
+            /** @var User $user */
+            $user = $userRepository->find($id);
+            /** @var UserPhoto[] $avatars */
+            $avatars = $userPhotoRepository->getAvatardOrderedByPath();
+
+            return $this->render('admin/users/user.avatar.html.twig', [
+                'user' => $user,
+                'avatars' => $avatars,
+            ]);
+        }
+
+        /**
+         * @Route("/admin/users/avatar/{avatar}/{id}", name="app_admin_users_avatar_set")
+         * @param UserRepository $userRepository
+         * @param $id
+         * @param UserPhotoRepository $userPhotoRepository
+         * @return \Symfony\Component\HttpFoundation\Response
+         */
+        public function users_set_avatar(UserRepository $userRepository, $id, UserPhotoRepository $userPhotoRepository, $avatar, EntityManagerInterface $entityManager)
+        {
+            /** @var User $user */
+            $user = $userRepository->find($id);
+            /** @var UserPhoto[] $avatars */
+            $avatar = $userPhotoRepository->find($avatar);
+
+            $user->setPhoto($avatar);
+//            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Avatar zaktualizowany!');
+            return $this->redirectToRoute('app_admin_users_avatar', array('id' => $id));
         }
 
         /**

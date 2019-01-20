@@ -62,4 +62,6 @@
                 'curiosityForm' => $form->createView(),
             ]);
         }
+
+//        todo: edit, delete
     }

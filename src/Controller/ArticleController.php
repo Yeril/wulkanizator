@@ -18,6 +18,7 @@
          * @param Request $request
          * @param PaginatorInterface $paginator
          * @return \Symfony\Component\HttpFoundation\Response
+         * @throws \Exception
          */
         public function homepage(ArticleRepository $articleRepository, CuriosityRepository $curiosityRepository, Request $request, PaginatorInterface $paginator)
         {

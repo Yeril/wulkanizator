@@ -4,6 +4,7 @@
 
     use App\Entity\UserPhoto;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Bridge\Doctrine\RegistryInterface;
 
     /**
@@ -14,9 +15,37 @@
      */
     class UserPhotoRepository extends ServiceEntityRepository
     {
-        public function __construct(RegistryInterface $registry)
+        /**
+         * @var EntityManagerInterface
+         */
+        private $entityManager;
+
+        public function __construct(RegistryInterface $registry, EntityManagerInterface $entityManager)
         {
             parent::__construct($registry, UserPhoto::class);
+            $this->entityManager = $entityManager;
+        }
+
+        public function getDefaultPhotoForRegisteredUser()
+        {
+            $result = $this->findOneBy(['path' => 'img/avatars/avatar01.png']);
+            if ($result) {
+                return $result->getPath();
+            } else {
+                $photo = new UserPhoto();
+                $photo->setPath('img/avatars/avatar01.png');
+                $this->entityManager->persist($photo);
+                $this->entityManager->flush();
+                return $photo->getPath();
+            }
+        }
+
+        public function getAvatardOrderedByPath()
+        {
+            return $this->createQueryBuilder('a')
+                ->orderBy('a.path', 'ASC')
+                ->getQuery()
+                ->getResult();
         }
 
         // /**

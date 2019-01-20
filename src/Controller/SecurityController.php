@@ -4,8 +4,8 @@
 
     use App\Entity\User;
     use App\Form\RegistrationFormType;
+    use App\Repository\UserPhotoRepository;
     use App\Security\LoginFormAuthenticator;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -42,9 +42,10 @@
          * @param UserPasswordEncoderInterface $passwordEncoder
          * @param GuardAuthenticatorHandler $guardHandler
          * @param LoginFormAuthenticator $authenticator
+         * @param UserPhotoRepository $userPhotoRepository
          * @return Response
          */
-        public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+        public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, UserPhotoRepository $userPhotoRepository): Response
         {
             if (($this->isGranted("ROLE_USER"))) {
                 return $this->redirectToRoute("app_homepage");
@@ -67,6 +68,7 @@
                 if( true === $form->get('agreeTerms')->getData())
                     $user->agreeToTerms();
                 $user->setRoles(['ROLE_USER']);
+                $user->setPhoto($this->getRandomReference('main_photos'));
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);

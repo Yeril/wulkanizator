@@ -38,7 +38,9 @@
                                          href="{{ path('app_articles', {slug: article.slug }) }}">{{ article.id }}</a>
                 </td>
                 <td style="width: 10%">{{ article.title }}</td>
-                <td style="width: 10%">{{ article.author.email }}</td>
+                <td style="width: 10%"><a href="{{ path('app_admin_users_details', {id: article.author.id}) }}">
+                        {{ article.author.email }}
+                    </a></td>
                 <td style="width: 20%"> {{ article.content|truncate(60) }}</td>
                 <td style="width: 10%">
                     {% for articletag in article.tags %}

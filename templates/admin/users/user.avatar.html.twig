@@ -1,0 +1,70 @@
+{% extends '_main.admin.html.twig' %}
+
+{% set title = 'Avatar' %}
+
+{% block title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_title %}Admin - {{ title }} <a href="{{ path('app_admin_users_details', {id: user.id}) }}"><span
+            class="text-warning font-weight-bold">{{ user.email }}</span></a>, current: <img
+        src="{{ asset(user.photo.path) }}" alt="avatar" style="width: 40px;"> {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        div.gallery img {
+            width: 70%;
+            height: auto;
+            margin: 20px;
+        }
+
+        div.desc {
+            padding: 15px;
+            text-align: center;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .responsive {
+            padding: 0 6px;
+            float: left;
+            width: 19.99999%;
+        }
+
+        @media only screen and (max-width: 700px) {
+            .responsive {
+                width: 49.99999%;
+                margin: 6px 0;
+            }
+        }
+
+        @media only screen and (max-width: 500px) {
+            .responsive {
+                width: 100%;
+            }
+        }
+
+    </style>
+{% endblock %}
+
+{% block admin_page_body %}
+    {% for message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="avatars">
+        <h1>Wybierz avatar</h1>
+        {% for avatar in avatars %}
+            <div class="responsive">
+                <div class="gallery">
+                    <a
+                            href="{{ path('app_admin_users_avatar_set', {id: user.id, avatar: avatar.id}) }}">
+                        <img src="{{ asset(avatar.path) }}" alt="{{ avatar.id }}" width="512" height="512">
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -70,22 +70,20 @@
                                         class="fas fa-plus-square"></i></button>
                         </a>
                         <a>
-                            <button class="btn btn-warning deletepermamently-comment" data-id="{{ comment.id }}"><i
+                            <button class="btn btn-danger deletepermamently-comment" data-id="{{ comment.id }}"><i
                                         class="fas fa-trash-alt"></i></button>
                         </a>
                     {% else %}
                         <a>
-                            <button class="btn btn-danger delete-comment" data-id="{{ comment.id }}"><i
+                            <button class="btn btn-warning delete-comment" data-id="{{ comment.id }}"><i
                                         class="fas fa-trash-alt"></i></button>
                         </a>
                     {% endif %}
-
-
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4" class="text-center">
+                <td colspan="7" class="text-center">
                     No comments found
                 </td>
             </tr>
@@ -100,9 +98,9 @@
     <script>
         $('document').ready(function () {
             // let table = $('#comments');
-            let btndel = $('button.btn.btn-danger.delete-comment');
+            let btndel = $('button.btn.btn-warning.delete-comment');
             let btncre = $('button.btn.btn-success.create-comment');
-            let btnperm = $('button.btn.btn-warning.deletepermamently-comment');
+            let btnperm = $('button.btn.btn-danger.deletepermamently-comment');
             btndel.click(function () {
                 let id = $(this).attr('data-id');
                 $.ajax({

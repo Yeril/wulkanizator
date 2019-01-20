@@ -9,9 +9,9 @@
     {
         public function loadData(ObjectManager $manager)
         {
-            $this->createMany(9, 'main_photos', function ($i) {
+            $this->createMany(8, 'main_photos', function ($i) {
                 $userPhoto = new UserPhoto();
-                $userPhoto->setPath(sprintf("img/avatars/avatar0%d.png  ", $i + 1));
+                $userPhoto->setPath(sprintf("img/avatars/avatar0%d.png  ", $i + 2));
                 return $userPhoto;
             });
             $manager->flush();

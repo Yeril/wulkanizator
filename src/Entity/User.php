@@ -275,6 +275,11 @@
 
         public function getPhoto(): ?UserPhoto
         {
+            if ($this->photo == null) {
+                $xd = new UserPhoto();
+                $xd->setPath('img/avatars/avatar01.png');
+                return $xd;
+            }
             return $this->photo;
         }
 

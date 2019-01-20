@@ -29,7 +29,11 @@
         {% for user in users %}
             <tr>
                 <td style="width: 3%">{{ user.id }}</td>
-                <td style="width: 10%">{{ user.email }}</td>
+                <td style="width: 10%">
+                    <a href="{{ path('app_admin_users_details', {id: user.id}) }}">
+                        {{ user.email }}
+                    </a>
+                </td>
                 <td style="width: 10%">{{ user.firstName }}</td>
                 <td style="width: 10%">{{ user.lastName }}</td>
                 <td class="h3" style="width: 10%">
@@ -41,8 +45,12 @@
                     </span>
                     </a>
                 </td>
-                <td style="width: 10%"><img class="rounded-circle" src="{{ asset(user.photo.path) }}" width="50px"
-                                            alt="{{ user.photo.path }}"></td>
+                <td style="width: 10%">
+                    <a href="{{ path('app_admin_users_avatar', {id: user.id}) }}">
+                        <img class="rounded-circle" src="{{ asset(user.photo.path) }}" width="50px"
+                             alt="{{ user.photo.path }}">
+                    </a>
+                </td>
                 <td class="text-center" style="width: 20%">
                     <a href="{{ path('app_admin_users_edit', {id: user.id}) }}">
                         <button class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>

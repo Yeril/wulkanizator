@@ -30,43 +30,50 @@
                     <div class="sidebar-sticky">
                         <ul class="nav flex-column text-light">
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ path('app_admin') }}">
+                                <a class="nav-link {% if app.request.get('_route') == 'app_admin' %} active{% endif %}"
+                                   href="{{ path('app_admin') }}">
                                     <span data-feather="home"></span>
                                     Główna
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_admin_users') }}">
+                                <a class="nav-link{% if app.request.pathInfo starts with '/admin/users' %} active{% endif %}"
+                                   href="{{ path('app_admin_users') }}">
                                     <span data-feather="users"></span>
                                     Użytkownicy
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_admin_articles') }}">
+                                <a class="nav-link {% if app.request.pathInfo starts with '/admin/articles' %} active{% endif %}"
+                                   href="{{ path('app_admin_articles') }}">
                                     <span data-feather="file-text"></span>
                                     Artykuły
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_admin_comments') }}">
+                                <a class="nav-link{% if app.request.pathInfo starts with '/admin/comments' %} active{% endif %}"
+                                   href="{{ path('app_admin_comments') }}">
                                     <span data-feather="twitter"></span>
                                     Komentarze
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_admin_curiosities') }}">
+                                <a class="nav-link{% if app.request.pathInfo starts with '/admin/curiosities' %} active{% endif %}"
+                                   href="{{ path('app_admin_curiosities') }}">
                                     <span data-feather="trending-up"></span>
                                     Ciekawostki
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_admin_tags') }}">
+                                <a class="nav-link{% if app.request.pathInfo starts with '/admin/tags' %} active{% endif %}"
+                                   href="{{ path('app_admin_tags') }}">
                                     <span data-feather="tag"></span>
                                     Tagi
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_admin_contact') }}">
+                                <a class="nav-link{% if app.request.pathInfo starts with '/admin/contact' %} active{% endif %}"
+                                   href="{{ path('app_admin_contact') }}">
                                     <span data-feather="mail"></span>
                                     Kontakt
                                 </a>
