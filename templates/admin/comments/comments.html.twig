@@ -33,7 +33,7 @@
                 </td>
                 <td class="align-middle" style="width: 10%">
                     {% if comment.user %}
-                        {{ comment.user.email }}
+                        <a href="{{ path('app_admin_users_details', {'id': comment.user.id}) }}">{{ comment.user.email }}</a>
                     {% else %}
                         <span class="font-italic text-danger">Użytkownik usunięty</span>
                     {% endif %}
@@ -143,7 +143,7 @@
             });
             btnperm.click(function () {
                 let id = $(this).attr('data-id');
-                if (confirm("Czy napewno chcesz usunąć użytkownika z bazy?")) {
+                if (confirm("Czy napewno chcesz usunąć komentarz z bazy?")) {
                     $.ajax({
                         url: '{{ path('app_admin_comment_delete', {slug: 'permamently'}) }}',
                         method: 'POST',

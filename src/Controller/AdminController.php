@@ -382,6 +382,39 @@
         }
 
         /**
+         * @Route("/admin/articles/comments/{id}", name="app_admin_article_comments")
+         * @param ArticleRepository $articleRepository
+         * @param $id
+         * @param Request $request
+         * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+         */
+        public function articles_comments(ArticleRepository $articleRepository, $id, Request $request, CommentRepository $commentRepository, PaginatorInterface $paginator)
+        {
+            /** @var Article $article */
+            $article = $articleRepository->find($id);
+            /** @var Comment[] $comments */
+            $comments = $article->getComments();
+
+            $comments_pag = $paginator->paginate(
+                $comments, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                5/*limit per page*/
+
+            );
+
+            $comments_pag->setCustomParameters(array(
+                'size' => 'small',
+                'rounded' => false,
+                'span_class' => 'block-warning'
+            ));
+
+            return $this->render('admin/article/article_comments.html.twig', [
+                'article' => $article,
+                'comments' => $comments_pag,
+            ]);
+        }
+
+        /**
          * @Route("/admin/comments", name="app_admin_comments")
          */
         public function comments(CommentRepository $commentRepository)
@@ -431,13 +464,14 @@
                 } elseif ($slug == 'create') {
                     $comment->setIsDeleted(0);
                     $entityManager->persist($comment);
-                } elseif ($slug == 'permamently')
+                } elseif ($slug == 'permamently') {
                     $entityManager->remove($comment);
-                else
+                } else
                     return new Response("fail");
 
-
                 $entityManager->flush();
+                if ($slug == 'permamently')
+                    $this->redirectToRoute('app_admin_comments');
                 return new Response("success");
             } catch (\Exception $e) {
                 return $e ? $e->getMessage() : new Response("fail");

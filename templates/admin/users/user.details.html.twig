@@ -161,9 +161,11 @@
 
                         </td>
                         <td>
-                            <span class="fa-layers fa-fw 2x">
-                                    <i class="far fa-comment"></i> {{ article.comments|length }}
-                            </span>
+                            <a href="{{ path('app_admin_article_comments', {id: article.id}) }}">
+                                <span class="fa-layers fa-fw 2x">
+                                        <i class="far fa-comment"></i> {{ article.comments|length }}
+                                </span>
+                            </a>
                         </td>
                         <td>
                             {{ article.publishedAtString }}

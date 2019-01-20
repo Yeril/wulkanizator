@@ -1,12 +1,144 @@
 {% extends '_main.admin.html.twig' %}
 
-{% set title = 'Komentarze - podgląd' %}
+{% set title = 'Szczegóły komentarza' %}
 
 {% block title %}Admin - {{ title }} {% endblock %}
 
 {% block admin_page_title %}Admin - {{ title }} {% endblock %}
 
 {% block admin_page_body %}
-    {{ dump(comment) }}
-    {#todo: comment page for id #}
+    <div class="h4">
+        <div class="row">
+            <div class="col-6"><span class="text-info">Data Dodania: </span>{{ comment.createdAtString }}</div>
+            <div class="col-6"><span class="text-info">Status: </span>
+                {% if not comment.isDeleted %}
+                    <span
+                            class="font-italic text-info h3">
+                                <i class="fas fa-info"></i>
+                            </span>
+                {% else %}
+                    <span class="font-italic text-danger h3">
+                                <i class="far fa-trash-alt"></i>
+                            </span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6"><span class="text-info">Autor: </span> <a
+                        href="{{ path('app_admin_users_details', {'id': comment.user.id}) }}">{{ comment.user.email }}</a>
+            </div>
+            <div class="col-6"><span class="text-info">Artykuł: </span> <a
+                        href="{{ path('app_admin_article_comments', {'id': comment.article.id}) }}">{{ comment.article.title }}</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="row justify-content-center align-content-center align-middle">
+        <div class="col-6">
+            <h2 style="font-family:'Lato','Helvetica','Arial',sans-serif;font-weight: 700;text-align: center;margin: 40px auto 20px;hyphens: none;">
+                Treść
+            </h2>
+            <p style="font-size: 1.2rem;font-family: 'Georgia', serif;font-weight: 400;line-height: 1.65em;padding-bottom: 8px;hyphens: none;">
+                {{ comment.content }}
+            </p>
+        </div>
+    </div>
+    <div class="row justify-content-center align-content-center align-middle">
+        <div class="col-6 justify-content-center align-content-center align-middle">
+            {% if comment.isDeleted %}
+                <a class="d-block">
+                    <button class="btn btn-success create-comment btn-block" data-id="{{ comment.id }}"><i
+                                class="fas fa-plus-square"></i></button>
+                </a>
+                <a class="d-block">
+                    <button class="btn btn-danger deletepermamently-comment btn-block" data-id="{{ comment.id }}"><i
+                                class="fas fa-trash-alt"></i></button>
+                </a>
+            {% else %}
+                <a class="d-block">
+                    <button class="btn btn-warning delete-comment btn-block" data-id="{{ comment.id }}"><i
+                                class="fas fa-trash-alt"></i></button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('document').ready(function () {
+            // let table = $('#comments');
+            let btndel = $('button.btn.btn-warning.delete-comment.btn-block');
+            let btncre = $('button.btn.btn-success.create-comment.btn-block');
+            let btnperm = $('button.btn.btn-danger.deletepermamently-comment.btn-block');
+            btndel.click(function () {
+                let id = $(this).attr('data-id');
+                $.ajax({
+                    url: '{{ path('app_admin_comment_delete', {slug: 'delete'}) }}',
+                    method: 'POST',
+                    data: {id: id},
+                    success: function (returnedvalue) {
+                        if (returnedvalue === "success") {
+                            document.location.reload();
+                        }
+                        if (returnedvalue === "fail") {
+                            alert("Failed to delete comment id=" + id);
+                            document.location.reload();
+                        }
+                    },
+
+                }).fail(function () {
+                    alert("Operation Failed");
+                });
+            });
+            btncre.click(function () {
+                let id = $(this).attr('data-id');
+                $.ajax({
+                    url: '{{ path('app_admin_comment_delete', {slug: 'create'}) }}',
+                    method: 'POST',
+                    data: {id: id},
+                    success: function (returnedvalue) {
+                        if (returnedvalue === "success") {
+                            document.location.reload();
+                        }
+                        if (returnedvalue === "fail") {
+                            alert("Failed to add comment id=" + id);
+                            document.location.reload();
+                        }
+                    },
+
+                }).fail(function () {
+                    alert("Operation Failed");
+                });
+            });
+            btnperm.click(function () {
+                let route = "{{ path('app_admin_comments')|escape('js') }}";
+                let id = $(this).attr('data-id');
+                if (confirm("Czy napewno chcesz usunąć komentarz z bazy?")) {
+                    $.ajax({
+                        url: '{{ path('app_admin_comment_delete', {slug: 'permamently'}) }}',
+                        method: 'POST',
+                        data: {id: id},
+                        success: function (returnedvalue) {
+                            if (returnedvalue === "success") {
+                                window.location.href = route;
+                            }
+                            if (returnedvalue === "fail") {
+                                alert("Failed to delete permamently comment id=" + id);
+                                document.location.reload();
+                            }
+                        },
+
+                    }).fail(function () {
+                        alert("Operation Failed");
+                    });
+                }
+            })
+        })
+    </script>
+    <script src="https://use.fontawesome.com/releases/v5.6.3/js/all.js"
+            integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1"
+            crossorigin="anonymous"></script>
 {% endblock %}

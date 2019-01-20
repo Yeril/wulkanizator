@@ -28,11 +28,13 @@
         <tbody>
         {% for user in users %}
             <tr>
-                <td style="width: 3%">{{ user.id }}</td>
+                <td style="width: 3%"><a class="page-link"
+                                         href="{{ path('app_admin_users_details', {id: user.id}) }}">{{ user.id }}</a>
+                </td>
                 <td style="width: 10%">
-                    <a href="{{ path('app_admin_users_details', {id: user.id}) }}">
-                        {{ user.email }}
-                    </a>
+
+                    {{ user.email }}
+
                 </td>
                 <td style="width: 10%">{{ user.firstName }}</td>
                 <td style="width: 10%">{{ user.lastName }}</td>

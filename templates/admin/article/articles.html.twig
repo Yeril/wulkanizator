@@ -35,9 +35,11 @@
         {% for article in articles %}
             <tr>
                 <td style="width: 3%"><a class="page-link"
-                                         href="{{ path('app_articles', {slug: article.slug }) }}">{{ article.id }}</a>
+                                         href="{{ path('app_admin_article_comments', {id: article.id }) }}">{{ article.id }}</a>
                 </td>
-                <td style="width: 10%">{{ article.title }}</td>
+                <td style="width: 10%"><a
+                            href="{{ path('app_articles', {slug: article.slug }) }}">{{ article.title }}</a>
+                </td>
                 <td style="width: 10%"><a href="{{ path('app_admin_users_details', {id: article.author.id}) }}">
                         {{ article.author.email }}
                     </a></td>
@@ -53,11 +55,13 @@
                         <span class="fa-layers-counter 2x"
                               style="color:white;background-color: black">{{ article.heartCount }}</span>
                     </span>
-                    <span class="fa-layers fa-fw 2x">
+                    <a href="{{ path('app_admin_article_comments', {'id': article.id}) }}"><span
+                                class="fa-layers fa-fw 2x">
                         <i class="far fa-comment"></i>
                         <span class="fa-layers-counter 2x"
                               style="color:white;background-color: black">{{ article.comments|length }}</span>
                     </span>
+                    </a>
                 </td>
                 <td style="width: 10%">
                     {% if article.publishedAtString != 'null' %}
@@ -66,14 +70,10 @@
                         nieopublikowano
                     {% endif %}
                     <br>{{ article.createdAtString }}</td>
-                {#<td>#}
-                {#<span class="fa fa-{{ article.isPublished ? 'check' : 'times' }}"></span>#}
-                {#</td>#}
                 <td class="text-center" style="width: 20%">
                     <a href="{{ path('app_admin_article_edit', {id: article.id}) }}">
                         <button class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
                     </a>
-                    {#href="{{ path('app_admin_article_delete', {id: article.id}) }}"#}
                     <a>
                         <button class="btn btn-danger delete-article" data-id="{{ article.id }}"><i
                                     class="fas fa-trash-alt"></i></button>
