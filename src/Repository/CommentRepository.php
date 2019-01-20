@@ -28,6 +28,15 @@
                 ->orderBy(['createdAt' => 'DESC']);
         }
 
+        public function getCommentsFromArticleId($id)
+        {
+            return $this->createQueryBuilder('a')
+                ->leftJoin('a.article', 'article')
+                ->where('article.id=:id')->setParameter('id', $id)
+                ->andWhere('a.isDeleted=0')
+                ->getQuery()->getResult();
+        }
+
 
         /**
          * @param string|null $term
@@ -46,6 +55,16 @@
 
             return $qb
                 ->orderBy('c.createdAt', 'DESC');
+        }
+
+        public function findAllofUser(\App\Entity\User $user)
+        {
+            return $this->createQueryBuilder('a')
+                ->orderBy('a.createdAt', 'DESC')
+                ->andWhere('a.user=:user')
+                ->setParameter('user', $user)
+                ->getQuery()
+                ->getResult();
         }
 
     }

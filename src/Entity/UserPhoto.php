@@ -40,7 +40,10 @@
 
         public function getPath(): ?string
         {
-            return $this->path;
+            if ($this->path)
+                return $this->path;
+            else
+                return "/avatars/avatar01.png";
         }
 
         public function setPath(string $path): self

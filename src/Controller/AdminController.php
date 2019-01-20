@@ -91,10 +91,12 @@
          * @param EntityManagerInterface $entityManager
          * @param Request $request
          * @param ArticleRepository $articleRepository
-         * @return \Symfony\Component\HttpFoundation\RedirectResponse
+         * @param SecurityController $securityController
+         * @param CommentRepository $commentRepository
+         * @return void
          * @Method("DELETE")
          */
-        public function users_delete(UserRepository $userRepository, $id, EntityManagerInterface $entityManager, Request $request, ArticleRepository $articleRepository, SecurityController $securityController)
+        public function users_delete(UserRepository $userRepository, $id, EntityManagerInterface $entityManager, Request $request, ArticleRepository $articleRepository, SecurityController $securityController, CommentRepository $commentRepository)
         {
 
             /** @var User $user */
@@ -105,6 +107,12 @@
 //            if we delete user with articles his article becomes ours
             /** @var Article[] $userArticles */
             $userArticles = $articleRepository->findAllofUser($user);
+            /** @var Comment[] $userComments */
+            $userComments = $commentRepository->findAllofUser($user);
+            foreach ($userComments as $comment) {
+                $comment->setIsDeleted(true);
+                $entityManager->persist($comment);
+            }
             foreach ($userArticles as $article) {
                 $article->setAuthor($securityController->getUser());
                 $entityManager->persist($article);
