@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("css/homepage.css") }}">
+    <style>
+        [role="main"] {
+            padding-top: 50px; /* Space for fixed navbar */
+        }
+
+        @media (min-width: 768px) {
+            [role="main"] {
+                padding-top: 50px; /* Space for fixed navbar */
+            }
+        }
+
+        .navbar-brand {
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+            font-size: 1rem;
+            background-color: rgba(0, 0, 0, .25);
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+        }
+
+        .navbar .form-control {
+            padding: .75rem 1rem;
+            border-width: 0;
+            border-radius: 0;
+        }
+
+        .navbar-brand {
+            background-color: rgb(0, 0, 0);
+        }
+
+        .bg-dark {
+            background-color: #000 !important;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        button:hover {
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script>
+        feather.replace()
+    </script>
+
+
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-1 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ path('app_homepage') }}">Wulkanizator</a>
+        <a class="btn btn-outline-warning col-sm-3 col-md-2 mr-0" href="{{ path('app_logout') }}">Logout</a>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <main role="main" class="col-12 px-4 mt-5">
+                <h1 class="h2">{% block user_profile_title %}{% endblock %}</h1>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.get('_route') == 'app_account' %}active{% endif %}"
+                           href="{{ path('app_account') }}">Podsumowanie </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.get('_route') == 'app_account_avatar' %}active{% endif %}"
+                           href="{{ path('app_account_avatar') }}">Avatar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.get('_route') == 'app_account_data' %}active{% endif %}"
+                           href="{{ path('app_account_data') }}">Dane</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.get('_route') == 'app_account_comments' %}active{% endif %}"
+                           href="{{ path('app_account_comments') }}">Komentarze</a>
+                    </li>
+                </ul>
+                {% block user_profile_page_additional_button %}{% endblock %}
+                {% block user_profile_page_body %}{% endblock %}
+            </main>
+        </div>
+    </div>
+{% endblock %}

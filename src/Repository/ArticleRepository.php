@@ -4,6 +4,7 @@
 
     use App\Entity\Article;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+    use Doctrine\DBAL\DBALException;
     use Doctrine\ORM\QueryBuilder;
     use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -20,6 +21,19 @@
             parent::__construct($registry, Article::class);
         }
 
+        public function getHeartCountForUID($id)
+        {
+            $conn = $this->getEntityManager()->getConnection();
+            $sql = 'select sum(article.heart_count) sum from article left join user u on article.author_id = u.id where u.id=:id;';
+            try {
+                $stmt = $conn->prepare($sql);
+            } catch (DBALException $e) {
+            }
+            $stmt->execute(['id' => $id]);
+
+            return $stmt->fetchAll()[0]['sum'];
+        }
+
         /**
          * @return Article[]
          * @throws \Exception
@@ -32,8 +46,7 @@
                 ->andWhere('a.publishedAt<=:param')
                 ->setParameter('param', $now)
                 ->getQuery()
-                ->getResult()
-                ;
+                ->getResult();
         }
 
         public function findAllOrderedByNewest()
@@ -53,6 +66,7 @@
                 ->getQuery()
                 ->getResult();
         }
+
         /*
         public function findOneBySomeField($value): ?Article
         {

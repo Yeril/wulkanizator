@@ -1,20 +1,41 @@
-{% extends 'base.html.twig' %}
+{% extends '_main.user.html.twig' %}
 
-{% block title %}Hello AccountController!{% endblock %}
+{% set title = 'Podsumowanie' %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block title %}Użytkownik - {{ title }} {% endblock %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{% block user_profile_title %}Użytkownik <span class="text-secondary">{{ app.user }}</span> - {{ title }} {% endblock %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/zwrg/Desktop/github/wulkanizator2/wulkanizator/src/Controller/AccountController.php'|file_link(0) }}">src/Controller/AccountController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/zwrg/Desktop/github/wulkanizator2/wulkanizator/templates/account/index.html.twig'|file_link(0) }}">templates/account/index.html.twig</a></code></li>
-    </ul>
-</div>
+{% block user_profile_page_body %}
+    <div class="row mt-3 p-2">
+        <p class="text-muted">Witaj na stronie swojego profilu, możesz konfigurować tutaj swoje konto.<br><br></p>
+    </div>
+    <h3>Dane użytkownika</h3>
+    <div class="row border-top p-4">
+        <div class="flex-column mr-2">
+            <a href="{{ path('app_account_avatar') }}"><img style="width: 100px" src="{{ asset(user.photo.path) }}"
+                                                            alt="{{ user.photo.id }}"></a>
+        </div>
+        <div class="d-flex flex-column bd-highlight">
+            <p>Imię: <span class="text-primary">{{ user.firstName }}</span>.</p>
+            <p>Nazwisko: <span class="text-primary">{{ user.lastName }}</span>.</p>
+            <p>Email: <span class="text-primary">{{ user.email }}</span>.</p>
+        </div>
+
+    </div>
+    <h3>Statystyki</h3>
+    <div class="border-top p-4">
+        <p>Liczba komentarzy: <span class="text-primary">{{ user.comments|length }}</span>.</p>
+        <p>Liczba artykułów: <span class="text-primary">{{ user.articles|length }}</span>.</p>
+        <p>Otrzymana liczba polubień: <span class="text-primary">
+                {% if heartcount %}
+                    {{ heartcount }}.
+                {% else %}
+                    0.
+                {% endif %}
+            </span></p>
+        <p>Data założenia konta: <span class="text-primary">{{ user.agreedTermsAt|ago }}</span>.</p>
+    </div>
+
 {% endblock %}
+

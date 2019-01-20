@@ -76,7 +76,6 @@
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Użytkownik zmodyfikowany!');
-
                 return $this->redirectToRoute('app_admin_users');
             }
 
