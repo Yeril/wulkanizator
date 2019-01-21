@@ -68,7 +68,8 @@
                 if( true === $form->get('agreeTerms')->getData())
                     $user->agreeToTerms();
                 $user->setRoles(['ROLE_USER']);
-                $user->setPhoto($this->getRandomReference('main_photos'));
+                $photos = $userPhotoRepository->getAvatardOrderedByPath();
+                $user->setPhoto($photos[0]);
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
