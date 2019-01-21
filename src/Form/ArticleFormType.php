@@ -45,7 +45,7 @@
                 ])
                 ->add('publishedAt', null, [
                     'widget' => 'single_text'
-                ])//                todo: article tags
+                ])
             ;
 
         }

@@ -38,7 +38,7 @@
                             'message' => 'Pole nie może być puste!'
                         ])
                     ]
-                ])//todo: generate new password
+                ])
             ;
         }
 

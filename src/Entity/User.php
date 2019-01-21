@@ -75,7 +75,6 @@
          */
         private $photo;
 
-        //todo: if null return default picture
 
         public function __construct()
         {

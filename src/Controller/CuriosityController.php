@@ -63,5 +63,4 @@
             ]);
         }
 
-//        todo: edit, delete
     }
