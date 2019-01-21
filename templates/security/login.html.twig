@@ -8,6 +8,11 @@
 {% endblock %}
 
 {% block body %}
+    {% for message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success text-center">
+            {{ message }}
+        </div>
+    {% endfor %}
     <form method="post" class="form-signin">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

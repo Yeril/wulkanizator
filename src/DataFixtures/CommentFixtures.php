@@ -15,12 +15,10 @@
                 $comment->setContent(
                     $this->faker->boolean ? $this->faker->paragraph : $this->faker->sentences(2, true)
                 );
-
                 $comment->setUser($this->getRandomReference('main_users'));
-                $comment->setCreatedAt($this->faker->dateTimeBetween('-1 months', '-1 seconds'));
+                $comment->setCreatedAt($this->faker->dateTimeBetween('-5 days', '-1 days'));
                 $comment->setIsDeleted($this->faker->boolean(20));
                 $comment->setArticle($this->getRandomReference('main_articles'));
-
                 return $comment;
             });
 

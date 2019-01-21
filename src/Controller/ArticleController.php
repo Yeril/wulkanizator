@@ -3,7 +3,10 @@
     namespace App\Controller;
 
     use App\Entity\Article;
+    use App\Entity\Comment;
+    use App\Form\CommentFormType;
     use App\Repository\ArticleRepository;
+    use App\Repository\CommentRepository;
     use App\Repository\CuriosityRepository;
     use Knp\Component\Pager\PaginatorInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,12 +58,44 @@
         /**
          * @Route("/articles/{slug}", name="app_articles")
          * @param Article $article
+         * @param CommentRepository $commentRepository
          * @return \Symfony\Component\HttpFoundation\Response
          */
-        public function articles(Article $article)
+        public function articles(Request $request, Article $article, CommentRepository $commentRepository, $slug, SecurityController $securityController)
         {
-            return $this->render('article/articles.html.twig',[
+            /** @var Comment[] $comments */
+            $comments = $commentRepository->getCommentsFromArticleId($article->getId());
+            $comment = new Comment();
+            $form = $this->createForm(CommentFormType::class, $comment);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                if (!$this->isGranted("ROLE_USER")) {
+                    $this->addFlash('success', 'Najpierw się zaloguj!');
+                    return $this->redirectToRoute('app_login');
+                }
+
+                $comment->setContent($form->get('content')->getData());
+                $comment->setIsDeleted(false);
+                $user = $securityController->getUser();
+                $comment->setUser($user);
+                $comment->setArticle($article);
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($comment);
+                $entityManager->flush();
+
+                unset($form);
+                unset($comment);
+
+                $this->addFlash('success', 'Komentarz został wysłany');
+                return $this->redirectToRoute('app_articles', ['slug' => $slug]);
+            }
+            /** @var Article $article */
+            /** @var Comment[] $comments */
+            return $this->render('article/articles.html.twig', [
                 'article' => $article,
+                'comments' => $comments,
+                'commentForm' => $form->createView(),
             ]);
         }
     }

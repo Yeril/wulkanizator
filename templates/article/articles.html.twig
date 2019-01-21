@@ -2,23 +2,236 @@
 
 {% block title %}Artykuły{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .p-5 {
+            width: 75%;
+            margin: auto;
+        }
+
+        .conteiner {
+            width: 70%;
+            display: flex;
+            justify-content: center;
+            margin: auto;
+        }
+
+        .reactions {
+            clear: both;
+        }
+
+
+        .comments {
+            float: left;
+            padding: 5px;
+        }
+
+
+        .comments > a:link {
+            color: black;
+        }
+
+
+        .comments > a:hover {
+            text-decoration: none;
+        }
+
+
+        .comments > a:visited {
+            color: black;
+        }
+
+
+        #center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 70%;
+        }
+
+        .id {
+            padding: 15px;
+        }
+
+        .title {
+            padding: 20px 0;
+
+        }
+
+        .title > h1 {
+            font-weight: 750;
+            font-size: 50px;
+        }
+
+        .authorimg {
+            /* float: left; */
+            padding: 10px;
+        }
+
+        .avatar {
+            float: left;
+            width: 50px;
+            height: 50px;
+        }
+
+        .author {
+            float: left;
+            padding-left: 10px;
+
+        }
+
+        .author > p {
+            font-size: 35px;
+            font-weight: 400;
+        }
+
+        .date {
+            clear: both;
+            padding-bottom: 10px;
+        }
+
+        .photo {
+            clear: both;
+        }
+
+
+        .tags {
+            clear: both;
+            padding: 5px;
+        }
+
+        .desc {
+            padding: 20px 0;
+            text-align: justify;
+        }
+
+        .comm {
+            clear: both;
+            padding: 10px;
+        }
+
+        .borderr {
+            border: none;
+        }
+
+        .comment {
+            /* border-bottom: 3px solid #ddd; */
+            padding: 15px;
+        }
+
+        .border :last-child {
+            border-bottom: none;
+        }
+
+        .av {
+            width: 70%;
+            padding: 10px;
+            margin: auto;
+        }
+
+        .av > img {
+            width: 75px;
+            height: auto;
+        }
+
+        .form-control {
+            padding: 5px;
+        }
+
+        .main {
+            padding: 15px 0;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
+    <section class="p-5">
+        <div class="conteiner">
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <h1>Title: {{ article.title }}</h1>
-                <h2>Posted: {{ article.publishedAt|ago }}</h2>
-                <h2>Heart count: {{ article.heartCount }}</h2>
-                <div>{{ article.content}}</div>
-
-                <h3>Comments</h3>
-                {% for comment in article.nonDeletedComments %}
-                <div>
-                    {{ comment.content }}
+            <div class="article">
+                <div class="title">
+                    <h1>{{ article.title }}</h1>
                 </div>
-                {% endfor %}
+                <div class="authorimg">
+                    <img class="avatar" src="{{ asset(article.author.photo.path) }}" alt="avatar">
+
+                    <div class="author">
+                        <p>{{ article.author.firstName }} {{ article.author.lastName }}</p>
+                    </div>
+                    <div class="date">
+                        <span>Added {{ article.publishedAtString|ago }}</span>
+                    </div>
+                </div>
+                {#<div class="photo">#}
+                {#<img src="../img/paliwo.jpg" class="img-thumbnail" id="center" alt="">#}
+                {#</div>#}
+
+                <div class="desc">
+                    <p class="h5 main">
+                        {{ article.content }}
+                    </p>
+                </div>
+                <div class="tags">
+                    {% for tag in article.tags %}
+                        <a class="badge badge-info" href="#">{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+
+                <div class="comm">
+                    <h2>Komentarze ({{ article.nonDeletedComments|length }}):</h2>
+                    <div class="borderr">
+                        {% for comment in comments %}
+                            <div class="comment">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <div class="av">
+                                            <img src="{{ asset(comment.user.photo.path) }}" class="rounded" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="comm_author">
+                                            {% if comment.user.id == article.author.id %}
+                                                <h4 class="text-info">{{ comment.user.firstName }} {{ comment.user.lastName }}</h4>
+                                            {% else %}
+                                                <h4>{{ comment.user.firstName }} {{ comment.user.lastName }}</h4>
+                                            {% endif %}
+                                        </div>
+                                        <div class="datee">
+                                            <p>{{ comment.createdAtString|ago }}</p>
+                                        </div>
+                                        <div class="centering-wrapper">
+                                            <div class="content">
+                                                <p>{{ comment.content }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        {% for message in app.session.flashBag.get('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+
+                        <div class="new">
+                            {{ form_start(commentForm, {label_attr: {class: 'form-signin'}}) }}
+                            {{ form_errors(commentForm.content) }}
+                            {{ form_row(commentForm.content, {
+                                attr: { placeholder: 'Treść wiadomości', style: 'height:100px' },
+                                label_attr: { class: 'sr-only' }
+                            }) }}
+                            <button class="btn btn-lg btn-dark btn-block" type="submit">Prześlij wiadomość</button>
+
+                            {{ form_end(commentForm) }}
+                        </div>
+
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

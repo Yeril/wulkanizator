@@ -1,20 +1,30 @@
 <?php
 
-namespace App\DataFixtures;
+    namespace App\DataFixtures;
 
-use App\Entity\Tag;
-use Doctrine\Common\Persistence\ObjectManager;
+    use App\Entity\Tag;
+    use Doctrine\Common\Persistence\ObjectManager;
 
-class TagFixtures extends BaseFixture
-{
-    public function loadData(ObjectManager $manager)
+    class TagFixtures extends BaseFixture
     {
-        $this->createMany(10, 'main_tags', function() {
-            $tag = new Tag();
-            $tag->setName($this->faker->realText(15));
+        private static $tags = [
+            'motoryzacja',
+            'auta',
+            'naprawa',
+            'części',
+            'nowości',
+            'superpojazdy',
+            'wyścigi',
+            'policja'
+        ];
 
-            return $tag;
-        });
-        $manager->flush();
+        public function loadData(ObjectManager $manager)
+        {
+            $this->createMany(8, 'main_tags', function ($count) {
+                $tag = new Tag();
+                $tag->setName(TagFixtures::$tags[$count]);
+                return $tag;
+            });
+            $manager->flush();
+        }
     }
-}
