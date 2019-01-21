@@ -194,7 +194,11 @@
                                             {% if comment.user.id == article.author.id %}
                                                 <h4 class="text-info">{{ comment.user.firstName }} {{ comment.user.lastName }}</h4>
                                             {% else %}
-                                                <h4>{{ comment.user.firstName }} {{ comment.user.lastName }}</h4>
+                                                {% if comment.user.firstName and comment.user.firstName %}
+                                                    <h4>{{ comment.user.firstName }} {{ comment.user.lastName }}</h4>
+                                                {% else %}
+                                                    <h4>{{ comment.user.email }}</h4>
+                                                {% endif %}
                                             {% endif %}
                                         </div>
                                         <div class="datee">
