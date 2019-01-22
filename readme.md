@@ -85,9 +85,9 @@ d) Cele proceduralne - określenie co będzie potrzebne(budżet, czas, pracownic
 
 Spis rodzajów użytkowników wraz z ich celami i funkcjami
 | TYP  | CELE  |  FUNKCJE   |
-|--|--|--|
-| UŻYTKOWNICY   | W01, W02, W03, W05, W09  | Użytkownicy portalu pełnią funkcję czytelników bloga. Mają możliwość kontaktowania się z administratorami poprzez formularz. Jako zalogowany użytkownik otrzymuje możliwość komentowania artykułów oraz zarządzania własnym kontem. |
-| ADMINISTRATORZY | W04, W06, W07, W08, W10 | Administrator posiada możliwość zarządzania artykułami, ciekawostkami oraz tagami. Może je dodawać, edytować, publikować/odpublikować, oraz usuwać. Jako administrator ma wgląd w komentarze, również te usunięte. Dodatkowo może zarządzać profilami użytkowników |
+|------|-------|------------|
+|UŻYTKOWNICY | W01, W02, W03, W05, W09 | Użytkownicy portalu pełnią funkcję czytelników bloga. Mają możliwość kontaktowania się z administratorami poprzez formularz. Jako zalogowany użytkownik otrzymuje możliwość komentowania artykułów oraz zarządzania własnym kontem. |
+|ADMINISTRATORZY | W04, W06, W07, W08, W10 | Administrator posiada możliwość zarządzania artykułami, ciekawostkami oraz tagami. Może je dodawać, edytować, publikować/odpublikować, oraz usuwać. Jako administrator ma wgląd w komentarze, również te usunięte. Dodatkowo może zarządzać profilami użytkowników. |
 
 
 
