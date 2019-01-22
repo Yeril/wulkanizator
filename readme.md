@@ -119,8 +119,8 @@ Użytkownik Niezalogowany (UN) -> Użytkownik (U) -> Administrator (A)
 
 ## Lista aktorów
 
-|TYP  | CELE            |  FUNKCJE                    |   RODZAJ                    |
-|-----|-----------------|-----------------------------|-----------------------------|
+|TYP  | CELE            |  FUNKCJE                    |   RODZAJ                |
+|-----|-----------------|-----------------------------|-------------------------|
 |UŻYTKOWNICY NIEZALOGOWANI|W01, W02, W04, W05, W07|Użytkownik niezalogowany może utworzyć konto, zalogować się, przeglądać artykuły i ciekawostki oraz uzupełnić formularz kontaktowy| Osoba|
 |UŻYTKOWNICY|W03, W06, W11, W12|Użytkownik zalogowany może zarządzać kontem, przeglądać artykuły i ciekawostki, komentować, zarządzać komentarzami oraz wylogować się | Osoba|
 |ADMINISTRATORZY|W06, W08-W12|Administrator może dodawać artykuły, ciekawostki, tagi oraz komentarze oraz nimi zarządzać. Dodatkowo ma możliwość zarządzania kontami użytkowników. Ponadto zarządza wiadomościami kontaktowymi. | Osoba|
@@ -418,7 +418,7 @@ Scenariusz:
     
 3.  Akceptuje zmiany odpowiednim przyciskiem lub je odrzuca.
     
-### UC17 Wysyłanie wiadomości kontaktowej
+### UC18 Wysyłanie wiadomości kontaktowej
 
 Jako użytkownik niezalogowany,
 
@@ -433,3 +433,23 @@ Scenariusz:
 2.  Uzupełnia pola formularza, takie jak e-mail i treść wiadomości .
     
 3.  Wysyła zapytanie wybierając przycisk Wyślij.
+
+## Diagram bazy danych
+
+![Diagram bazy danych](https://files.tinypic.pl/i/00978/wgbdfmyfy35p.png)
+
+## Wykres Gantta
+![Wykres Gantta](https://files.tinypic.pl/i/00978/qd9xa5xwthkb.png)
+
+
+## Zagrożenia
+
+| Lp. | Zagrożenie                                                  | Wielkość szkody (S) |                       | Prawdopodobieństwo powstania szkody (P) |                    | Ryzyko (W) , W = S x P |                             |
+|-----|-------------------------------------------------------------|---------------------|-----------------------|-----------------------------------------|--------------------|------------------------|-----------------------------|
+| 1.  | Atak na system bazodanowy                                   | S=3                 | Znaczne szkody        | P=4                                     | dosyć częste       | W=12                   | ryzyko niedopuszczalne      |
+| 2.  | Przechwycenie danych bankowych klienta                      | S=3                 | Znaczne szkody        | P=3                                     | prawdopodobne      | W=9                    | dopuszczalna akceptowalność |
+| 3.  | Awaria serwera hostującego serwis i bazę danych             | S=2                 | Wymierne szkody       | P=3                                     | prawdopodobne      | W=6                    | dopuszczalna akceptowalność |
+| 4.  | Błąd aplikacji serwisu uniemożliwiający korzystanie z niego | S=2                 | Wymierne szkody       | P=3                                     | prawdopodobne      | W=6                    | dopuszczalna akceptowalność |
+| 5.  | Zerwanie łączności z serwerem                               | S=1                 | Znikome szkody        | P=4                                     | dosyć częste       | W=4                    | dopuszczalna akceptowalność |
+| 6.  | Powódź w lokalizacji serwera                                | S=4                 | Ciężkie szkody        | P=2                                     | mało prawdopodobne | W=8                    | dopuszczalna akceptowalność |
+| 7.  | Pożar w lokalizacji serwera                                 | S=5                 | Bardzo ciężkie szkody | P=2                                     | mało prawdopodobne | W=10                   | ryzyko niedopuszczalne      |
