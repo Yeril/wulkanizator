@@ -84,10 +84,12 @@ d) Cele proceduralne - określenie co będzie potrzebne(budżet, czas, pracownic
 ## Określenie kto będzie korzystał z systemu
 
 Spis rodzajów użytkowników wraz z ich celami i funkcjami
-|TYP              |CELE                         |     FUNKCJE                 |
-|-----------------|-----------------------------|-----------------------------|
-| UŻYTKOWNICY     |W01, W02, W03, W05, W09      | Użytkownicy portalu pełnią funkcję czytelników bloga. Mają możliwość kontaktowania się z administratorami poprzez formularz. Jako zalogowany użytkownik otrzymuje możliwość komentowania artykułów oraz zarządzania własnym kontem.|
-|ADMINISTRATORZY|W04, W06, W07, W08, W10| Administrator posiada możliwość zarządzania artykułami, ciekawostkami oraz tagami. Może je dodawać, edytować, publikować/odpublikować, oraz usuwać. Jako administrator ma wgląd w komentarze, również te usunięte. Dodatkowo może zarządzać profilami użytkowników.|
+| TYP  | CELE  |  FUNKCJE   |
+|--|--|--|
+| UŻYTKOWNICY   | W01, W02, W03, W05, W09  | Użytkownicy portalu pełnią funkcję czytelników bloga. Mają możliwość kontaktowania się z administratorami poprzez formularz. Jako zalogowany użytkownik otrzymuje możliwość komentowania artykułów oraz zarządzania własnym kontem. |
+| ADMINISTRATORZY | W04, W06, W07, W08, W10 | Administrator posiada możliwość zarządzania artykułami, ciekawostkami oraz tagami. Może je dodawać, edytować, publikować/odpublikować, oraz usuwać. Jako administrator ma wgląd w komentarze, również te usunięte. Dodatkowo może zarządzać profilami użytkowników |
+
+
 
 
 ## Lista przypadków użycia
@@ -125,7 +127,8 @@ Użytkownik Niezalogowany (UN) -> Użytkownik (U) -> Administrator (A)
 |UŻYTKOWNICY|W03, W06, W11, W12|Użytkownik zalogowany może zarządzać kontem, przeglądać artykuły i ciekawostki, komentować, zarządzać komentarzami oraz wylogować się | Osoba|
 |ADMINISTRATORZY|W06, W08-W12|Administrator może dodawać artykuły, ciekawostki, tagi oraz komentarze oraz nimi zarządzać. Dodatkowo ma możliwość zarządzania kontami użytkowników. Ponadto zarządza wiadomościami kontaktowymi. | Osoba|
 
-
+## Diagram UC
+![Diagram UC](https://files.tinypic.pl/i/00978/r53icsih0z91.png)
 ## Przypadki użycia
 
 ### UC01 Logowanie
@@ -453,3 +456,5 @@ Scenariusz:
 | 5.  | Zerwanie łączności z serwerem                               | S=1                 | Znikome szkody        | P=4                                     | dosyć częste       | W=4                    | dopuszczalna akceptowalność |
 | 6.  | Powódź w lokalizacji serwera                                | S=4                 | Ciężkie szkody        | P=2                                     | mało prawdopodobne | W=8                    | dopuszczalna akceptowalność |
 | 7.  | Pożar w lokalizacji serwera                                 | S=5                 | Bardzo ciężkie szkody | P=2                                     | mało prawdopodobne | W=10                   | ryzyko niedopuszczalne      |
+
+
