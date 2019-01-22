@@ -17,14 +17,14 @@ Niniejszy dokument ma na celu przedstawienie specyfikacji projektu system inform
 
 ## Ogólny opis założeń systemu i wymagań
 
-Ogólnym założeniem projektu jest budowa systemu zarządzania blogiem. Strona, jak i system, oferuje rejestracje i logowanie użytkowników. Zalogowany użytkownik ma możliwość dodania artykułu oraz ciekawostki. Dodatkowo może nimi zarządzać, edytować je. Strona oferuje również szybki kontakt z administratorem, poprzez prosty formularz na stronie.
+Ogólnym założeniem projektu jest budowa systemu zarządzania blogiem. Strona, jak i system, oferuje rejestracje i logowanie użytkowników. Każdy z użytkowników może przeglądać artykułu oraz ciekawostki. Po zalogowaniu mają dostęp do komentowania artykułów, jak i zarządzania własnym koontem i komentarzami. Administrator ma możliwość dodania artykułu, tagów oraz ciekawostki. Dodatkowo może nimi zarządzać, edytować je. Strona oferuje również szybki kontakt z administratorem dla wszystkich użytkowników, poprzez prosty formularz na stronie.
 
 ## Lista wymagań
 
 |  ID |NAZWA            |OPIS                         |          UC   |
 |-----|-----------------|-----------------------------|---------------|
 |W01  |REJESTRACJA      |Użytkownik może zarejestrować się poprzez formularz rejestracji bez akceptacji Administratora.| UC02|
-|W02  |LOGOWANIE        |Użytkownik może zalogować się poprzez formularz. |UC01|
+|W02  |AUTORYZACJA      |Użytkownik może zalogować się poprzez formularz. |UC01|
 |W03  |WYLOGOWANIE      |Użytkownik może wylogować się poprzez przycisk.| UC03|
 |W04  |PRZEGLĄD ARTYKUŁÓW|Użytkownik może przeglądać artykuły.| UC04|
 |W05  |PRZEGLĄD CIEKAWOSTEK|Użytkownik może przeglądać ciekawostki.| UC05|
@@ -43,12 +43,10 @@ Cele projektu - zgodnie z metodologią S.M.A.R.T. (pol. Z.M.O.R.A. - Zdefiniowan
 
 a) Cele ogólne (np. bycie liderem na rynku, odzyskanie pozycji itp.)
 
--   zbudowanie działającego systemu obsługi klientów sklepu,
+-   zbudowanie działającego systemu bloga,
     
--   zbudowanie innowacyjnego projektu cieszącego się popularnością,
-    
--   zdobycie tytułu innowacyjnego przedsiębiorcy w dziedzinie marketingu i usług.
-    
+-   zbudowanie innowacyjnego projektu cieszącego się popularnością.
+        
 
 b) Cele bezpośrednie (np. zarobienie określonej sumy, zdobycie X klientów itp.)
 
@@ -83,11 +81,11 @@ d) Cele proceduralne - określenie co będzie potrzebne(budżet, czas, pracownic
 
 ## Określenie kto będzie korzystał z systemu
 
-Spis rodzajów użytkowników wraz z ich celami i funkcjami
+Spis rodzajów użytkowników wraz z ich celami i funkcjami.
 | TYP  | CELE  |  FUNKCJE   |
-|------|-------|------------|
-|UŻYTKOWNICY | W01, W02, W03, W05, W09 | Użytkownicy portalu pełnią funkcję czytelników bloga. Mają możliwość kontaktowania się z administratorami poprzez formularz. Jako zalogowany użytkownik otrzymuje możliwość komentowania artykułów oraz zarządzania własnym kontem. |
-|ADMINISTRATORZY | W04, W06, W07, W08, W10 | Administrator posiada możliwość zarządzania artykułami, ciekawostkami oraz tagami. Może je dodawać, edytować, publikować/odpublikować, oraz usuwać. Jako administrator ma wgląd w komentarze, również te usunięte. Dodatkowo może zarządzać profilami użytkowników. |
+|------|-------|------------| 
+| UŻYTKOWNICY   | W01, W02, W03, W05, W09  | Użytkownicy portalu pełnią funkcję czytelników bloga. Mają możliwość kontaktowania się z administratorami poprzez formularz. Jako zalogowany użytkownik otrzymuje możliwość komentowania artykułów oraz zarządzania własnym kontem. | 
+| ADMINISTRATORZY | W04, W06, W07, W08, W10 | Administrator posiada możliwość zarządzania artykułami, ciekawostkami oraz tagami. Może je dodawać, edytować, publikować/odpublikować, oraz usuwać. Jako administrator ma wgląd w komentarze, również te usunięte. Dodatkowo może zarządzać profilami użytkowników |
 
 
 
@@ -99,7 +97,7 @@ Użytkownik Niezalogowany (UN) -> Użytkownik (U) -> Administrator (A)
 
 |ID   | NAZWA           |  UWAGI                      |     OPIS                    |
 |-----|-----------------|-----------------------------|-----------------------------|
-|UC01 |Logowanie  | UN| Użytkownik podejmuje próbę zalogowania, wprowadzając w formularzu logowania swój adres e-mail oraz hasło. Sprawdzana jest obecność podanego adresu e-mail w bazie danych użytkowników oraz poprawność wprowadzonego hasła. Jeśli hasło jest niepoprawne, wyświetlany jest odpowiedni komunikat oraz link do zresetowania hasła. Po poprawnym wprowadzeniu hasła użytkownik zostaje zalogowany i uzyskuje dostęp do funkcjonalności użytkownika zalogowanego|
+|UC01 |Autoryzacja | UN| Użytkownik podejmuje próbę autoryzacji, wprowadzając w formularzu logowania swój adres e-mail oraz hasło. Sprawdzana jest obecność podanego adresu e-mail w bazie danych użytkowników oraz poprawność wprowadzonego hasła. Jeśli hasło jest niepoprawne, wyświetlany jest odpowiedni komunikat oraz link do zresetowania hasła. Po poprawnym wprowadzeniu hasła użytkownik zostaje zalogowany i uzyskuje dostęp do funkcjonalności użytkownika zalogowanego|
 |UC02 |Rejestracja |UN |Użytkownik podczas próby rejestracji podaje w formularzu swój adres e-mail (sprawdzana jest jego poprawność – jeśli niepoprawny, wyświetlany jest popup proszący o poprawę) i hasło oraz powtórzone hasło. Asynchronicznie sprawdzana jest zgodność obu pól – jeśli się nie zgadzają, użytkownik jest proszony o poprawienie zgodności. Adresy e-mail w bazie danych nie mogą się powtarzać.|
 |UC03 |Wylogowanie |U |Zalogowany użytkownik może wylogować się poprzez naciśnięcie przycisku na dowolnej stronie. Wówczas tracony jest dostęp do funkcjonalności zalogowanego użytkownika.|
 |UC04 | Przegląd artykułów |UN | Każdy z użytkowników po przejściu do zakładki "Artykuły" ma możliwość przeglądania dodanych artykułów. Jeśli do artykułu są komentarze, również są widoczne.|
@@ -128,10 +126,10 @@ Użytkownik Niezalogowany (UN) -> Użytkownik (U) -> Administrator (A)
 |ADMINISTRATORZY|W06, W08-W12|Administrator może dodawać artykuły, ciekawostki, tagi oraz komentarze oraz nimi zarządzać. Dodatkowo ma możliwość zarządzania kontami użytkowników. Ponadto zarządza wiadomościami kontaktowymi. | Osoba|
 
 ## Diagram UC
-![Diagram UC](https://files.tinypic.pl/i/00978/r53icsih0z91.png)
+![Diagram UC](https://pics.tinypic.pl/i/00978/ejxf10p53ptj.png)
 ## Przypadki użycia
 
-### UC01 Logowanie
+### UC01 Autoryzacja
 
 Jako użytkownik niezalogowany,
 
@@ -437,6 +435,19 @@ Scenariusz:
     
 3.  Wysyła zapytanie wybierając przycisk Wyślij.
 
+## Przykładowe diagramy BPMN
+Dodawanie artykułu i komentarza
+![diagram BPMN](https://pics.tinypic.pl/i/00978/89x67a9ral0s.png)
+
+Wysłanie wiadomości poprzez formularz kontaktowy
+![diagram BPMN](https://pics.tinypic.pl/i/00978/bu9cmwgorta5.png)
+
+## Przykładowe diagramy sekwencji UML
+Wysyłanie wiadomości kontaktowej.
+![diagram sekwencji UML](https://pics.tinypic.pl/i/00978/en1jy6tv9e0l.png)
+
+Rejestracja i dodanie komentarza.
+![diagram sekwencji UML](https://pics.tinypic.pl/i/00978/7g50ln1a8znp.png)
 ## Diagram bazy danych
 
 ![Diagram bazy danych](https://files.tinypic.pl/i/00978/wgbdfmyfy35p.png)
@@ -450,11 +461,10 @@ Scenariusz:
 | Lp. | Zagrożenie                                                  | Wielkość szkody (S) |                       | Prawdopodobieństwo powstania szkody (P) |                    | Ryzyko (W) , W = S x P |                             |
 |-----|-------------------------------------------------------------|---------------------|-----------------------|-----------------------------------------|--------------------|------------------------|-----------------------------|
 | 1.  | Atak na system bazodanowy                                   | S=3                 | Znaczne szkody        | P=4                                     | dosyć częste       | W=12                   | ryzyko niedopuszczalne      |
-| 2.  | Przechwycenie danych bankowych klienta                      | S=3                 | Znaczne szkody        | P=3                                     | prawdopodobne      | W=9                    | dopuszczalna akceptowalność |
-| 3.  | Awaria serwera hostującego serwis i bazę danych             | S=2                 | Wymierne szkody       | P=3                                     | prawdopodobne      | W=6                    | dopuszczalna akceptowalność |
-| 4.  | Błąd aplikacji serwisu uniemożliwiający korzystanie z niego | S=2                 | Wymierne szkody       | P=3                                     | prawdopodobne      | W=6                    | dopuszczalna akceptowalność |
-| 5.  | Zerwanie łączności z serwerem                               | S=1                 | Znikome szkody        | P=4                                     | dosyć częste       | W=4                    | dopuszczalna akceptowalność |
-| 6.  | Powódź w lokalizacji serwera                                | S=4                 | Ciężkie szkody        | P=2                                     | mało prawdopodobne | W=8                    | dopuszczalna akceptowalność |
-| 7.  | Pożar w lokalizacji serwera                                 | S=5                 | Bardzo ciężkie szkody | P=2                                     | mało prawdopodobne | W=10                   | ryzyko niedopuszczalne      |
+| 2.  | Awaria serwera hostującego serwis i bazę danych             | S=2                 | Wymierne szkody       | P=3                                     | prawdopodobne      | W=6                    | dopuszczalna akceptowalność |
+| 3.  | Błąd aplikacji serwisu uniemożliwiający korzystanie z niego | S=2                 | Wymierne szkody       | P=3                                     | prawdopodobne      | W=6                    | dopuszczalna akceptowalność |
+| 4.  | Zerwanie łączności z serwerem                               | S=1                 | Znikome szkody        | P=4                                     | dosyć częste       | W=4                    | dopuszczalna akceptowalność |
+| 5.  | Powódź w lokalizacji serwera                                | S=4                 | Ciężkie szkody        | P=2                                     | mało prawdopodobne | W=8                    | dopuszczalna akceptowalność |
+| 6.  | Pożar w lokalizacji serwera                                 | S=5                 | Bardzo ciężkie szkody | P=2                                     | mało prawdopodobne | W=10                   | ryzyko niedopuszczalne      |
 
 
