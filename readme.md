@@ -1,4 +1,3 @@
-
 # Wulkanizator project
 
 ## How to install?
@@ -449,7 +448,91 @@ System będzie budowany na wzorcu architektonicznym MVC, można dzięki temu ods
 
 Dodatkowo wykorzystamy framework Symfony w celu uproszczenie konfiguracji trudnych części projektu i zapewnimy sobie profesjonalne wsparcie dla kluczowych elementów takich jak logowanie, przesyłanie do bazy danych, pobieranie rekordów z bazy danych, ogólnie mówiąc kwestie bezpieczeństwa.
 
-## Identyfikacja klas
+## Identyfikacja klas i  określenie zakresu funkcjonalnego
+
+### Controllers:
+
+- **AccountController** - obsługa profilu użytownika.
+Jego komentarze (usuwanie, edytwanie), informacje (zmiana danych, maila, hasła), dane (zmiana imienia, nazwiska, maila), awatar (zmiana awatara na inny) i zarządzanie nimi.
+- **AdminController** - obsługa serwisu z panelu administratora, wszystkie operacje które Administrator może używać.
+ Zarządzanie użytkownikami (usuwanie, edytowanie, banowanie, blokowanie), komentarze użytkownika z podziałem na konkretnego i na wszystkie opublikowane komentarze (wyświetlanie szczegółów, usuwanie, blokowanie, ukrywanie), zmiana avataru użytkownika, zarządzanie artykułami (dodawanie, publikowanie, ukrywanie, usuwanie, edytowanie, wyświetlanie zawartości i/lub szczegółów i statystyk, wyświetlanie jego komentarzy i zarzadzanie nimi), zarządzanie tagami (dodawanie, przypisywanie do artykułów, modyfikowanie istniejących, usuwanie).
+- **ArticleController** - zarządzanie główną częścią widocznej dla użytkownika strony (homepage).
+Wyświetlanie strony głównej portalu z umieszczeniem artykułów i ciekawostek, wyświetlanie konkretnych artykułów wraz z komentarzami, obsługa dodawania komentarzy,
+- **ContactController** - klasa odpowiedzialna za obsługe zdarzenia dodania informacji kontaktowej.
+Wyświetlenie strony dodwawania informacji kontaktowej, przeprowadzenie validacji tychże danych, wysłanie na serwer informacji, wyświetlenie administratorowi wszystkich dostępnych przychodzących wiadomości z możliwością usuwania i dopowadania na nie.
+- **CuriosityController** - klasa odpowiedzialna za ciekawostki.
+Administrator może tutaj dodawać usuwać edytować ciekawostki pojawiające się na stronie głównej.
+- **SecurityController** - klasa odpowiedzialna za logowanie i rejestracje użytkownika.
+Sprawdzenie poprawności wprowadzonych danych za pomocą innych klas: LoginFormAuthenticator i Klas odpowiedzialnych za generowanie formularzy, wylogowywanie.
+- **TagController** - Wyświetlenie informacji o tagach dla użytkownika (możliwośc przechodzenia do innych artykułów za pomocą wyboru tagu odpowadającego)
+
+### Fixtures:
+
+- **BaseFixutres** - klasa abstrakcyjna wprowadzająca funckje które ułatwiają wprowadzanie danych testowych.
+- **Article, Comment, Curiosity, Tag, Photo, User Fixtures** - klasy służą generowaniu odpowiednich obiektów w naszym projekcie i przekzaują rekordy do podłączonej bazy danych
+
+### Entities:
+
+- **Article, Comment, Curiosity, Tag, ReceivedContact, User, UserPhoto** - klasy odpowiadające encją w naszej bazie danych zawierają wszelkie potrzebne funkcje to pobierania wyświetlania i ustawiania danych w bazie/obiekcie.
+
+### Forms:
+
+- Klasy odpowiedzialne za stworzenie, wygenerowanie i walidacje formularzy umieszczanych na stronach używanych do edycji i tworzenia (np. artykułu, tagu itd.)
+
+### Migrations:
+
+- Klasy odpowiedzialne za tworzenie bazy danych opartej na stworzonych klasach entities, z podziałem na czas edycji.
+
+### Repositories:
+
+- Klasy odpowiedzialne za wszelkie kwerendy na bazie danych umożliwiające dostęp rekord-obiekt, obiekt-rekord, zawierają się tam funkcjie umożliwiające przeszukiwanie po id, nazwach, emailach, umożliwiają sortowanie itp operacje na bazie.
+W skład wchodzi: **Article/Comment/Curiosity/ReceivedContact/Tag/UserPhoto/User-Repository**
+
+### Security:
+
+- **LoginFormAuthenticator** klasa odpowiedzialna za przeprowadzenie autentykacji i autoryzacji użytkownika, posiada metody które sprawdzają bieżący kontroler, pobierają dane z formularza logowania, ustawiają ostatniego użytkownika, pobierają użytkownika z bazy o danych wprowadzonych w formularzu, sprawdzają poprawność wprowadzonych danych, wykonują akcje przekierowania na poprzednia stronę, logują użytkownika tworzą sesję, wylogowywują użytkownika,
+
+### Validator:
+
+- klasa **UniqueCuriosity** sprawdza niemapowane pola w dodawaniu ciekawostki.
+
+Dodatkowo prócz klas mamy templates które umożliwają nam generowanie widoków dla użytkownika i przy wspołpracy z kontrolerami mamy możliwość wyświetlania zmiennych i rekordów. Poniżej znajduje się opis:
+
+### Templates:
+
+- **/account** - zawiera widoki umożliwiające wyświetlanie zawartości stron: zmiany avataru, komentarzy użytkownika, zmiany danych użytkownika, podsumowania.
+- **/admin** - *./articles ./comments ./tags ./users* - zawiera widoki dotyczące wyświetlania tabelek crud dla artykułów komentarzy tagów users.
+- **/article** - zawiera widoki dla wyświetlania artykułów i strony głównej
+- **/contact** - zawiera widoki do wyświetlania strony Contact
+- **/curiosity** - zawiera widoki do edycji i zarzadzania ciekawostkami
+- **/security** - zawiera widoki formularzy logowania i rejestracji
+- **/tag** - zawiera widoki wyświetlania tagów i artykułów im odpowiadających
+- **/** - zawiera główne templaty z których korzystają podfoldery
+
+![Kernel](docs/images/Kernel.png)
+
+![Authenticator](docs/images/Authenticator.png)
+
+![Controllers](docs/images/Controllers.png)
+
+![Entities](docs/images/Entities.png)
+
+![Fixures](docs/images/Fixtures.png)
+
+![Forms](docs/images/Forms.png)
+
+![Repository](docs/images/Repository.png)
+
+![Validator](docs/images/Validator.png)
+
+## Wykorzystane wzorce:
+
+- Builder - tworzenie zapytań do bazy SQL,
+- Strategia - dodawanie użytkowników, modyfikacja encji,
+- MVC,
+- Adapter - widoki
+- inne wzorce bazujące na frameworku Symfony.
+
 
 ## Przykładowe diagramy BPMN
 Dodawanie artykułu i komentarza
