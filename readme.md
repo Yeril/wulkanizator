@@ -2,18 +2,16 @@
 
 **Autorzy**: Rafał Gałek, Dawid Jasztal
 
-
 ## Cel i przeznaczenie dokumentu
 
 Niniejszy dokument ma na celu przedstawienie specyfikacji projektu system informatycznego bloga. Dokument uwzględnia pełną funkcjonalność systemu, zawiera szczegółowy spis wymagań funkcjonalnych i niefunkcjonalnych, przypadki użycia oraz listę aktorów. Ponadto w kolejnych wersjach dokumentu, został on rozbudowany o przykładowy diagram BPMN, projekt bazy danych oraz wykres Gantta.
 
 ## **Słownik użytych skrótów**
 
-|  Skrót/pojęcie |Opis                           | 
+|  Skrót/pojęcie |Opis                           |
 |----------------|-------------------------------|
 | W              | Wymaganie                     |
 | UC             | Use Case - przypadek użycia   |
-
 
 ## Ogólny opis założeń systemu i wymagań
 
@@ -44,56 +42,52 @@ Cele projektu - zgodnie z metodologią S.M.A.R.T. (pol. Z.M.O.R.A. - Zdefiniowan
 a) Cele ogólne (np. bycie liderem na rynku, odzyskanie pozycji itp.)
 
 -   zbudowanie działającego systemu bloga,
-    
+
 -   zbudowanie innowacyjnego projektu cieszącego się popularnością.
-        
+
 
 b) Cele bezpośrednie (np. zarobienie określonej sumy, zdobycie X klientów itp.)
 
 -   zdobycie 5% klientów korzystających z podobnych rozwiązań w okresie 1 miesiąca od wdrożenia,
-    
+
 -   zwrot budżetu początkowego w okresie 12 miesięcy od wdrożenia,
-    
+
 -   znaleźć się na wysokim miejscu w pozycjonowaniu Google.
-    
+
 
 c) Cele produktowe (np. aplikacja do... , wdrożenie w ciągu X miesięcy, akcja marketingowa itp.)
 
 -   wdrożenie systemu w 7 miesięcy,
-    
+
 -   wprowadzenie responsywności na urządzenia mobilne,
-    
+
 -   przeniesienie całej papierowej bazy na bazę danych,
-    
+
 -   kampania reklamowa na środkach publicznego transportu oraz reklamy internetowe.
-    
+
 
 d) Cele proceduralne - określenie co będzie potrzebne(budżet, czas, pracownicy, forma realizacji)
 
 -   przewidywany budżet 10 000 zł,
-    
--   przewidywany czas to 7 miesięcy,
-    
--   3 pracowników zajmujących się programowaniem,
-    
--   realizacja projektu w HTML, JS, CSS, PHP.
 
+-   przewidywany czas to 7 miesięcy,
+
+-   3 pracowników zajmujących się programowaniem,
+
+-   realizacja projektu w HTML, JS, CSS, PHP.
 
 ## Określenie kto będzie korzystał z systemu
 
 Spis rodzajów użytkowników wraz z ich celami i funkcjami.
 
-| TYP  | CELE  |  FUNKCJE   | 
-|------|-------|------------|  
- | UŻYTKOWNICY   | W01, W02, W03, W05, W09  | Użytkownicy portalu pełnią funkcję czytelników bloga. Mają możliwość kontaktowania się z administratorami poprzez formularz. Jako zalogowany użytkownik otrzymuje możliwość komentowania artykułów oraz zarządzania własnym kontem. |  
- | ADMINISTRATORZY | W04, W06, W07, W08, W10 | Administrator posiada możliwość zarządzania artykułami, ciekawostkami oraz tagami. Może je dodawać, edytować, publikować/odpublikować, oraz usuwać. Jako administrator ma wgląd w komentarze, również te usunięte. Dodatkowo może zarządzać profilami użytkowników | 
-
-
-
+| TYP  | CELE  |  FUNKCJE   |
+|------|-------|------------|
+ | UŻYTKOWNICY   | W01, W02, W03, W05, W09  | Użytkownicy portalu pełnią funkcję czytelników bloga. Mają możliwość kontaktowania się z administratorami poprzez formularz. Jako zalogowany użytkownik otrzymuje możliwość komentowania artykułów oraz zarządzania własnym kontem. |
+ | ADMINISTRATORZY | W04, W06, W07, W08, W10 | Administrator posiada możliwość zarządzania artykułami, ciekawostkami oraz tagami. Może je dodawać, edytować, publikować/odpublikować, oraz usuwać. Jako administrator ma wgląd w komentarze, również te usunięte. Dodatkowo może zarządzać profilami użytkowników |
 
 ## Lista przypadków użycia
 
-Priorytet uprawnień:  
+Priorytet uprawnień:
 Użytkownik Niezalogowany (UN) -> Użytkownik (U) -> Administrator (A)
 
 |ID   | NAZWA           |  UWAGI                      |     OPIS                    |
@@ -117,7 +111,6 @@ Użytkownik Niezalogowany (UN) -> Użytkownik (U) -> Administrator (A)
 |UC17| Edytowanie danych| U | Zalogowany użytkownik w swoim profilu ma możliwość zmiany swoich danych, takich jak e-mail, imię, nazwisko czy avatar.|
 |UC18| Wysyłanie wiadomości kontaktowej| UN | Użytkownik może skorzystać z zakładki "Kontakt" w celu skontaktowania się z Administracją. |
 
-
 ## Lista aktorów
 
 |TYP  | CELE            |  FUNKCJE                    |   RODZAJ                |
@@ -136,16 +129,16 @@ Jako użytkownik niezalogowany,
 
 chcę zalogować się do serwisu,
 
-aby korzystać z funkcjonalności dostępnej tylko dla osób zalogowanych. 
+aby korzystać z funkcjonalności dostępnej tylko dla osób zalogowanych.
 
 Scenariusz:
 
 1.  Użytkownik niezalogowany przechodzi do formularza logowania.
-    
+
 2.  Podaje w pola swój login (mail) i hasło.
-    
+
 3.  System przetwarza zapytanie w celu sprawdzenia poprawności sprawdzonych danych.
-    
+
 4.  W przypadku wprowadzenia poprawnych danych tworzona jest sesja, a użytkownik przenoszony na poprzednio przeglądaną stronę. W przeciwnym przypadku wyświetlany jest odpowiedni monit o błędzie wprowadzonych danych.
 
 ### UC02 Rejestracja
@@ -154,20 +147,20 @@ Jako użytkownik niezarejestrowany,
 
 chcę utworzyć nowe konto użytkownika,
 
-aby korzystać z pełnej funkcjonalności serwisu.  
+aby korzystać z pełnej funkcjonalności serwisu.
 
 Scenariusz:
 
 1.  Użytkownik niezarejestrowany przechodzi do podstrony z formularzem rejestracji.
-    
+
 2.  Wyświetlany jest formularz rejestracji.
-    
+
 3.  Obowiązkowe pola formularza to adres e-mail oraz dwukrotnie powtórzone hasło. Dodatkowo rejestrujący się użytkownik może wprowadzić dane osobowe oraz adresowe, które będą wymagane podczas realizacji zamówienia.
-    
+
 4.  Po naciśnięciu przycisku zatwierdzenia sprawdzana jest poprawność formatu adresu e-mail oraz zgodność obydwóch pól z hasłem.
-    
+
 5.  Dane o nowym użytkowniku są zapisane w tabeli użytkowników, a na jego adres e-mail wysyłana jest automatyczna wiadomość aktywacyjna.
-    
+
 6.  Po aktywacji konta osoba logująca się podanym adresem e-mail jest pełnoprawnym użytkownikiem serwisu. Brak aktywacji wiąże się z usunięciem nieaktywowanego konta po 24 godzinach.
 
 ### UC03 Wylogowanie
@@ -176,14 +169,14 @@ Jako użytkownik,
 
 chcę wylogować się,
 
-aby zakończyć sesję i opuścić serwis.  
+aby zakończyć sesję i opuścić serwis.
 
 Scenariusz:
 
 1.  Użytkownik naciska znajdujący się na każdej podstronie przycisk “Wyloguj”.
-    
+
 2.  Tracone są uprawnienia użytkownika oraz dostęp do pełnej funkcjonalności serwisu.
-    
+
 3.  Sesja użytkownika oraz tymczasowe dane zostają wyczyszczone.
 
 ### UC04 Przeglądanie artykułów
@@ -197,9 +190,9 @@ aby dodać komentarz do jednego z nich.
 Scenariusz:
 
 1.  Użytkownik przechodzi do zakładki artykuły.
-    
+
 2.  Na stronie przedstawione są artykuły, ułożone stronami i posortowane datą dodania.
-    
+
 3.  Użytkownik może przewijać stronę, zmieniać numer strony w celu znalezienia poszukiwanego artykułu.
 
 ### UC05 Przeglądanie ciekawostek
@@ -213,9 +206,9 @@ aby zapoznać się z nimi.
 Scenariusz:
 
 1.  Użytkownik przechodzi do zakładki artykuły.
-    
+
 2.  Na stronie przedstawione obok artykułów dostępny jest panel ciekawostek.
-    
+
 3.  Użytkownik może przewijać stronę, zmieniać numer strony w celu znalezienia poszukiwanej ciekawostki.
 
 ### UC06 Dodanie artykułu
@@ -229,10 +222,11 @@ aby dodać komentarz do jednego z nich.
 Scenariusz:
 
 1.  Administrator przechodzi do panelu administratora i wybiera zakładkę artykuły.
-    
+
 2.  W prawym górnym rogu wybiera Dodaj artykuł i przechodzi do formularza.
-    
+
 3.  Uzupełnia pola formularza, takie jak tytuł, zawartość oraz datę publikacji.
+
 4. Akceptuje dodatnie artykułu.
 
 ### UC07 Zarządzanie statusem artykułu
@@ -246,9 +240,9 @@ aby nie był widoczny na stronie głównej.
 Scenariusz:
 
 1.  Administrator przechodzi do panelu administratora i wybiera zakładkę artykuły.
-    
+
 2.  Wyszukuje artykułu który chce odpublikować .
-    
+
 3.  Klikając w odpowiedni przycisk odpublikowuje artykuł. Artykuł przechodzi na początek listy odpublikowanych artykułów.
 
 ### UC08 Usuwanie artykułu
@@ -262,9 +256,9 @@ aby nie udostępniać go dalej .
 Scenariusz:
 
 1.  Administrator przechodzi do panelu administratora i wybiera zakładkę artykuły.
-    
+
 2.  Wyszukuje artykułu który chce usunąć.
-    
+
 3.  Klikając w odpowiedni przycisk usuwa artykuł.
 
 ### UC09 Edytowanie artykułu
@@ -273,27 +267,27 @@ Jako administrator,
 
 chcę edytować artykuł,
 
-aby dopisać akapit.  
+aby dopisać akapit.
 
 Scenariusz:
 
 1.  Administrator przechodzi do panelu administratora.
-    
+
 2.  Przechodzi do zakładki artykuły i wyszukuje interesujący go artykuł.
-    
+
 3.  Poprzez wybranie przycisku Edytuj przełącza się w tryb edycji.
-    
+
 4.  Po zakończeniu modyfikacji akceptuje zmiany lub je porzuca.
 
-### UC10 Dodanie ciekawostki 
+### UC10 Dodanie ciekawostki
 
-Jako administrator,  
+Jako administrator,
 
-chcę dodać ciekawostkę, 
+chcę dodać ciekawostkę,
 
-aby przyciągnąć uwagę czytelników.  
+aby przyciągnąć uwagę czytelników.
 
-Scenariusz:  
+Scenariusz:
 
 1. Administrator przechodzi do panelu administratora i wybiera zakładkę ciekawostki.
 
@@ -303,15 +297,15 @@ Scenariusz:
 
 4. Akceptuje dodatnie ciekawostki.
 
-### UC11 Usuwanie ciekawostki  
+### UC11 Usuwanie ciekawostki
 
-Jako administrator,  
+Jako administrator,
 
-chcę usunąć ciekawostkę,  
+chcę usunąć ciekawostkę,
 
-aby nie udostępniać jej dalej .  
+aby nie udostępniać jej dalej .
 
-Scenariusz:  
+Scenariusz:
 
 1. Administrator przechodzi do panelu administratora i wybiera zakładkę ciekawostki.
 
@@ -325,27 +319,27 @@ Jako administrator,
 
 chcę edytować ciekawostkę,
 
-aby zmienić tytuł.  
+aby zmienić tytuł.
 
 Scenariusz:
 
 1.  Administrator przechodzi do panelu administratora.
-    
+
 2.  Przechodzi do zakładki ciekawostki i wyszukuje interesującą go ciekawostkę.
-    
+
 3.  Poprzez wybranie przycisku Edytuj przełącza się w tryb edycji.
-    
+
 4.  Po zakończeniu modyfikacji akceptuje zmiany lub je porzuca.
 
 ### UC13 Dodanie tagu
 
-Jako administrator,  
+Jako administrator,
 
-chcę dodać tag, 
+chcę dodać tag,
 
-aby otagować artykuł.  
+aby otagować artykuł.
 
-Scenariusz:  
+Scenariusz:
 
 1. Administrator przechodzi do panelu administratora i wybiera zakładkę tagi.
 
@@ -357,13 +351,13 @@ Scenariusz:
 
 ### UC14 Usuwanie tagu
 
-Jako administrator,  
+Jako administrator,
 
-chcę usunąć tag,  
+chcę usunąć tag,
 
-aby nie widniał przy artykułach .  
+aby nie widniał przy artykułach .
 
-Scenariusz:  
+Scenariusz:
 
 1. Administrator przechodzi do panelu administratora i wybiera zakładkę tagi.
 
@@ -373,13 +367,13 @@ Scenariusz:
 
 ### UC15 Dodanie komentarza
 
-Jako użytkownik zalogowany,  
+Jako użytkownik zalogowany,
 
-chcę dodać komentarz, 
+chcę dodać komentarz,
 
-aby dołączyć do dyskusji pod artykułem.  
+aby dołączyć do dyskusji pod artykułem.
 
-Scenariusz:  
+Scenariusz:
 
 1. Użytkownik przechodzi do wybranego artykułu.
 
@@ -390,12 +384,12 @@ Scenariusz:
 
 ### UC16 Usuwanie komentarza
 
-Jako użytkownik zalogowany,  
+Jako użytkownik zalogowany,
 
-chcę usunąć komentarz, 
+chcę usunąć komentarz,
 
 aby nie widniał pod artykułem.
-Scenariusz:  
+Scenariusz:
 
 1. Użytkownik przechodzi do panelu swojego konta i zakładki komentarze.
 
@@ -410,30 +404,30 @@ Jako użytkownik,
 
 chcę zmienić dane swojego konta,
 
-aby zaktualizować swój adres e-mail.  
+aby zaktualizować swój adres e-mail.
 
 Scenariusz:
 
 1.  Zalogowany użytkownik przechodzi do panelu swojego konta i zakładki dane.
-    
+
 2.  Modyfikuje istniejące dane .
-    
+
 3.  Akceptuje zmiany odpowiednim przyciskiem lub je odrzuca.
-    
+
 ### UC18 Wysyłanie wiadomości kontaktowej
 
 Jako użytkownik niezalogowany,
 
 chcę wysłać pytanie do administratora,
 
-aby prosić o zgodę na wykorzystanie jego artykułu.  
+aby prosić o zgodę na wykorzystanie jego artykułu.
 
 Scenariusz:
 
 1.  Niezalogowany użytkownik przechodzi do zakładki kontakt.
-    
+
 2.  Uzupełnia pola formularza, takie jak e-mail i treść wiadomości .
-    
+
 3.  Wysyła zapytanie wybierając przycisk Wyślij.
 
 ## Przykładowe diagramy BPMN
