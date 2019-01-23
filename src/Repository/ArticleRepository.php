@@ -89,4 +89,15 @@
         {
             return $qb ?: $this->createQueryBuilder('a');
         }
+
+        public function findAllofTag($tag)
+        {
+            return $this->createQueryBuilder('a')
+                ->leftJoin('a.tags', 'tags')
+                ->andWhere('tags.id=:tag')
+                ->setParameter('tag', $tag)
+                ->orderBy('a.publishedAt', 'DESC')
+                ->getQuery()
+                ->getResult();
+        }
     }

@@ -9,6 +9,7 @@
 
 {% block admin_page_body %}
     {% for message in app.session.flashBag.get('success') %}
+        <!--suppress ExceptionCaughtLocallyJS -->
         <div class="alert alert-success">
             {{ message }}
         </div>

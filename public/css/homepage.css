@@ -29,12 +29,6 @@ body {
     text-shadow: 1px 1px 1px #ebebeb, 1px 1px 1px #5a6268;
 }
 
-.footer {
-    display: block;
-    width: 100%;
-    text-align: center;
-}
-
 
 .main-article {
     border: 2px solid #efefee;

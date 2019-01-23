@@ -4,7 +4,6 @@
 
     use App\Entity\Curiosity;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-    use Doctrine\Common\Collections\Criteria;
     use Symfony\Bridge\Doctrine\RegistryInterface;
 
     /**

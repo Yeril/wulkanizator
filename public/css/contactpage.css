@@ -28,13 +28,6 @@
     resize: vertical;
 }
 
-.hint-text {
-    font-size: 15px;
-    text-align: center;
-    padding-bottom: 25px;
-    opacity: 0.8;
-}
-
 #map {
     height: 400px;
     /* The height is 400 pixels */

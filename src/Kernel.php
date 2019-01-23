@@ -1,6 +1,9 @@
-<?php
+<?php /** @noinspection PhpIncludeInspection */
+    /** @noinspection ALL */
 
-namespace App;
+    /** @noinspection PhpUnhandledExceptionInspection */
+
+    namespace App;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;

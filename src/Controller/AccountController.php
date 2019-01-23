@@ -22,6 +22,7 @@
          * @Route("/account", name="app_account")
          * @IsGranted("ROLE_USER")
          * @param SecurityController $securityController
+         * @param ArticleRepository $articleRepository
          * @return \Symfony\Component\HttpFoundation\Response
          */
         public function index(SecurityController $securityController, ArticleRepository $articleRepository)
@@ -32,10 +33,15 @@
             //clear sql
             $heartCountForUser = $articleRepository->getHeartCountForUID($user->getId());
 
-            return $this->render('account/index.html.twig', [
+            $response = $this->render('account/index.html.twig', [
                 'user' => $user,
                 'heartcount' => $heartCountForUser,
             ]);
+
+            $response->headers->addCacheControlDirective('must-revalidate', true);
+            $response->headers->addCacheControlDirective('no-cache', true);
+            $response->headers->addCacheControlDirective('no-store', true);
+            return $response;
         }
 
         /**
@@ -139,7 +145,6 @@
 
             /** @var Comment $comments */
             $comment = $commentRepository->find($id);
-            $comments = $user->getNonDeletedComments();
             //not our comment
             if (!$comment) {
                 throw new \Exception("Nie znaleziono takiego komentarza!");
