@@ -18,6 +18,7 @@
         /**
          * @Route("/", name="app_homepage")
          * @param ArticleRepository $articleRepository
+         * @param CuriosityRepository $curiosityRepository
          * @param Request $request
          * @param PaginatorInterface $paginator
          * @return \Symfony\Component\HttpFoundation\Response
@@ -57,8 +58,11 @@
 
         /**
          * @Route("/articles/{slug}", name="app_articles")
+         * @param Request $request
          * @param Article $article
          * @param CommentRepository $commentRepository
+         * @param $slug
+         * @param SecurityController $securityController
          * @return \Symfony\Component\HttpFoundation\Response
          */
         public function articles(Request $request, Article $article, CommentRepository $commentRepository, $slug, SecurityController $securityController)

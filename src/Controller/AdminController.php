@@ -34,14 +34,20 @@
     {
         /**
          * @Route("/admin", name="app_admin")
+         * @param SecurityController $securityController
+         * @return Response
          */
         public function index(SecurityController $securityController)
         {
             /** @var User $user */
             $user = $securityController->getUser();
-            return $this->render('admin/index.html.twig', [
+            $response = $this->render('admin/index.html.twig', [
                 'user' => $user,
             ]);
+            $response->headers->addCacheControlDirective('must-revalidate', true);
+            $response->headers->addCacheControlDirective('no-cache', true);
+            $response->headers->addCacheControlDirective('no-store', true);
+            return $response;
         }
 
         /**
@@ -89,14 +95,13 @@
          * @param UserRepository $userRepository
          * @param $id
          * @param EntityManagerInterface $entityManager
-         * @param Request $request
          * @param ArticleRepository $articleRepository
          * @param SecurityController $securityController
          * @param CommentRepository $commentRepository
-         * @return void
+         * @return \Symfony\Component\HttpFoundation\RedirectResponse
          * @Method("DELETE")
          */
-        public function users_delete(UserRepository $userRepository, $id, EntityManagerInterface $entityManager, Request $request, ArticleRepository $articleRepository, SecurityController $securityController, CommentRepository $commentRepository)
+        public function users_delete(UserRepository $userRepository, $id, EntityManagerInterface $entityManager, ArticleRepository $articleRepository, SecurityController $securityController, CommentRepository $commentRepository)
         {
 
             /** @var User $user */
@@ -128,9 +133,10 @@
         /**
          * @Route("/admin/users/comments/{id}", name="app_admin_users_comments")
          * @param UserRepository $userRepository
+         * @param $id
          * @return \Symfony\Component\HttpFoundation\Response
          */
-        public function users_comments(UserRepository $userRepository, $id, CommentRepository $commentRepository)
+        public function users_comments(UserRepository $userRepository, $id)
         {
             /** @var User $user */
             $user = $userRepository->find($id);
@@ -143,6 +149,9 @@
         /**
          * @Route("/admin/users/details/{id}", name="app_admin_users_details")
          * @param UserRepository $userRepository
+         * @param $id
+         * @param PaginatorInterface $paginator
+         * @param Request $request
          * @return \Symfony\Component\HttpFoundation\Response
          */
         public function users_details(UserRepository $userRepository, $id, PaginatorInterface $paginator, Request $request)
@@ -208,6 +217,8 @@
          * @param UserRepository $userRepository
          * @param $id
          * @param UserPhotoRepository $userPhotoRepository
+         * @param $avatar
+         * @param EntityManagerInterface $entityManager
          * @return \Symfony\Component\HttpFoundation\Response
          */
         public function users_set_avatar(UserRepository $userRepository, $id, UserPhotoRepository $userPhotoRepository, $avatar, EntityManagerInterface $entityManager)
@@ -262,6 +273,7 @@
          * @Route("/admin/articles/add/", name="app_admin_article_add")
          * @param Request $request
          * @param EntityManagerInterface $em
+         * @param SecurityController $securityController
          * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
          */
         public function articles_add(Request $request, EntityManagerInterface $em, SecurityController $securityController)
@@ -353,12 +365,11 @@
          * @Route("/admin/articles/publish/{id}", name="app_admin_article_publish")
          * @param ArticleRepository $articleRepository
          * @param $id
-         * @param Request $request
          * @param EntityManagerInterface $entityManager
          * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
          * @throws \Exception
          */
-        public function articles_publish(ArticleRepository $articleRepository, $id, Request $request, EntityManagerInterface $entityManager)
+        public function articles_publish(ArticleRepository $articleRepository, $id, EntityManagerInterface $entityManager)
         {
             $article = $articleRepository->find($id);
             $now = new \DateTime();
@@ -373,12 +384,11 @@
          * @Route("/admin/articles/unpublish/{id}", name="app_admin_article_unpublish")
          * @param ArticleRepository $articleRepository
          * @param $id
-         * @param Request $request
          * @param EntityManagerInterface $entityManager
          * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
          * @throws \Exception
          */
-        public function articles_unpublish(ArticleRepository $articleRepository, $id, Request $request, EntityManagerInterface $entityManager)
+        public function articles_unpublish(ArticleRepository $articleRepository, $id, EntityManagerInterface $entityManager)
         {
             $article = $articleRepository->find($id);
             $article->unpublish();
@@ -393,9 +403,10 @@
          * @param ArticleRepository $articleRepository
          * @param $id
          * @param Request $request
+         * @param PaginatorInterface $paginator
          * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
          */
-        public function articles_comments(ArticleRepository $articleRepository, $id, Request $request, CommentRepository $commentRepository, PaginatorInterface $paginator)
+        public function articles_comments(ArticleRepository $articleRepository, $id, Request $request, PaginatorInterface $paginator)
         {
             /** @var Article $article */
             $article = $articleRepository->find($id);
@@ -423,6 +434,8 @@
 
         /**
          * @Route("/admin/comments", name="app_admin_comments")
+         * @param CommentRepository $commentRepository
+         * @return Response
          */
         public function comments(CommentRepository $commentRepository)
         {
@@ -487,6 +500,8 @@
 
         /**
          * @Route("/admin/tags", name="app_admin_tags")
+         * @param TagRepository $tagRepository
+         * @return Response
          */
         public function tags(TagRepository $tagRepository)
         {
@@ -499,20 +514,28 @@
 
         /**
          * @Route("/admin/tags/show/{id}", name="app_admin_tag_show")
+         * @param TagRepository $tagRepository
+         * @param $id
+         * @param ArticleRepository $articleRepository
+         * @return Response
          */
-        public function tags_show(TagRepository $tagRepository, $id)
+        public function tags_show(TagRepository $tagRepository, $id, ArticleRepository $articleRepository)
         {
             /** @var Tag[] $tags */
             $tag = $tagRepository->find($id);
-            dd($tag);
+            $articles = $articleRepository->findAllofTag($tag->getId());
 
             return $this->render('admin/tags/tag_show.html.twig', [
                 'tag' => $tag,
+                'articles' => $articles
             ]);
         }
 
         /**
          * @Route("/admin/tags/add", name="app_admin_tag_add")
+         * @param Request $request
+         * @param EntityManagerInterface $entityManager
+         * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
          */
         public function tags_add(Request $request, EntityManagerInterface $entityManager)
         {
@@ -538,6 +561,11 @@
 
         /**
          * @Route("/admin/tags/edit/{id}", name="app_admin_tag_edit")
+         * @param TagRepository $tagRepository
+         * @param $id
+         * @param EntityManagerInterface $entityManager
+         * @param Request $request
+         * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
          */
         public function tags_edit(TagRepository $tagRepository, $id, EntityManagerInterface $entityManager, Request $request)
         {
@@ -560,6 +588,10 @@
 
         /**
          * @Route("/admin/tags/delete/{id}", name="app_admin_tag_delete")
+         * @param TagRepository $tagRepository
+         * @param $id
+         * @param EntityManagerInterface $entityManager
+         * @return \Symfony\Component\HttpFoundation\RedirectResponse
          */
         public function tags_delete(TagRepository $tagRepository, $id, EntityManagerInterface $entityManager)
         {

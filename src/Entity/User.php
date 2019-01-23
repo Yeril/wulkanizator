@@ -270,7 +270,10 @@
 
         public function __toString()
         {
-            return $this->getFirstName();
+            if (!$this->getFirstName())
+                return $this->getEmail();
+            else
+                return $this->getFirstName();
         }
 
         public function getPhoto(): ?UserPhoto
