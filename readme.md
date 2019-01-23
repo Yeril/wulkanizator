@@ -82,6 +82,7 @@ d) Cele proceduralne - określenie co będzie potrzebne(budżet, czas, pracownic
 ## Określenie kto będzie korzystał z systemu
 
 Spis rodzajów użytkowników wraz z ich celami i funkcjami.
+
 | TYP  | CELE  |  FUNKCJE   | 
 |------|-------|------------|  
  | UŻYTKOWNICY   | W01, W02, W03, W05, W09  | Użytkownicy portalu pełnią funkcję czytelników bloga. Mają możliwość kontaktowania się z administratorami poprzez formularz. Jako zalogowany użytkownik otrzymuje możliwość komentowania artykułów oraz zarządzania własnym kontem. |  
