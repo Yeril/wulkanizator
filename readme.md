@@ -12,6 +12,8 @@ php bin/console doctrine:fixtures:load
 ```
 >Use default `user0@user0.com:user` or `admin0@admin0.com:admin`
 
+
+
 **Autorzy**: Rafał Gałek, Dawid Jasztal
 
 ## Cel i przeznaczenie dokumentu
@@ -455,25 +457,25 @@ Dodatkowo wykorzystamy framework Symfony w celu uproszczenie konfiguracji trudny
 - **AccountController** - obsługa profilu użytownika.
 Jego komentarze (usuwanie, edytwanie), informacje (zmiana danych, maila, hasła), dane (zmiana imienia, nazwiska, maila), awatar (zmiana awatara na inny) i zarządzanie nimi.
 - **AdminController** - obsługa serwisu z panelu administratora, wszystkie operacje które Administrator może używać.
- Zarządzanie użytkownikami (usuwanie, edytowanie, banowanie, blokowanie), komentarze użytkownika z podziałem na konkretnego i na wszystkie opublikowane komentarze (wyświetlanie szczegółów, usuwanie, blokowanie, ukrywanie), zmiana avataru użytkownika, zarządzanie artykułami (dodawanie, publikowanie, ukrywanie, usuwanie, edytowanie, wyświetlanie zawartości i/lub szczegółów i statystyk, wyświetlanie jego komentarzy i zarzadzanie nimi), zarządzanie tagami (dodawanie, przypisywanie do artykułów, modyfikowanie istniejących, usuwanie).
+ Zarządzanie użytkownikami (usuwanie, edytowanie, banowanie, blokowanie), komentarze użytkownika z podziałem na konkretnego i na wszystkie opublikowane komentarze (wyświetlanie szczegółów, usuwanie, blokowanie, ukrywanie), zmiana awataru użytkownika, zarządzanie artykułami (dodawanie, publikowanie, ukrywanie, usuwanie, edytowanie, wyświetlanie zawartości i/lub szczegółów i statystyk, wyświetlanie jego komentarzy i zarządzanie nimi), zarządzanie tagami (dodawanie, przypisywanie do artykułów, modyfikowanie istniejących, usuwanie).
 - **ArticleController** - zarządzanie główną częścią widocznej dla użytkownika strony (homepage).
-Wyświetlanie strony głównej portalu z umieszczeniem artykułów i ciekawostek, wyświetlanie konkretnych artykułów wraz z komentarzami, obsługa dodawania komentarzy,
-- **ContactController** - klasa odpowiedzialna za obsługe zdarzenia dodania informacji kontaktowej.
-Wyświetlenie strony dodwawania informacji kontaktowej, przeprowadzenie validacji tychże danych, wysłanie na serwer informacji, wyświetlenie administratorowi wszystkich dostępnych przychodzących wiadomości z możliwością usuwania i dopowadania na nie.
+Wyświetlanie strony głównej portalu z umieszczeniem artykułów i ciekawostek, wyświetlanie konkretnych artykułów wraz z komentarzami, obsługa dodawania komentarzy.
+- **ContactController** - klasa odpowiedzialna za obsługę zdarzenia, dodania informacji kontaktowej.
+Wyświetlenie strony dodwawania informacji kontaktowej, przeprowadzenie validacji tychże danych, wysłanie na serwer informacji, wyświetlenie administratorowi wszystkich dostępnych przychodzących wiadomości z możliwością usuwania i odpowiadania na nie.
 - **CuriosityController** - klasa odpowiedzialna za ciekawostki.
-Administrator może tutaj dodawać usuwać edytować ciekawostki pojawiające się na stronie głównej.
+Administrator może tutaj dodawać, usuwać, edytować ciekawostki pojawiające się na stronie głównej.
 - **SecurityController** - klasa odpowiedzialna za logowanie i rejestracje użytkownika.
 Sprawdzenie poprawności wprowadzonych danych za pomocą innych klas: LoginFormAuthenticator i Klas odpowiedzialnych za generowanie formularzy, wylogowywanie.
-- **TagController** - Wyświetlenie informacji o tagach dla użytkownika (możliwośc przechodzenia do innych artykułów za pomocą wyboru tagu odpowadającego)
+- **TagController** - Wyświetlenie informacji o tagach dla użytkownika (możliwość przechodzenia do innych artykułów za pomocą wyboru tagu odpowadającego).
 
 ### Fixtures:
 
-- **BaseFixutres** - klasa abstrakcyjna wprowadzająca funckje które ułatwiają wprowadzanie danych testowych.
-- **Article, Comment, Curiosity, Tag, Photo, User Fixtures** - klasy służą generowaniu odpowiednich obiektów w naszym projekcie i przekzaują rekordy do podłączonej bazy danych
+- **BaseFixutres** - klasa abstrakcyjna wprowadzająca funkcje, które ułatwiają wprowadzanie danych testowych.
+- **Article, Comment, Curiosity, Tag, Photo, User Fixtures** - klasy służą generowaniu odpowiednich obiektów w naszym projekcie i przekzaują rekordy do podłączonej bazy danych.
 
 ### Entities:
 
-- **Article, Comment, Curiosity, Tag, ReceivedContact, User, UserPhoto** - klasy odpowiadające encją w naszej bazie danych zawierają wszelkie potrzebne funkcje to pobierania wyświetlania i ustawiania danych w bazie/obiekcie.
+- **Article, Comment, Curiosity, Tag, ReceivedContact, User, UserPhoto** - klasy odpowiadające encją w naszej bazie danych zawierają wszelkie potrzebne funkcje do pobierania, wyświetlania i ustawiania danych w bazie/obiekcie.
 
 ### Forms:
 
@@ -485,29 +487,29 @@ Sprawdzenie poprawności wprowadzonych danych za pomocą innych klas: LoginFormA
 
 ### Repositories:
 
-- Klasy odpowiedzialne za wszelkie kwerendy na bazie danych umożliwiające dostęp rekord-obiekt, obiekt-rekord, zawierają się tam funkcjie umożliwiające przeszukiwanie po id, nazwach, emailach, umożliwiają sortowanie itp operacje na bazie.
-W skład wchodzi: **Article/Comment/Curiosity/ReceivedContact/Tag/UserPhoto/User-Repository**
+- Klasy odpowiedzialne za wszelkie kwerendy na bazie danych umożliwiające dostęp rekord-obiekt, obiekt-rekord, zawierają się tam funkcje umożliwiające przeszukiwanie po id, nazwach, emailach, umożliwiają sortowanie itp operacje na bazie.
+W skład wchodzi: **Article/Comment/Curiosity/ReceivedContact/Tag/UserPhoto/User-Repository**.
 
 ### Security:
 
-- **LoginFormAuthenticator** klasa odpowiedzialna za przeprowadzenie autentykacji i autoryzacji użytkownika, posiada metody które sprawdzają bieżący kontroler, pobierają dane z formularza logowania, ustawiają ostatniego użytkownika, pobierają użytkownika z bazy o danych wprowadzonych w formularzu, sprawdzają poprawność wprowadzonych danych, wykonują akcje przekierowania na poprzednia stronę, logują użytkownika tworzą sesję, wylogowywują użytkownika,
+- **LoginFormAuthenticator** klasa odpowiedzialna za przeprowadzenie autentykacji i autoryzacji użytkownika, posiada metody które sprawdzają bieżący kontroler, pobierają dane z formularza logowania, ustawiają ostatniego użytkownika, pobierają użytkownika z bazy o danych wprowadzonych w formularzu, sprawdzają poprawność wprowadzonych danych, wykonują akcje przekierowania na poprzednia stronę, logują użytkownika, tworzą sesję, wylogowywują użytkownika.
 
 ### Validator:
 
 - klasa **UniqueCuriosity** sprawdza niemapowane pola w dodawaniu ciekawostki.
 
-Dodatkowo prócz klas mamy templates które umożliwają nam generowanie widoków dla użytkownika i przy wspołpracy z kontrolerami mamy możliwość wyświetlania zmiennych i rekordów. Poniżej znajduje się opis:
+Dodatkowo prócz klas mamy templates które umożliwają nam generowanie widoków dla użytkownika i przy współpracy z kontrolerami mamy możliwość wyświetlania zmiennych i rekordów. Poniżej znajduje się opis:
 
 ### Templates:
 
-- **/account** - zawiera widoki umożliwiające wyświetlanie zawartości stron: zmiany avataru, komentarzy użytkownika, zmiany danych użytkownika, podsumowania.
-- **/admin** - *./articles ./comments ./tags ./users* - zawiera widoki dotyczące wyświetlania tabelek crud dla artykułów komentarzy tagów users.
-- **/article** - zawiera widoki dla wyświetlania artykułów i strony głównej
-- **/contact** - zawiera widoki do wyświetlania strony Contact
-- **/curiosity** - zawiera widoki do edycji i zarzadzania ciekawostkami
-- **/security** - zawiera widoki formularzy logowania i rejestracji
-- **/tag** - zawiera widoki wyświetlania tagów i artykułów im odpowiadających
-- **/** - zawiera główne templaty z których korzystają podfoldery
+- **/account** - zawiera widoki umożliwiające wyświetlanie zawartości stron: zmiany awataru, komentarzy użytkownika, zmiany danych użytkownika, podsumowania.
+- **/admin** - *./articles ./comments ./tags ./users* - zawiera widoki dotyczące wyświetlania tabelek crud dla artykułów, komentarzy, tagów, users.
+- **/article** - zawiera widoki dla wyświetlania artykułów i strony głównej.
+- **/contact** - zawiera widoki do wyświetlania strony Contact.
+- **/curiosity** - zawiera widoki do edycji i zarządzania ciekawostkami.
+- **/security** - zawiera widoki formularzy logowania i rejestracji.
+- **/tag** - zawiera widoki wyświetlania tagów i artykułów im odpowiadających.
+- **/** - zawiera główne templaty z których korzystają podfoldery.
 
 ![Kernel](docs/images/Kernel.png)
 
@@ -530,7 +532,7 @@ Dodatkowo prócz klas mamy templates które umożliwają nam generowanie widokó
 - Builder - tworzenie zapytań do bazy SQL,
 - Strategia - dodawanie użytkowników, modyfikacja encji,
 - MVC,
-- Adapter - widoki
+- Adapter - widoki,
 - inne wzorce bazujące na frameworku Symfony.
 
 
