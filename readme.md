@@ -430,6 +430,12 @@ Scenariusz:
 
 3.  Wysyła zapytanie wybierając przycisk Wyślij.
 
+## Przygotowanie architektury systemu
+
+System będzie budowany na wzorcu architektonicznym MVC, można dzięki temu odseparować model - bazę danych, widok - interfejs użytkownika i kontroler do połączenia pomiędzy użytkownikiem, a bazą zapewniającym wsparcie odpowiednich funkcji dla działania systemu.
+
+Dodatkowo wykorzystamy framework Symfony w celu uproszczenie konfiguracji trudnych części projektu i zapewnimy sobie profesjonalne wsparcie dla kluczowych elementów takich jak logowanie, przesyłanie do bazy danych, pobieranie rekordów z
+
 ## Przykładowe diagramy BPMN
 Dodawanie artykułu i komentarza
 ![diagram BPMN](https://pics.tinypic.pl/i/00978/89x67a9ral0s.png)
