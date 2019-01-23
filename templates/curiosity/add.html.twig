@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dodaj ciekawostkę!{% endblock %}
+
+{% block body %}
+    {% for message in app.session.flashBag.get('success-curiosity') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container mt-5">
+        <h1 class="display-4 text-center">Dodaj nową ciekawostkę</h1>
+        {{ form_start(curiosityForm, {label_attr: {class: 'form-signin'}}) }}
+        {{ form_errors(curiosityForm.title) }}
+        {{ form_row(curiosityForm.title, {
+            attr: { placeholder: 'Tytuł' },
+            label_attr: { class: 'sr-only' }
+        }) }}
+        {{ form_errors(curiosityForm.text) }}
+        {{ form_row(curiosityForm.text, {
+            attr: { placeholder: 'Treść notatki', style: 'height:70px'},
+            label_attr: { class: 'sr-only' }
+        }) }}
+        {{ form_errors(curiosityForm.link) }}
+        {{ form_row(curiosityForm.link, {
+            attr: { placeholder: 'Link do źródła'},
+            label_attr: { class: 'sr-only' }
+        }) }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Dodaj</button>
+
+        {{ form_end(curiosityForm) }}
+    </div>
+
+
+{% endblock %}
+

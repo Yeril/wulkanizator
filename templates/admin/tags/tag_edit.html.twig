@@ -1,0 +1,26 @@
+{% extends '_main.admin.html.twig' %}
+
+{% set title = 'Edytuj tag' %}
+
+{% block title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_body %}
+
+    {% block content_body %}
+        {{ form_start(tagForm, {
+        }) }}
+        {{ form_row(tagForm.name, {
+            label: 'Nazwa Tagu',
+        }) }}
+
+        {{ form_row(tagForm.article, {
+            label: 'Artykuły',
+        }) }}
+
+        <button type="submit" class="btn btn-primary">Stwórz</button>
+        {{ form_end(tagForm) }}
+    {% endblock %}
+
+{% endblock %}

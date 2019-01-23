@@ -1,0 +1,8 @@
+Email: "Adres email"
+Password: "Hasło"
+Agree terms: "Akceptuję regulamin"
+Your password should be at least {{ limit }} characters: "Twoje hasło powinno być długie na przynajmniej {{ limit }} znaków"
+'Wprowadź swój adres email': "Wprowadź swój adres email"
+'Proszę wprowadź hasło!': "Proszę wprowadź hasło!"
+'Zaakceptuj regulamin!': "Zaakceptuj regulamin!"
+'This value should not be blank.': "To pole nie może być puste."

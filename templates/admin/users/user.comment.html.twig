@@ -1,0 +1,46 @@
+{% extends '_main.admin.html.twig' %}
+
+{% set title = 'Komentarze użytkownika' %}
+
+{% block title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_title %}Admin - {{ title }} <a href="{{ path('app_admin_users_details', {id: user.id}) }}"><span
+            class="text-warning font-weight-bold">{{ user.email }}</span></a> {% endblock %}
+
+
+{% block admin_page_body %}
+    <table id="comments" class="table table-bordered align-content-center text-center align-middle">
+        <thead class="thead-dark">
+        <tr class="text-center">
+            <th>Komentarz</th>
+            <th>Artykuł</th>
+            <th>Data</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for comment in user.comments %}
+            <tr>
+                <td style="width: 30%">{{ comment.content }}</td>
+                <td style="width: 20%">
+                    <a href="{{ path('app_articles', {'slug': comment.article.slug}) }}">
+                        {{ comment.article.title }}
+                    </a>
+                </td>
+                <td style="width: 10%">{{ comment.createdAtString }}</td>
+
+                <td class="text-center" style="width: 20%">
+                    {% if not comment.isDeleted %}
+                        <a href="{{ path('app_admin_users_comments_delete', {id: comment.id}) }}">
+                            <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        </a>
+                    {% else %}
+                        <span class="text-danger font-italic">komentarz usunięty</span>
+                    {% endif %}
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

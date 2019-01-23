@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Zarejestruj się!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("css/homepage.css") }}">
+    <link rel="stylesheet" href="{{ asset("css/singinup.css") }}">
+{% endblock %}
+
+{% block body %}
+    <div class='form-signin'>
+
+        {{ form_start(registrationForm, {label_attr: {class: 'form-signin'}}) }}
+        {{ form_errors(registrationForm.email) }}
+        {{ form_row(registrationForm.email, {
+            attr: { placeholder: 'Email' },
+            label_attr: { class: 'sr-only' }
+        }) }}
+        {{ form_errors(registrationForm.password) }}
+        {{ form_row(registrationForm.password, {
+            attr: { placeholder: 'Password' },
+            label_attr: { class: 'sr-only' }
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj</button>
+
+        {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}
+

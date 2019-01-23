@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("css/homepage.css") }}">
+{% endblock %}
+
+{% block body %}
+    <section class="section section-top section-full">
+        <div class="bg-cover" id="bg-img"></div>
+        <div class="bg-overlay"></div>
+        <div class="container">
+            <div class="row justify-content-center align-items-center p-5">
+                <div class="col-md-8 col-lg-7">
+                    <h1 class="shadowed text-white text-center mb-4 text">
+                        Blog dla fanów motoryzacji
+                    </h1>
+                    <p class="shadowed lead text-white text-center mb-4">
+                        Nasz blog powstał z myślą o osobach, u których w żyłach płynie benzyna. Porady ekspertów,
+                        ciekawostki, fakty i mity, opinie użytkowników. Jeśli interesujesz się motoryzacją tak jak my to
+                        bardzo dobrze trafiłeś!
+                    </p>
+                    <p class="text-center mb-0">
+                        <a href="{{ path("app_homepage") }}" class="btn btn-lg btn-warning">
+                            Sprawdź nowe artykuły
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section p-5">
+        <div class="container text-md-left">
+            <div class="row align-items-center">
+                <div class="col-md-6 col-lg-5 offset-lg-1">
+                    <img src="{{ asset("img/cars.jpg") }}" alt="cars.jpg" class="img-fluid">
+                </div>
+                <div class="col-md-6 col-lg-4 offset-lg-1">
+                    <h2 class="shadowed-white"> Wszystkie pojazdy! </h2>
+                    <p class="text-muted"> Marka? Model? U nas nie jest to ważne. Łączymy wszystkich fanów motoryzacji w
+                        jednym miejscu. Interesujemy się każdą marką. Uwielbiamy zarówno klasyki jak i najnowsze
+                        modele.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section p-5">
+        <div class="container text-md-right">
+            <div class="row align-items-center">
+                <div class="col-md-6 col-lg-5 offset-lg-1 order-md-2">
+                    <img src="{{ asset("img/desk.jpg") }}" alt="desk.jpg" class="img-fluid">
+                </div>
+                <div class="col-md-6 col-lg-4 offset-lg-1 order-md-1">
+                    <h2 class="shadowed-white"> Każdy temat! </h2>
+                    <p class="text-muted text">Nowości ze świata motoryzacji, fakty o których nie wiedziałeś, porady od
+                        ekspertów, podsumowania najważniejszych motoryzacyjnych wydarzeń, wywiady z ludźmi z branży.
+                    </p>
+                    <a href="{{ path("app_register") }}" class="btn btn-dark">Zarejestruj się teraz!</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

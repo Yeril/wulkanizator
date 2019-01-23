@@ -1,0 +1,44 @@
+{% extends '_main.admin.html.twig' %}
+
+{% set title = 'Zmień użytkownika' %}
+
+{% block title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_body %}
+
+
+    {% block content_body %}
+        {{ form_start(userForm) }}
+        {{ form_row(userForm.email, {
+            label: 'Email'
+        }) }}
+        {{ form_row(userForm.firstName, {
+            label: 'Imię'
+        }) }}
+        {{ form_row(userForm.lastName, {
+            label: 'Nazwisko'
+        }) }}
+
+        <button type="submit" class="btn btn-danger">Zmodyfikuj</button>
+        <a href="{{ path('app_admin_users') }}">
+            <button type="button" class="btn btn-success">Anuluj</button>
+        </a>
+        {{ form_end(userForm) }}
+    {% endblock %}
+
+{% endblock %}
+
+{#{% block stylesheets %}#}
+    {#{{ parent() }}#}
+
+    {#<link rel="stylesheet" href="{{ asset('css/algolia-autocomplete.css') }}">#}
+{#{% endblock %}#}
+
+{#{% block javascripts %}#}
+    {#{{ parent() }}#}
+
+    {#<script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script>#}
+    {#<script src="{{ asset('js/algolia-autocomplete.js') }}"></script>#}
+{#{% endblock %}#}

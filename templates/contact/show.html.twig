@@ -1,0 +1,46 @@
+{% extends '_main.admin.html.twig' %}
+
+{% block title %}Admin - Kontakt{% endblock %}
+
+{% block admin_page_title %}Admin - Kontakt{% endblock %}
+
+{% block admin_page_body %}
+    {% for message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.session.flashBag.get('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container mt-5">
+        {% if mails %}
+            <table class="table table-bordered">
+                <thead class="thead-dark text-center">
+                <tr>
+                    <th>Email</th>
+                    <th>Zawartość</th>
+                    <th>Utworzono</th>
+                    <th>Akcje</th>
+                </tr>
+                </thead>
+                {% for message in mails %}
+                    <tr>
+                        <td style="width: 10%">{{ message.email }}</td>
+                        <td style="width: 60%">{{ message.content }}</td>
+                        <td style="width: 10%">{{ message.when }}</td>
+                        <td style="width: 20%" class="text-center">
+                            <a href="{{ path('app_admin_contact_delete', {'slug': message.id }) }}"
+                               class="btn btn-danger btn-sm">usuń</a>
+                            <a href="mailto:{{ message.email }}" class="btn btn-info btn-sm">odpowiedz</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="display-3 alert-warning text-center">Brak wiadomości!</div>
+        {% endif %}
+    </div>
+{% endblock %}
