@@ -1,0 +1,32 @@
+{% extends '_main.user.html.twig' %}
+
+{% set title = 'Dane' %}
+
+{% block title %}Użytkownik - {{ title }} {% endblock %}
+
+{% block user_profile_title %}Użytkownik <span class="text-secondary">{{ app.user }}</span> - {{ title }} {% endblock %}
+
+{% block user_profile_page_body %}
+    {% for message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success mt-1">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {{ form_start(userForm) }}
+    {{ form_row(userForm.email, {
+        label: 'Email'
+    }) }}
+    {{ form_row(userForm.firstName, {
+        label: 'Imię'
+    }) }}
+    {{ form_row(userForm.lastName, {
+        label: 'Nazwisko'
+    }) }}
+
+    <button type="submit" class="btn btn-danger">Zmodyfikuj</button>
+    <a href="{{ path('app_account') }}">
+        <button type="button" class="btn btn-success">Anuluj</button>
+    </a>
+    {{ form_end(userForm) }}
+{% endblock %}
+

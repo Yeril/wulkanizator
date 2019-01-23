@@ -1,0 +1,273 @@
+{% extends '_main.admin.html.twig' %}
+
+{% set title = 'Użytkownik szczegóły' %}
+
+{% block title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_title %}Admin - {{ title }} <a href="{{ path('app_admin_users_details', {id: user.id}) }}"><span
+            class="text-warning font-weight-bold">{{ user.email }}</span></a> {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+
+        .account {
+            width: 70%;
+        }
+
+        .personalDate {
+            float: left;
+            padding-left: 5%;
+        }
+
+        .table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        td {
+            align-content: center;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .articles {
+            clear: both;
+            padding: 15px;
+        }
+
+        .borderTable {
+            width: 100%;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .tables {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .tables th, td {
+            text-align: center;
+        }
+
+        .comments {
+            padding: 15px;
+        }
+    </style>
+{% endblock %}
+{% block admin_page_body %}
+    {% for message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-9">
+            <div class="date">
+
+                <div class="account d-flex">
+                    <div class="card" style="width: 18rem; border:0; min-width:135px">
+                        <a class="text-center m-auto" href="{{ path('app_admin_users_avatar', {id: user.id}) }}"><img
+                                    src="{{ asset(user.photo.path) }}" alt="{{ asset(user.photo.path) }}"
+                                    class="img-thumbnail rounded-circle float-left" style="width: 150px;height: 150px;"></a>
+                        <div class="card-body">
+                            <p class="card-text text-center">Kliknij tutaj, aby zmienić awatar.</p>
+                        </div>
+                    </div>
+                    <div class="personalDate">
+                        <h2>Dane użytkownika:</h2>
+                        <table class="table">
+                            <tr>
+                                <th>ID</th>
+                                <td>{{ user.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Imię</th>
+                                <td>{{ user.firstName }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nazwisko</th>
+                                <td>{{ user.lastName }}</td>
+                            </tr>
+                            <tr>
+                                <th>E-mail</th>
+                                <td>{{ user.email }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="action">
+                <h2>Zarządzaj kontem:</h2>
+                <table class="table">
+                    <tr>
+                        <th>Edytuj dane</th>
+                        <td><a href="{{ path('app_admin_users_edit',{id: user.id}) }}">
+                                <button class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Usuń konto</th>
+                        <td><a href="{{ path('app_admin_users_delete', {'id': user.id}) }}">
+                                <button id="user_delete" class="btn btn-danger delete-article"><i
+                                            class="fas fa-trash-alt"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="articles">
+        <h2>Artykuły użytkownika:</h2>
+        <div class="borderTable">
+            <table class="tables">
+                <tr>
+                    <th>ID</th>
+                    <th>Tytuł</th>
+                    <th>Zawartość</th>
+                    <th>Tagi</th>
+                    <th>Komentarze</th>
+                    <th>Opublikowano / Stworzono</th>
+                    <th>Akcje</th>
+                </tr>
+                {% for article in user.articles %}
+                    <tr>
+                        <td>{{ article.id }}</td>
+                        <td><a href="{{ path('app_articles', {slug: article.slug}) }}">{{ article.title }}</a></td>
+                        <td>{{ article.content|truncate(60) }}</td>
+                        <td>
+                            {% for tag in article.tags %}
+                                {{ tag.name }}
+                            {% else %}
+                                <span class="text-warning font-italic">Brak tagów</span>
+                            {% endfor %}
+
+                        </td>
+                        <td>
+                            <a href="{{ path('app_admin_article_comments', {id: article.id}) }}">
+                                <span class="fa-layers fa-fw 2x">
+                                        <i class="far fa-comment"></i> {{ article.comments|length }}
+                                </span>
+                            </a>
+                        </td>
+                        <td>
+                            {{ article.publishedAtString }}
+                            <br>
+                            {{ article.createdAtString }}
+                        </td>
+                        <td class="text-center" style="width: 20%">
+                            <a href="{{ path('app_admin_article_edit', {id: article.id}) }}">
+                                <button class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                            </a>
+                            <a href="{{ path('app_admin_article_delete', {'id': article.id}) }}">
+                                <button class="btn btn-danger delete-article" data-id="{{ article.id }}"><i
+                                            class="fas fa-trash-alt"></i></button>
+                            </a>
+                            {% if not article.ispublished %}
+                                <a href="{{ path('app_admin_article_publish', {id: article.id}) }}">
+                                    <button class="btn btn-success"><i class="fas fa-upload"></i></button>
+                                </a>
+                            {% else %}
+                                <a href="{{ path('app_admin_article_unpublish', {id: article.id}) }}">
+                                    <button class="btn btn-warning"><i class="fas fa-download"></i></button>
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center text-warning">
+                            Nie znaleziono artykułów
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div class="comments">
+        <h2>Komentarze użytkownika:</h2>
+        <div class="borderTable">
+            <table class="tables">
+                <tr>
+                    <th>ID</th>
+                    <th>Zawartość</th>
+                    <th>Utworzono</th>
+                    <th>Tytuł</th>
+                    <th>Czy usunięty</th>
+                    <th>Akcje</th>
+                </tr>
+                {% for comment in comments %}
+                    <tr>
+                        <td>{{ comment.id }}</td>
+                        <td>
+                            {{ comment.content }}
+                        </td>
+                        <td>
+                            {{ comment.getCreatedAtString }}
+                        </td>
+                        <td>
+                            {{ comment.article.title }}
+                        </td>
+                        <td>
+                            {% if not comment.isDeleted %}
+                                <a href="{{ path('app_admin_comment_show', {id: comment.id}) }}">
+                            <span
+                                    class="font-italic text-info h3">
+                                <i class="fas fa-info"></i>
+                            </span>
+                                </a>
+                            {% else %}
+                                <a href="{{ path('app_admin_comment_show', {id: comment.id}) }}">
+                            <span class="font-italic text-danger h3">
+                                <i class="far fa-trash-alt"></i>
+                            </span>
+                                </a>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if comment.isDeleted %}
+                                <a>
+                                    <button class="btn btn-success create-comment" data-id="{{ comment.id }}"><i
+                                                class="fas fa-plus-square"></i></button>
+                                </a>
+                                <a>
+                                    <button class="btn btn-danger deletepermamently-comment"
+                                            data-id="{{ comment.id }}"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                </a>
+                            {% else %}
+                                <a>
+                                    <button class="btn btn-warning delete-comment" data-id="{{ comment.id }}"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-warning">
+                            Nie znaleziono komentarzy
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="6" class="text-center margin:auto">{{ knp_pagination_render(comments) }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endblock %}

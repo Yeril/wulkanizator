@@ -1,0 +1,72 @@
+{% extends '_main.user.html.twig' %}
+
+{% set title = 'Avatar' %}
+
+{% block title %}Użytkownik - {{ title }} {% endblock %}
+
+{% block user_profile_title %}Użytkownik <span class="text-secondary">{{ app.user }}</span> - {{ title }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        div.gallery img {
+            width: 70%;
+            height: auto;
+            margin: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .responsive {
+            padding: 0 6px;
+            float: left;
+            width: 19.99999%;
+        }
+
+        @media only screen and (max-width: 700px) {
+            .responsive {
+                width: 49.99999%;
+                margin: 6px 0;
+            }
+        }
+
+        @media only screen and (max-width: 500px) {
+            .responsive {
+                width: 100%;
+            }
+        }
+
+    </style>
+{% endblock %}
+
+{% block user_profile_page_body %}
+    {% for message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div>
+        <div class="gallery">
+            <h1>Bieżący avatar</h1>
+            <div class="">
+                <img style="min-width: 150px;width: 18%;" src="{{ asset(user.photo.path) }}" alt="{{ user.photo.id }}">
+            </div>
+        </div>
+    </div>
+    <div class="avatars">
+        <h1>Wybierz nowy avatar</h1>
+        {% for avatar in avatars %}
+            <div class="responsive">
+                <div class="gallery">
+                    <a
+                            href="{{ path('app_account_avatar_set', {id: user.id, avatar: avatar.id}) }}">
+                        <img src="{{ asset(avatar.path) }}" alt="{{ avatar.id }}" width="512" height="512">
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

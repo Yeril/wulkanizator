@@ -1,0 +1,45 @@
+{% extends '_main.admin.html.twig' %}
+
+{% set title = 'Ciekawostki' %}
+
+{% block title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_title %}Admin - {{ title }} {% endblock %}
+{% block admin_page_additional_button %}
+    <a href="{{ path('app_curiosity_new') }}">
+        <button class="btn btn-light"><i class="fas fa-plus-circle"></i> Dodaj nową ciekawostkę</button>
+    </a>
+{% endblock %}
+
+{% block admin_page_body %}
+    <div class="container mt-5">
+        {% if curiosities %}
+            <table class="table table-bordered">
+                <thead class="thead-dark text-center">
+                <tr>
+                    <th>Tytuł</th>
+                    <th>Tekst</th>
+                    <th>URL</th>
+                    <th>Opublikowano</th>
+                    <th>Akcje</th>
+                </tr>
+                </thead>
+                {% for curiosity in curiosities %}
+                    <tr>
+                        <td style="width: 10%">{{ curiosity.title }}</td>
+                        <td style="width: 30%">{{ curiosity.text }}</td>
+                        <td style="width: 30%"><a href="{{ curiosity.link }}" class="page-link">{{ curiosity.link }}</a>
+                        </td>
+                        <td style="width: 10%">{{ curiosity.when }}</td>
+                        <td style="width: 20%" class="text-center">
+                            <button class="btn btn-danger btn-sm">usuń</button>
+                            <button class="btn btn-warning btn-sm">edytuj</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="display-3 alert-warning text-center">Brak ciekawostek!</div>
+        {% endif %}
+    </div>
+{% endblock %}

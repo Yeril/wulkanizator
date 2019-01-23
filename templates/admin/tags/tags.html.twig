@@ -1,0 +1,61 @@
+{% extends '_main.admin.html.twig' %}
+
+{% set title = 'Tagi' %}
+
+{% block title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_title %}Admin - {{ title }}{% endblock %}
+
+{% block admin_page_additional_button %}
+    <a href="{{ path('app_admin_tag_add') }}">
+        <button class="btn btn-light"><i class="fas fa-plus-circle"></i> Utwórz nowy</button>
+    </a>
+{% endblock %}
+
+{% block admin_page_body %}
+    {% for message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <table id="tags" class="table table-bordered align-content-center text-center">
+        <thead class="thead-dark">
+        <tr class="text-center">
+            <th>ID</th>
+            <th>Nazwa</th>
+            <th>Utworzono</th>
+            <th>Artykuły</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for tag in tags %}
+            <tr>
+                <td style="width: 3%"><a class="page-link"
+                                         href="{{ path('app_admin_tag_show', {id: tag.id }) }}">{{ tag.id }}</a></td>
+                <td style="width: 10%">{{ tag.name }}</td>
+                <td style="width: 10%">{{ tag.createdAtString }}</td>
+                <td style="width: 10%">
+                    {% for tagarticle in tag.article %}
+                        <a href="{{ path('app_articles', {slug: tagarticle.slug }) }}">{{ tagarticle.title }}</a><br>
+                    {% endfor %}
+                </td>
+                <td class="text-center" style="width: 20%">
+                    <a href="{{ path('app_admin_tag_edit', {id: tag.id}) }}">
+                        <button class="btn btn-info">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                    </a>
+                    <a>
+                        <a href="{{ path('app_admin_tag_delete', {id: tag.id}) }}">
+                            <button class="btn btn-danger delete-tag" data-id="{{ tag.id }}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </a>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

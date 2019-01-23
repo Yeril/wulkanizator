@@ -567,5 +567,3 @@ Rejestracja i dodanie komentarza.
 | 4.  | Zerwanie łączności z serwerem                               | S=1                 | Znikome szkody        | P=4                                     | dosyć częste       | W=4                    | dopuszczalna akceptowalność |
 | 5.  | Powódź w lokalizacji serwera                                | S=4                 | Ciężkie szkody        | P=2                                     | mało prawdopodobne | W=8                    | dopuszczalna akceptowalność |
 | 6.  | Pożar w lokalizacji serwera                                 | S=5                 | Bardzo ciężkie szkody | P=2                                     | mało prawdopodobne | W=10                   | ryzyko niedopuszczalne      |
-
-

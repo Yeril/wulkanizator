@@ -1,0 +1,171 @@
+{% extends '_main.admin.html.twig' %}
+
+{% set title = 'Komentarze' %}
+
+{% block title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_title %}Admin - {{ title }} {% endblock %}
+
+
+{% block admin_page_body %}
+    {% for message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <table id="comments" class="table table-bordered align-content-center text-center">
+        <thead class="thead-dark">
+        <tr class="text-center">
+            <th>ID</th>
+            <th>email użytkownika</th>
+            <th>Zawartość</th>
+            <th>Czy Usunięty</th>
+            <th>Utworzono</th>
+            <th>Artykuł</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for comment in comments %}
+            <tr>
+                <td class="align-middle" style="width: 3%"><a class="page-link"
+                                                              href="{{ path('app_admin_comment_show', {id: comment.id}) }}">{{ comment.id }}</a>
+                </td>
+                <td class="align-middle" style="width: 10%">
+                    {% if comment.user %}
+                        <a href="{{ path('app_admin_users_details', {'id': comment.user.id}) }}">{{ comment.user.email }}</a>
+                    {% else %}
+                        <span class="font-italic text-danger">Użytkownik usunięty</span>
+                    {% endif %}
+                </td>
+                <td class="align-middle" style="width: 10%">{{ comment.content|truncate(50) }}</td>
+                <td class="align-middle" style="width: 10%">
+                    {% if not comment.isDeleted %}
+                        <a href="{{ path('app_admin_comment_show', {id: comment.id}) }}">
+                            <span
+                                    class="font-italic text-info h3">
+                                <i class="fas fa-info"></i>
+                            </span>
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_admin_comment_show', {id: comment.id}) }}">
+                            <span class="font-italic text-danger h3">
+                                <i class="far fa-trash-alt"></i>
+                            </span>
+                        </a>
+                    {% endif %}
+                </td>
+                <td class="align-middle" style="width: 10%">{{ comment.createdAtString }}</td>
+                <td class="align-middle" style="width: 10%">
+                    {% if comment.article %}
+                        <a href="{{ path('app_articles', {slug:comment.article.slug}) }}">{{ comment.article.title }}</a>
+                    {% else %}
+                        <span class="font-italic text-danger">Artykuł usunięty</span>
+                    {% endif %}
+                </td>
+                <td class="align-middle text-center" style="width: 10%">
+                    {% if comment.isDeleted %}
+                        <a>
+                            <button class="btn btn-success create-comment" data-id="{{ comment.id }}"><i
+                                        class="fas fa-plus-square"></i></button>
+                        </a>
+                        <a>
+                            <button class="btn btn-danger deletepermamently-comment" data-id="{{ comment.id }}"><i
+                                        class="fas fa-trash-alt"></i></button>
+                        </a>
+                    {% else %}
+                        <a>
+                            <button class="btn btn-warning delete-comment" data-id="{{ comment.id }}"><i
+                                        class="fas fa-trash-alt"></i></button>
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7" class="text-center">
+                    No comments found
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('document').ready(function () {
+            // let table = $('#comments');
+            let btndel = $('button.btn.btn-warning.delete-comment');
+            let btncre = $('button.btn.btn-success.create-comment');
+            let btnperm = $('button.btn.btn-danger.deletepermamently-comment');
+            btndel.click(function () {
+                let id = $(this).attr('data-id');
+                $.ajax({
+                    url: '{{ path('app_admin_comment_delete', {slug: 'delete'}) }}',
+                    method: 'POST',
+                    data: {id: id},
+                    success: function (returnedvalue) {
+                        if (returnedvalue === "success") {
+                            document.location.reload();
+                        }
+                        if (returnedvalue === "fail") {
+                            alert("Failed to delete comment id=" + id);
+                            document.location.reload();
+                        }
+                    },
+
+                }).fail(function () {
+                    alert("Operation Failed");
+                });
+            });
+            btncre.click(function () {
+                let id = $(this).attr('data-id');
+                $.ajax({
+                    url: '{{ path('app_admin_comment_delete', {slug: 'create'}) }}',
+                    method: 'POST',
+                    data: {id: id},
+                    success: function (returnedvalue) {
+                        if (returnedvalue === "success") {
+                            document.location.reload();
+                        }
+                        if (returnedvalue === "fail") {
+                            alert("Failed to add comment id=" + id);
+                            document.location.reload();
+                        }
+                    },
+
+                }).fail(function () {
+                    alert("Operation Failed");
+                });
+            });
+            btnperm.click(function () {
+                let id = $(this).attr('data-id');
+                if (confirm("Czy napewno chcesz usunąć komentarz z bazy?")) {
+                    $.ajax({
+                        url: '{{ path('app_admin_comment_delete', {slug: 'permamently'}) }}',
+                        method: 'POST',
+                        data: {id: id},
+                        success: function (returnedvalue) {
+                            if (returnedvalue === "success") {
+                                document.location.reload();
+                            }
+                            if (returnedvalue === "fail") {
+                                alert("Failed to delete permamently comment id=" + id);
+                                document.location.reload();
+                            }
+                        },
+
+                    }).fail(function () {
+                        alert("Operation Failed");
+                    });
+                }
+            })
+        })
+    </script>
+    <script src="https://use.fontawesome.com/releases/v5.6.3/js/all.js"
+            integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1"
+            crossorigin="anonymous"></script>
+{% endblock %}

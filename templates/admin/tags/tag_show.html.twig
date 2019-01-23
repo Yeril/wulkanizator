@@ -1,0 +1,118 @@
+{% extends '_main.admin.html.twig' %}
+
+{% set title = 'Tagi - podgląd' %}
+
+{% block title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_title %}Admin - {{ title }} {% endblock %}
+
+{% block admin_page_body %}
+    <h3>Artykuły odpowiadające tagowi
+        <a href="{{ path('app_tags', {'id': tag.id}) }}" class="badge badge-warning">{{ tag.name }}</a>
+    </h3>
+    {% for message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <table id="articles" class="table table-bordered align-content-center text-center">
+        <thead class="thead-dark">
+        <tr class="text-center">
+            <th>ID</th>
+            <th>Tytuł</th>
+            <th>Autor</th>
+            <th>Zawartość</th>
+            <th>Tagi</th>
+            <th>Like/Comment</th>
+            <th>Opublikowano / Stworzono</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td style="width: 3%"><a class="page-link"
+                                         href="{{ path('app_admin_article_comments', {id: article.id }) }}">{{ article.id }}</a>
+                </td>
+                <td style="width: 10%"><a
+                            href="{{ path('app_articles', {slug: article.slug }) }}">{{ article.title }}</a>
+                </td>
+                <td style="width: 10%"><a href="{{ path('app_admin_users_details', {id: article.author.id}) }}">
+                        {{ article.author.email }}
+                    </a></td>
+                <td style="width: 20%"> {{ article.content|truncate(60) }}</td>
+                <td style="width: 10%">
+                    {% for articletag in article.tags %}
+                        <a href="{{ path('app_admin_tag_show', { id: articletag.id }) }}">{{ articletag.name }}</a><br>
+                    {% endfor %}
+                </td>
+                <td class="h3" style="width: 10%">
+                    <span class="fa-layers fa-fw 2x">
+                        <i class="far fa-heart" style="color:red;"></i>
+                        <span class="fa-layers-counter 2x"
+                              style="color:white;background-color: black">{{ article.heartCount }}</span>
+                    </span>
+                    <a href="{{ path('app_admin_article_comments', {'id': article.id}) }}"><span
+                                class="fa-layers fa-fw 2x">
+                        <i class="far fa-comment"></i>
+                        <span class="fa-layers-counter 2x"
+                              style="color:white;background-color: black">{{ article.comments|length }}</span>
+                    </span>
+                    </a>
+                </td>
+                <td style="width: 10%">
+                    {% if article.publishedAtString != 'null' %}
+                        {{ article.publishedAtString }}
+                    {% else %}
+                        nieopublikowano
+                    {% endif %}
+                    <br>{{ article.createdAtString }}</td>
+                <td class="text-center" style="width: 20%">
+                    <a href="{{ path('app_admin_article_edit', {id: article.id}) }}">
+                        <button class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                    </a>
+                    <a>
+                        <button class="btn btn-danger delete-article" data-id="{{ article.id }}"><i
+                                    class="fas fa-trash-alt"></i></button>
+                    </a>
+                    {% if not article.ispublished %}
+                        <a href="{{ path('app_admin_article_publish', {id: article.id}) }}">
+                            <button class="btn btn-success"><i class="fas fa-upload"></i></button>
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_admin_article_unpublish', {id: article.id}) }}">
+                            <button class="btn btn-warning"><i class="fas fa-download"></i></button>
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <!--suppress JSUnresolvedFunction -->
+    <script>
+        const articles = document.getElementById('articles');
+
+        if (articles) {
+            articles.addEventListener('click', e => {
+                if (e.target.className === 'btn btn-danger delete-article') {
+                    if (confirm('Jesteś pewny?')) {
+                        // noinspection JSUnresolvedFunction
+                        const id = e.target.getAttribute('data-id');
+                        fetch(`articles/delete/${id}`, {
+                            method: 'DELETE'
+                        }).then(res => window.location.reload());
+                    }
+                }
+            });
+        }
+    </script>
+    <script src="https://use.fontawesome.com/releases/v5.6.3/js/all.js"
+            integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1"
+            crossorigin="anonymous"></script>
+{% endblock %}
