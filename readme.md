@@ -1,3 +1,4 @@
+
 ﻿# Projekt Wulkanizator
 
 **Autorzy**: Rafał Gałek, Dawid Jasztal
@@ -15,7 +16,7 @@ Niniejszy dokument ma na celu przedstawienie specyfikacji projektu system inform
 
 ## Ogólny opis założeń systemu i wymagań
 
-Ogólnym założeniem projektu jest budowa systemu zarządzania blogiem. Strona, jak i system, oferuje rejestracje i logowanie użytkowników. Każdy z użytkowników może przeglądać artykułu oraz ciekawostki. Po zalogowaniu mają dostęp do komentowania artykułów, jak i zarządzania własnym koontem i komentarzami. Administrator ma możliwość dodania artykułu, tagów oraz ciekawostki. Dodatkowo może nimi zarządzać, edytować je. Strona oferuje również szybki kontakt z administratorem dla wszystkich użytkowników, poprzez prosty formularz na stronie.
+Ogólnym założeniem projektu jest budowa systemu zarządzania blogiem. Strona, jak i system, oferuje rejestracje i logowanie użytkowników. Każdy z użytkowników może przeglądać artykułu oraz ciekawostki. Po zalogowaniu mają dostęp do komentowania artykułów, jak i zarządzania własnym kontem i komentarzami. Administrator ma możliwość dodania artykułu, tagów oraz ciekawostki. Dodatkowo może nimi zarządzać, edytować je. Strona oferuje również szybki kontakt z administratorem dla wszystkich użytkowników, poprzez prosty formularz na stronie.
 
 ## Lista wymagań
 
@@ -92,23 +93,23 @@ Użytkownik Niezalogowany (UN) -> Użytkownik (U) -> Administrator (A)
 
 |ID   | NAZWA           |  UWAGI                      |     OPIS                    |
 |-----|-----------------|-----------------------------|-----------------------------|
-|UC01 |Autoryzacja | UN| Użytkownik podejmuje próbę autoryzacji, wprowadzając w formularzu logowania swój adres e-mail oraz hasło. Sprawdzana jest obecność podanego adresu e-mail w bazie danych użytkowników oraz poprawność wprowadzonego hasła. Jeśli hasło jest niepoprawne, wyświetlany jest odpowiedni komunikat oraz link do zresetowania hasła. Po poprawnym wprowadzeniu hasła użytkownik zostaje zalogowany i uzyskuje dostęp do funkcjonalności użytkownika zalogowanego|
+|UC01 |Autoryzacja | UN| Użytkownik podejmuje próbę autoryzacji, wprowadzając w formularzu logowania swój adres e-mail oraz hasło. Sprawdzana jest obecność podanego adresu e-mail w bazie danych użytkowników oraz poprawność wprowadzonego hasła. Jeśli hasło jest niepoprawne, wyświetlany jest odpowiedni komunikat oraz link do zresetowania hasła. Po poprawnym wprowadzeniu hasła użytkownik zostaje zalogowany i uzyskuje dostęp do funkcjonalności użytkownika zalogowanego.|
 |UC02 |Rejestracja |UN |Użytkownik podczas próby rejestracji podaje w formularzu swój adres e-mail (sprawdzana jest jego poprawność – jeśli niepoprawny, wyświetlany jest popup proszący o poprawę) i hasło oraz powtórzone hasło. Asynchronicznie sprawdzana jest zgodność obu pól – jeśli się nie zgadzają, użytkownik jest proszony o poprawienie zgodności. Adresy e-mail w bazie danych nie mogą się powtarzać.|
 |UC03 |Wylogowanie |U |Zalogowany użytkownik może wylogować się poprzez naciśnięcie przycisku na dowolnej stronie. Wówczas tracony jest dostęp do funkcjonalności zalogowanego użytkownika.|
 |UC04 | Przegląd artykułów |UN | Każdy z użytkowników po przejściu do zakładki "Artykuły" ma możliwość przeglądania dodanych artykułów. Jeśli do artykułu są komentarze, również są widoczne.|
 |UC05 | Przegląd ciekawostek|UN|  Każdy z użytkowników po przejściu do zakładki "Artykuły" ma możliwość przeglądania dodanych ciekawostek, mieszczących się obok artykułów.|
 |UC06| Dodawanie artykułu| A | W celu dodania artykułu, Administrator uzupełnia odpowiedni formularz. W formularzu uzupełnia pola takie jak tytuł artykułu, zawartość i data publikacji. Po zaakceptowaniu formularza, artykuł trafia na podstronę "artykuły".|
-|UC07| Zarządzanie statusem artykułu|A|Administrator decyduje o tym czy artykuł jest opublikowany. Za pomocą odpowiedniego przycisku może odpublikować artykuł lub opublikować odpublikowany artykuł.|
-|UC08| Usuwanie artykułu|A| Administrator może usuwać artykuły poprzed odpowiedni przycisk w sekcji zarządzania artykułami.|
+|UC07| Zarządzanie statusem artykułu|A|Administrator decyduje o tym czy artykuł jest opublikowany. Za pomocą odpowiedniego przycisku może opublikować artykuł lub usunąć publikację artykułu.|
+|UC08| Usuwanie artykułu|A| Administrator może usuwać artykuły poprzez odpowiedni przycisk w sekcji zarządzania artykułami.|
 |UC09|Edytowanie artykułu|A|Administrator może edytować artykuł, modyfikuje formularz, który uzupełniał podczas dodawania artykułu. Zmodyfikowane dane zatwierdza przyciskiem.|
 |UC10| Dodawanie ciekawostki| A | W celu dodania ciekawostki, Administrator uzupełnia odpowiedni formularz. W formularzu uzupełnia pola takie jak tytuł ciekawostki, krótki opis i link do zawartości. Po zaakceptowaniu formularza, ciekawostka trafia w odpowiednie miejsce na podstronę "artykuły".|
 |UC11| Usuwanie ciekawostki|A| Administrator może usuwać ciekawostki poprzed odpowiedni przycisk w sekcji zarządzania ciekawostkami.|
 |UC12|Edytowanie ciekawostki|A|Administrator może edytować ciekawostkę, modyfikuje formularz, który uzupełniał podczas dodawania ciekawostki. Zmodyfikowane dane zatwierdza przyciskiem.|
 |UC13| Dodawanie tagu| A | W celu dodania tagów, Administrator uzupełnia odpowiedni formularz. W formularzu uzupełnia pole z nazwą tagu oraz wybiera artykuły, do których chce je dodać. Po zaakceptowaniu formularza, tag jej dodawany do wybranych artykułów.|
-|UC14| Usuwanie tagu|A| Administrator może usuwać tagi poprzed odpowiedni przycisk w sekcji zarządzania tagami.|
+|UC14| Usuwanie tagu|A| Administrator może usuwać tagi poprzez odpowiedni przycisk w sekcji zarządzania tagami.|
 |UC15| Dodawanie komentarza| U | Zalogowany użytkownik pod dowolnym artykułem może dodać komentarz.|
-|UC16| Usuwanie komentarza| U | W sekcji komentarzy w profilu użytkownik może usunąć swój komentarz.|
-|UC17| Edytowanie danych| U | Zalogowany użytkownik w swoim profilu ma możliwość zmiany swoich danych, takich jak e-mail, imię, nazwisko czy avatar.|
+|UC16| Usuwanie komentarza| U | W sekcji komentarzy w zarządzaniu profilem, użytkownik może usunąć swój komentarz.|
+|UC17| Edytowanie danych| U | Zalogowany użytkownik w swoim profilu ma możliwość modyfikacji danych, takich jak e-mail, imię, nazwisko czy avatar.|
 |UC18| Wysyłanie wiadomości kontaktowej| UN | Użytkownik może skorzystać z zakładki "Kontakt" w celu skontaktowania się z Administracją. |
 
 ## Lista aktorów
@@ -117,7 +118,7 @@ Użytkownik Niezalogowany (UN) -> Użytkownik (U) -> Administrator (A)
 |-----|-----------------|-----------------------------|-------------------------|
 |UŻYTKOWNICY NIEZALOGOWANI|W01, W02, W04, W05, W07|Użytkownik niezalogowany może utworzyć konto, zalogować się, przeglądać artykuły i ciekawostki oraz uzupełnić formularz kontaktowy| Osoba|
 |UŻYTKOWNICY|W03, W06, W11, W12|Użytkownik zalogowany może zarządzać kontem, przeglądać artykuły i ciekawostki, komentować, zarządzać komentarzami oraz wylogować się | Osoba|
-|ADMINISTRATORZY|W06, W08-W12|Administrator może dodawać artykuły, ciekawostki, tagi oraz komentarze oraz nimi zarządzać. Dodatkowo ma możliwość zarządzania kontami użytkowników. Ponadto zarządza wiadomościami kontaktowymi. | Osoba|
+|ADMINISTRATORZY|W06, W08-W12|Administrator może dodawać artykuły, ciekawostki, tagi oraz komentarze oraz nimi zarządzać. Dodatkowo ma możliwość zarządzania kontami użytkowników. Ponadto zarządza też wiadomościami kontaktowymi. | Osoba|
 
 ## Diagram UC
 ![Diagram UC](https://pics.tinypic.pl/i/00978/ejxf10p53ptj.png)
@@ -345,7 +346,7 @@ Scenariusz:
 
 2. W prawym górnym rogu wybiera Dodaj tag i przechodzi do formularza.
 
-3. Uzupełnia pola formularza, takie jak nazwa i wybiera artykuły, w których ma być dodany.
+3. Uzupełnia nazwę tagu i wybiera artykuły, w których ma być dodany.
 
 4. Akceptuje dodatnie tagu.
 
@@ -434,7 +435,9 @@ Scenariusz:
 
 System będzie budowany na wzorcu architektonicznym MVC, można dzięki temu odseparować model - bazę danych, widok - interfejs użytkownika i kontroler do połączenia pomiędzy użytkownikiem, a bazą zapewniającym wsparcie odpowiednich funkcji dla działania systemu.
 
-Dodatkowo wykorzystamy framework Symfony w celu uproszczenie konfiguracji trudnych części projektu i zapewnimy sobie profesjonalne wsparcie dla kluczowych elementów takich jak logowanie, przesyłanie do bazy danych, pobieranie rekordów z
+Dodatkowo wykorzystamy framework Symfony w celu uproszczenie konfiguracji trudnych części projektu i zapewnimy sobie profesjonalne wsparcie dla kluczowych elementów takich jak logowanie, przesyłanie do bazy danych, pobieranie rekordów z bazy danych, ogólnie mówiąc kwestie bezpieczeństwa.
+
+## Identyfikacja klas
 
 ## Przykładowe diagramy BPMN
 Dodawanie artykułu i komentarza
